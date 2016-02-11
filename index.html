@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+ <head>
+  <title>Mahjong</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="css/styles.css" />
+ </head>
+ <body>
+  <div class="container">
+   <div id="content"></div>
+  </div>
+  <!-- Templates -->
+  <script type="text/template" id="tpl-splash">
+  <div id="splashscreen" style="font-size: 100px">&#x1F004;</div>
+  </script>
+
+  <script type="text/template" id="tpl-configuration">
+  <p>When you are ready, press play</p>
+  <form>
+  <button>play</button>
+  </form>
+  </script>
+
+  <script type="text/template" id="tpl-mahjong">
+  <div>Status: <span id="status">unknown</span></div>
+  <div>Tiles Left: <span id="tiles_left">0</span></div>
+  <div>Timer: <span id="timer">00:00</span></div>
+  <button>hint</button>
+  <button>reset</button>
+  <button>quit</button>
+  <div id="mahjongBoard" style="position: relative;" width="1024" height="1024">
+  </div>
+
+  </script>
+  <!-- Templates -->
+
+  <script src="js/vendor/jquery-1.10.2.min.js"></script>
+  <script src="js/vendor/underscore.js"></script>
+  <script src="js/vendor/backbone.js"></script>
+
+  <script src="js/App.js"></script>
+
+  <script src="js/views/splash.js"></script>
+
+  <script src="js/views/configuration.js"></script>
+  <script src="js/models/Configuration.js"></script>
+
+  <script src="js/views/mahjong.js"></script>
+  <script src="js/models/Deck.js"></script>
+  <script src="js/models/BoardLayout.js"></script>
+  <script src="js/models/Dealer.js"></script>
+  <script src="js/models/TileHandler.js"></script>
+  <script>
+    window.onload = function() {
+      app.init();
+    }
+  </script>
+ </body>
+</html>

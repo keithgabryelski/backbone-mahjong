@@ -1,0 +1,101 @@
+body, html {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+    padding: 20px 0 0 0;
+}
+
+.tile40 {
+  width: 33px;
+  height: 43px;
+  font-size: 40px;
+  margin: 0;
+  padding: 0;
+  background-color: #AAA;
+  border-top:0px solid #DDD;
+  border-bottom:6px solid #666;
+  border-left:0px solid #999;
+  border-right:6px solid #999;
+  transform: skew(0deg, 0deg);
+}
+
+.tilereddragon {
+  font-size: 36px;              /*remove this hack*/
+}
+
+.tile {
+    margin: 0;
+    padding: 0;
+    background-color: #AAA;
+    border: 1px solid #333;
+    color: #333;
+    box-shadow: 2px 2px 5px #999 inset;
+    -webkit-text-stroke-color: red;
+    -webkit-text-fill-color: red;
+}
+
+.clickable {
+    background-color: #DDD;
+    border-top:0px solid #BBB;
+    border-bottom:6px solid #888;
+    border-left:0px solid #AAA;
+    border-right:6px solid #BBB;
+    transform: skew(0deg, 0deg);
+}
+
+.highlighted {
+    background-color: #DD3300;
+    border-top:0px solid #DDD;
+    border-bottom:6px solid #EE7700;
+    border-left:0px solid #CCC;
+    border-right:6px solid #FF6600;
+    transform: skew(0deg, 0deg);
+}
+
+.clickable:hover {
+    background-color: #AA0000;
+    border-top:0px solid #DDD;
+    border-bottom:6px solid #BB4400;
+    border-left:0px solid #CCC;
+    border-right:6px solid #CC0000;
+    transform: skew(0deg, 0deg);
+}
+
+.category_dragon {
+}
+
+.category_bamboo {
+    color: #009900;
+}
+
+.category_circle {
+    color: #000099;
+}
+
+.category_honor {
+    color: #000000;
+}
+
+.category_character {
+    color: #990000;
+}
+
+.category_season {
+    color: #009966;
+}
+
+.category_flower {
+    color: #FF6600;
+}
+
+.category_joker {
+    color: #000000;
+}
+
+.category_back {
+    color: #000000;
+}
