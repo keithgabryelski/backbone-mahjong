@@ -1,0 +1,28 @@
+app.models.Board = Backbone.Model.extend({
+  defaults: {
+    deck: null,
+    board_layout: null,
+    positioned_tiles: [],
+    pulled_tiles: [],
+    highlighted_tile: null,
+    current_matches: []
+  },
+  get_all_positioned_tiles: function() {
+    var tiles = [];
+    for (var depth = 0; depth < this.get('positioned_tiles').length; ++depth) {
+      var board_layer = this.get('positioned_tiles')[depth];
+      for (var y = 0; y < board_layer.length; ++y) {
+        var board_row = board_layer[y];
+        for (var x = 0; x < board_row.length; ++x) {
+          if (board_row[x]) {
+            tiles.push(board_row[x])
+          }
+        }
+      }
+    }
+    return tiles;
+  },
+  remove_tile: function(position) {
+    this.get('positioned_tiles')[position.get('layer')][position.get('row')][position.get('column')] = null;
+  }
+});

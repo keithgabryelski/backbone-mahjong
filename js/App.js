@@ -2,10 +2,17 @@ var app = (function() {
   var api = {
     views: {},
     models: {},
+    logical: {},
     collections: {},
     content: null,
     router: null,
     configuration: null,
+    boardLayouts: {},
+    tileMatchingStyles: {},
+    tileCategories: {},
+    tileCategoryGroups: {},
+    tiles: {},
+    decks: {},
     init: function() {
       this.content = $("#content");
       this.configuration = new api.models.Configuration();

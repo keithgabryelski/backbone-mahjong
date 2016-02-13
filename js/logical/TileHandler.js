@@ -1,15 +1,15 @@
 app.models.TileHandler = Backbone.Model.extend({
   initialize: function(board) {
     this.board = board;
-    this.hilighted = null;
-    this.total_tiles = 0;
-    this.total_matches = 0;
+    this.total_tiles = [];
+    this.total_unblocked_tiles = [];
+    this.tiles_having_matches = [];
   },
-  is_blocked_from_above: function(tile) {
-    var l = tile['layer']
-    var r = tile['row']
-    var c = tile['column']
-    var p = tile['position']
+  is_blocked_from_above: function(positioned_tile) {
+    var l = positioned_tile.get('position').get('layer')
+    var r = positioned_tile.get('position').get('row')
+    var c = positioned_tile.get('position').get('column')
+    var p = positioned_tile.get('position').get('position')
 
     var search = [
       [l+1, r, c, 8+4+2+1]
@@ -37,20 +37,21 @@ app.models.TileHandler = Backbone.Model.extend({
       search.push([l+1, r,   c+1,  8+2])
       break;
     }
-    return this.do_these_tiles_exist(search)
+    return this.are_tiles_at_these_positions(search)
   },
-  do_these_tiles_exist: function(search) {
-    var board_depth = this.board.length
-    var board_height = this.board[0].length
-    var board_width = this.board[0][0].length
+  are_tiles_at_these_positions: function(search) {
+    var positioned_tiles = this.board.get('positioned_tiles')
+    var board_depth = positioned_tiles.length
+    var board_height = positioned_tiles[0].length
+    var board_width = positioned_tiles[0][0].length
     for (var n = 0; n < search.length; ++n) {
       var l = search[n][0]
       var r = search[n][1]
       var c = search[n][2]
       var mask = search[n][3]
       if (l < board_depth && r >= 0 && r < board_height && c >= 0 && c < board_width) {
-        if (this.board[l][r][c]) {
-          if (this.board[l][r][c]['position'] & mask) {
+        if (positioned_tiles[l][r][c]) {
+          if (positioned_tiles[l][r][c].get('position').get('position') & mask) {
             return true;
           }
         }
@@ -58,11 +59,11 @@ app.models.TileHandler = Backbone.Model.extend({
     }
     return false;
   },
-  is_blocked_from_the_left: function(tile) {
-    var l = tile['layer']
-    var r = tile['row']
-    var c = tile['column']
-    var p = tile['position']
+  is_blocked_from_the_left: function(positioned_tile) {
+    var l = positioned_tile.get('position').get('layer')
+    var r = positioned_tile.get('position').get('row')
+    var c = positioned_tile.get('position').get('column')
+    var p = positioned_tile.get('position').get('position')
 
     var search = [
     ]
@@ -86,13 +87,13 @@ app.models.TileHandler = Backbone.Model.extend({
       break;
     }
 
-    return this.do_these_tiles_exist(search)
+    return this.are_tiles_at_these_positions(search)
   },
-  is_blocked_from_the_right: function(tile) {
-    var l = tile['layer']
-    var r = tile['row']
-    var c = tile['column']
-    var p = tile['position']
+  is_blocked_from_the_right: function(positioned_tile) {
+    var l = positioned_tile.get('position').get('layer')
+    var r = positioned_tile.get('position').get('row')
+    var c = positioned_tile.get('position').get('column')
+    var p = positioned_tile.get('position').get('position')
 
     var search = [
     ]
@@ -116,47 +117,39 @@ app.models.TileHandler = Backbone.Model.extend({
       break;
     }
 
-    return this.do_these_tiles_exist(search)
+    return this.are_tiles_at_these_positions(search)
   },
-  is_tile_unblocked: function(tile) {
+  is_tile_unblocked: function(positioned_tile) {
     // can't be blocked from above (half overlay or full overlay)
     // must be unblocked from left or right
-    return !this.is_blocked_from_above(tile) &&
-      (!this.is_blocked_from_the_left(tile) || !this.is_blocked_from_the_right(tile))
+    return !this.is_blocked_from_above(positioned_tile) &&
+      (!this.is_blocked_from_the_left(positioned_tile) || !this.is_blocked_from_the_right(positioned_tile))
   },
-  remove_tile: function(tile) {
-    $(tile['view']).remove();
-    this.board[tile['layer']][tile['row']][tile['column']] = null;
+  remove_tile: function(positioned_tile) {
+    $(positioned_tile.get('view')).remove();
+    this.board.remove_tile(positioned_tile.get('position'))
   },
-  make_tile_clickable: function(tile) {
+  make_tile_clickable: function(positioned_tile) {
     var self = this;
-    $(tile['view']).
+    $(positioned_tile.get('view')).
       addClass("clickable").
       on("click", function(e) { self.tile_click($(e.target)) })
   },
-  make_tile_unclickable: function(tile) {
-    $(tile['view']).
+  make_tile_unclickable: function(positioned_tile) {
+    $(positioned_tile.get('view')).
       removeClass("clickable").
       off("click")
   },
   assess_clickability: function() {
-    this.total_tiles = [];
+    this.total_tiles = this.board.get_all_positioned_tiles();
     this.total_unblocked_tiles = [];
-    for (var nlayer = 0; nlayer < this.board.length; ++nlayer) {
-      var layer = this.board[nlayer];
-      for (var nrow = 0; nrow < layer.length; ++nrow) {
-        var row = layer[nrow];
-        for (var ncolumn = 0; ncolumn < row.length; ++ncolumn) {
-          var tile = row[ncolumn];
-          if (tile) {
-            this.total_tiles.push(tile)
-            this.make_tile_unclickable(tile);
-            if (this.is_tile_unblocked(tile)) {
-              this.make_tile_clickable(tile);
-              this.total_unblocked_tiles.push(tile);
-            }
-          }
-        }
+
+    for (var i = 0; i < this.total_tiles.length; ++i) {
+      var tile = this.total_tiles[i];
+      this.make_tile_unclickable(tile);
+      if (this.is_tile_unblocked(tile)) {
+        this.make_tile_clickable(tile);
+        this.total_unblocked_tiles.push(tile);
       }
     }
     
@@ -166,7 +159,7 @@ app.models.TileHandler = Backbone.Model.extend({
       var matching_tiles = []
       for (var n = i+1; n < this.total_unblocked_tiles.length; ++n) {
         var tile2 = this.total_unblocked_tiles[n];
-        if (this.are_tiles_matching(tile1, tile2)) {
+        if (tile1.get('tile').is_matching(tile2.get('tile'))) {
           matching_tiles.push(tile2)
         }
       }
@@ -191,24 +184,6 @@ app.models.TileHandler = Backbone.Model.extend({
   },
   unhighlight_tile: function(tile) {
   },
-  are_tiles_matching: function(tile1, tile2) {
-    if (tile1['matches'] == 'all' || tile2['matches'] == 'all') {
-      return true;
-    }
-    if (tile1['matches'] == 'none' || tile2['matches'] == 'none') {
-      return false;
-    }
-    if (tile1['matches'] != tile2['matches']) {
-      return false;
-    }
-    if (tile1['matches'] == 'exact') {
-      return tile1['value'] == tile2['value'];
-    }
-    if (tile1['matches'] == 'category') {
-      return tile1['category'] == tile2['category'];
-    }
-    return false;
-  },
   tile_click: function(target) {
     var target_data = jQuery.data(target[0], 'tile')
     if (this.highlighted) {
@@ -218,7 +193,7 @@ app.models.TileHandler = Backbone.Model.extend({
         this.highlighted = null;
         // BONKETY
       } else {
-        if (this.are_tiles_matching(highlighted_data, target_data)) {
+        if (highlighted_data.get('tile').is_matching(target_data.get('tile'))) {
           // FLASH
           this.remove_tile(highlighted_data);
           this.remove_tile(target_data);

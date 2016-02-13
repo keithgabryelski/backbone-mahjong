@@ -1,12 +1,6 @@
-app.models.Deck = Backbone.Model.extend({
-  MATCHES: [
-    'none'
-    'exact',
-    'category',
-    'all'
-  ],
+app.models.TileCategory = app.models.Type.extend({
   defaults: {
-    name: null,
-    matches: null,
+    tile_matching_style: null,
+    tile_category_group: null
   }
 });

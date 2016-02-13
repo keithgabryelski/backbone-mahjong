@@ -7,9 +7,6 @@ app.views.mahjong = Backbone.View.extend({
   initialize: function() {
     this.timer = 0;
     this.delegateEvents();
-    this.boardLayout = new app.models.BoardLayout().attributes;
-    this.deck = new app.models.Deck().attributes;
-    this.dealer = new app.models.Dealer();
     this.tileHandler = null;
 
     this.intervalId = null;     // 
@@ -39,8 +36,11 @@ app.views.mahjong = Backbone.View.extend({
       maxWidth:  64 + (15 * (33 + 6))
     });
 
-    var deck = this.dealer.shuffle_deck();
-    var board = this.dealer.deal_deck(deck);
+    // XXX configuration
+    var deck = app.decks.standard;
+    deck.shuffle();
+    var board_layout = app.boardLayouts.findWhere({ID: 1})
+    var board = deck.deal(board_layout);
     this.tileHandler = new app.models.TileHandler(board);
     this.generate_background(mahjongBoard[0]);
     this.show_board(mahjongBoard[0], board);
@@ -68,51 +68,47 @@ app.views.mahjong = Backbone.View.extend({
     var border = 6;
     var width = 33 + border;
     var height = 44 + border;
-    for (var boardLayer = 0; boardLayer < board.length; ++boardLayer) {
-      var layer = board[boardLayer];
-      for (var y = 0; y < layer.length; ++y) {
-        var row = layer[y];
-        for (var x = 0; x < row.length; ++x) {
-          var tile = row[x];
-          var left = initial_offset + (x * width) - (border * boardLayer);
-          var top = initial_offset + (y * height) - (border * boardLayer);
-          if (tile != null) {
-            switch (tile['position']) {
-            case 1:
-              left += (width/2)
-              top += (height/2)
-              break;
-            case 2:
-              top += (height/2)
-              break;
-            case 4:
-              left += (width/2)
-              break;
-            case 8:
-              break;
-            default:
-              break;
-            }
-            var tile_image = $("<div>").
-                addClass("tile40").
-                addClass("category_" + tile['category']).
-                addClass("tile_" + tile['name'].replace(' ', '_')).
-                css({
-                  left: left,
-                  top: top,
-                  zIndex: boardLayer + 1,
-                  position: 'absolute',
-                }).
-                html(tile['value']).
-                appendTo(view)[0];
-            if (tile['category'] == 'dragon' && tile['name'] == 'red') {
-              $(tile_image).addClass("tilereddragon")
-            }
-            tile['view'] = tile_image;
-            jQuery.data(tile_image, 'tile', tile)
-          }
-        }
+
+    var positioned_tiles = board.get_all_positioned_tiles()
+    for (var i = 0; i < positioned_tiles.length; ++i) {
+      var positioned_tile = positioned_tiles[i];
+      var position = positioned_tile.get('position');
+      var tile = positioned_tile.get('tile');
+      var left = initial_offset + (position.get('column') * width) - (border * position.get('layer'));
+      var top = initial_offset + (position.get('row') * height) - (border * position.get('layer'));
+      switch (position.get('position')) {
+      case 1:
+        left += (width/2)
+        top += (height/2)
+        break;
+      case 2:
+        top += (height/2)
+        break;
+      case 4:
+        left += (width/2)
+        break;
+      case 8:
+        break;
+      default:
+        break;
       }
+      var tile_image = $("<div>").
+          addClass("tile40").
+          addClass("category_" + tile.get('tile_category').get('short_name')).
+          addClass("tile_" + tile.get('short_name')).
+          css({
+            left: left,
+            top: top,
+            zIndex: position.get('layer') + 1,
+            position: 'absolute',
+          }).
+          html(tile.get('value')).
+          appendTo(view)[0];
+      if (tile.get('short_name') == 'red_dragon') {
+        $(tile_image).addClass("tilereddragon")
+      }
+      positioned_tile.set({view: tile_image});
+      jQuery.data(tile_image, 'tile', positioned_tile)
     }
   },
 });
