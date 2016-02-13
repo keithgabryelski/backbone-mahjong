@@ -159,7 +159,7 @@ app.models.TileHandler = Backbone.Model.extend({
       var matching_tiles = []
       for (var n = i+1; n < this.total_unblocked_tiles.length; ++n) {
         var tile2 = this.total_unblocked_tiles[n];
-        if (tile1.get('tile').is_matching(tile2.get('tile'))) {
+        if (tile1.is_matching(tile2)) {
           matching_tiles.push(tile2)
         }
       }
@@ -193,7 +193,7 @@ app.models.TileHandler = Backbone.Model.extend({
         this.highlighted = null;
         // BONKETY
       } else {
-        if (highlighted_data.get('tile').is_matching(target_data.get('tile'))) {
+        if (highlighted_data.is_matching(target_data)) {
           // FLASH
           this.remove_tile(highlighted_data);
           this.remove_tile(target_data);

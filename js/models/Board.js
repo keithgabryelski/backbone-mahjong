@@ -7,6 +7,15 @@ app.models.Board = Backbone.Model.extend({
     highlighted_tile: null,
     current_matches: []
   },
+  num_layers: function() {
+    return this.get('positioned_tiles').length;
+  },
+  num_rows: function() {
+    return this.get('positioned_tiles')[0].length;
+  },
+  num_columns: function() {
+    return this.get('positioned_tiles')[0][0].length
+  },
   get_all_positioned_tiles: function() {
     var tiles = [];
     for (var depth = 0; depth < this.get('positioned_tiles').length; ++depth) {

@@ -3,5 +3,8 @@ app.models.PositionedTile = Backbone.Model.extend({
     position: null,
     tile: null,
     view: null,                 // ick
+  },
+  is_matching: function(other_positioned_tile) {
+    return this.get('tile').is_matching(other_positioned_tile.get('tile'));
   }
 });
