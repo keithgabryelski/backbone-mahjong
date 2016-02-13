@@ -68,11 +68,15 @@ h1 {
 .category_dragon {
 }
 
-.category_bamboo {
+.category_wind {
+    color: #00AAAA;
+}
+
+.category_bamboo_suit {
     color: #009900;
 }
 
-.category_circle {
+.category_circle_suit {
     color: #000099;
 }
 
@@ -80,7 +84,7 @@ h1 {
     color: #000000;
 }
 
-.category_character {
+.category_character_suit {
     color: #990000;
 }
 
