@@ -4,7 +4,6 @@ app.models.Dealer = Backbone.Model.extend({
     this.configuration = configuration;
     this.deck = this.get_shuffled_deck();
     this.board = this.build_board();
-    this.compute_sizings();
   },
   get_shuffled_deck: function() {
     var deck = app.decks.standard;
@@ -16,18 +15,18 @@ app.models.Dealer = Backbone.Model.extend({
     return this.deck.deal(board_layout);
   },
   compute_sizings: function() {
-    this.windowWidth = window.innerWidth;
-    this.windowHeight = window.innerHeight; // height is computed from width
+    this.divWidth = $('div#mahjongBoard').innerWidth();
 
-    this.boardSideMargin = 8;
-    this.boardTopBottomMargin = 8;
+    this.boardSideMargin = 0;
+    this.boardTopBottomMargin = 0;
 
     this.numRows = this.board.num_rows();
     this.numLayers = this.board.num_layers();
     this.numColumns = this.board.num_columns();
-    this.perspectiveOffset = 4; // four pixels offset for each layer
-    this.boardWidth = this.windowWidth - (this.boardSideMargin * 2);
-    this.tileWidth = (this.boardWidth - (this.numLayers * this.perspectiveOffset)) / this.numColumns;
+    this.borderSize = 6;                      // in the css
+    this.perspectiveOffset = this.borderSize;
+    this.boardWidth = this.divWidth - (this.boardSideMargin * 2);
+    this.tileWidth = (this.boardWidth / this.numColumns) - this.borderSize;
     this.fontSize = this.tileWidth * 1.10;
 
     this.tileHeight = this.tileWidth * 4 / 3;
@@ -41,9 +40,11 @@ app.models.Dealer = Backbone.Model.extend({
     // the dragon board
     var mahjongBoard = $("#mahjongBoard");
     mahjongBoard.attr({
-      margin: this.boardSideMargin, // XXX need to set each side and top individually
+      margin: 0, // XXX need to set each side and top individually
       padding: 0, // XXX this is wrong
     });
+
+    this.compute_sizings();
 
     this.tileHandler = new app.models.TileHandler(this.board);
     this.generate_background(mahjongBoard[0]);
@@ -53,7 +54,7 @@ app.models.Dealer = Backbone.Model.extend({
   generate_background: function(view) {
     $("<div>").attr({
       id: "background",
-      margin: this.boardSideMargin, // XXX need to set each side and top individually
+      margin: 0, // XXX need to set each side and top individually
       padding: 0, // XXX this is wrong
     }).css({
       position: "absolute",

@@ -3,15 +3,17 @@
  <head>
   <title>Mahjong</title>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
  </head>
  <body>
   <div class="container">
    <div id="content"></div>
   </div>
+
   <!-- Templates -->
   <script type="text/template" id="tpl-splash">
-  <div id="splashscreen" style="font-size: 100px">&#x1F004;</div>
+  <div id="splashscreen" style="font-size: 512px">&#x1F000;</div>
   </script>
 
   <script type="text/template" id="tpl-configuration">
@@ -21,20 +23,66 @@
   </form>
   </script>
 
-  <script type="text/template" id="tpl-mahjong">
-  <div>Status: <span id="status">unknown</span></div>
-  <div>Tiles Left: <span id="tiles_left">0</span></div>
-  <div>Timer: <span id="timer">00:00</span></div>
-  <button>hint</button>
-  <button>reset</button>
-  <button>quit</button>
-  <div id="mahjongBoard" style="position: relative;" width="1024" height="1024">
-  </div>
-
+  <script type="text/template" id="tpl-play-historical-item">
+  <div class="cover-item" style="background-image: url('https://d1nexqccu6ll7z.cloudfront.net/_images/s-14-197-61462CCC-uk.png')"></div>
   </script>
+
+  <script type="text/template" id="tpl-play-history">
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            History
+          </a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+          <div class="row-fluid">
+            <div class="col-lg-12 col-md-10 ">
+              <div class="cover-container">
+                <!-- START PANEL -->
+
+                <% _.each(tile_pairs, function(tile_pair) { %>
+                  <div class="cover-item">[<%= tail_pair.tile1.tile %>, <%= tail_pair.tile1.tile %>]</div>
+                <% }); %>
+                <!-- END PANEL -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </script>
+
+  <script type="text/template" id="tpl-mahjong-status">
+  <div>
+  <div>Status: <span id="status"><%= status %></span></div>
+  <div>Matches Available: <span id="matches_available"><%= matches_available %></span></div>
+  <div>Tiles Left: <span id="tiles_left"><%= tiles_left %></span></div>
+  <div>Timer: <span id="timer"><%= timer %></span></div>
+  </div>
+  </script>
+
+  <script type="text/template" id="tpl-mahjong-controls">
+  <div>
+  <button>hint</button>
+  <button>undo</button>
+  <button>quit</button>
+  <button>play tree</button>
+  </div>
+  </script>
+
+  <script type="text/template" id="tpl-mahjong">
+  <div id="mahjongBoard" style="position: relative;" width="1024" height="1024"></div>
+  </script>
+
   <!-- Templates -->
 
   <script src="js/vendor/jquery-1.10.2.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script src="js/vendor/underscore.js"></script>
   <script src="js/vendor/backbone.js"></script>
 
@@ -42,7 +90,6 @@
 
   <script src="js/models/Type.js"></script>
   <script src="js/models/BoardLayout.js"></script>
-  <script src="js/models/Board.js"></script>
   <script src="js/models/Configuration.js"></script>
   <script src="js/models/Deck.js"></script>
   <script src="js/models/TileMatchingStyle.js"></script>
@@ -51,6 +98,7 @@
   <script src="js/models/Tile.js"></script>
   <script src="js/models/Position.js"></script>
   <script src="js/models/PositionedTile.js"></script>
+  <script src="js/models/TilePair.js"></script>
 
   <script src="js/collections/Types.js"></script>
   <script src="js/collections/BoardLayouts.js"></script>
@@ -59,6 +107,7 @@
   <script src="js/collections/TileCategoryGroups.js"></script>
   <script src="js/collections/Tiles.js"></script>
   <script src="js/collections/Decks.js"></script>
+  <script src="js/collections/TilePairs.js"></script>
 
   <script src="js/data/BoardLayouts.js"></script>
   <script src="js/data/TileMatchingStyles.js"></script>
@@ -66,6 +115,8 @@
   <script src="js/data/TileCategories.js"></script>
   <script src="js/data/Tiles.js"></script>
   <script src="js/data/Decks.js"></script>
+
+  <script src="js/models/Board.js"></script>
 
   <script src="js/logical/TileHandler.js"></script>
   <script src="js/logical/Dealer.js"></script>

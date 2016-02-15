@@ -35,7 +35,8 @@ var app = (function() {
 	this.splashView = new api.views.splash({
 	  el: $("#content") 
 	}).on("splashed", function() {
-	  api.router.navigate("configuration", {trigger: true});
+	  api.router.navigate("configuration");
+          window.location.reload();
 	})
       }
       return this.splashView;
@@ -45,7 +46,7 @@ var app = (function() {
 	this.configurationView = new api.views.configuration({
 	  model: api.configuration
 	}).on("play", function() {
-	  api.router.navigate("mahjong", {trigger: true});
+	  api.router.navigate("mahjong", true);
 	})
       }
       return this.configurationView;
@@ -54,8 +55,6 @@ var app = (function() {
       if (!this.mahjongView) {
 	this.mahjongView = new api.views.mahjong({
 	  model: api.configuration
-	}).on("quit", function() {
-	  api.router.navigate("configuration", {trigger: true});
 	})
       }
       return this.mahjongView;

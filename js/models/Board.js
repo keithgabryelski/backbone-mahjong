@@ -5,7 +5,8 @@ app.models.Board = Backbone.Model.extend({
     positioned_tiles: [],
     pulled_tiles: [],
     highlighted_tile: null,
-    current_matches: []
+    current_matches: [],
+    history: new app.models.TilePairs()
   },
   num_layers: function() {
     return this.get('positioned_tiles').length;
@@ -33,5 +34,8 @@ app.models.Board = Backbone.Model.extend({
   },
   remove_tile: function(position) {
     this.get('positioned_tiles')[position.get('layer')][position.get('row')][position.get('column')] = null;
+  },
+  tile_move: function(tile1, tile2) {
+    this.history.push[tile1, tile2]
   }
 });
