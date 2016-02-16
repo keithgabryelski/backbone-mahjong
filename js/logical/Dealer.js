@@ -5,6 +5,7 @@ app.models.Dealer = Backbone.Model.extend({
     this.deck = this.get_shuffled_deck();
     this.board = this.build_board();
     this.boardStatus = board_status;
+    this.tileHandler = null;
   },
   get_shuffled_deck: function() {
     var deck = app.decks.standard;
@@ -97,6 +98,7 @@ app.models.Dealer = Backbone.Model.extend({
           addClass("tile").
           addClass("category_" + tile.get('tile_category').get('short_name')).
           addClass("tile_" + tile.get('short_name')).
+          addClass("on_board").
           css({
             left: tile_xyz.x + this.boardSideMargin + ( positioned_tile.get('position').get('layer') * this.tileDepth),
             top: tile_xyz.y + this.boardTopBottomMargin - ( positioned_tile.get('position').get('layer') * this.tileDepth),
@@ -115,9 +117,6 @@ app.models.Dealer = Backbone.Model.extend({
             borderStyle: "solid",
             borderWidth: "1px 1px " + this.tileDepth + "px " + this.tileDepth + "px",
             borderRadius: (this.tileWidth / 5) + "px",
-          }).
-          css({
-            boxShadow: "-" + this.tileDepth + "px " + this.tileDepth + "px 10px rgba(0, 0, 0, .5)",
           }).
           html(tile.get('value')).
           appendTo(view)[0];
@@ -176,5 +175,10 @@ app.models.Dealer = Backbone.Model.extend({
   },
   compute_order: function(x, y, z) {
     return (-1 * x) +  y + z;
+  },
+  show_hint: function() {
+    if (this.tileHandler != null) {
+      this.tileHandler.show_hint();
+    }
   }
 });

@@ -2,9 +2,7 @@ app.models.TileHandler = Backbone.Model.extend({
   initialize: function(board, board_status) {
     this.board = board;
     this.boardStatus = board_status;
-    this.total_tiles = [];
-    this.total_unblocked_tiles = [];
-    this.tiles_having_matches = [];
+    this.hint_index = null;
   },
   is_blocked_from_above: function(positioned_tile) {
     var l = positioned_tile.get('position').get('layer')
@@ -133,7 +131,11 @@ app.models.TileHandler = Backbone.Model.extend({
   },
   remove_tile: function(positioned_tile) {
     this.make_tile_unclickable(positioned_tile);
-    $(positioned_tile.get('view')).addClass('highlighted');
+    $(positioned_tile.get('view')).
+      addClass('highlighted').
+      removeClass('on_board').
+      removeClass('hinted').
+      addClass('off_board');
     var tile = $(positioned_tile.get('view')).remove();
     tile.css({position: "static"}).css({zIndex: 1, boxShadow: ""})
     tile.appendTo($("<td>").prependTo($('tr#scroll')))
@@ -149,6 +151,17 @@ app.models.TileHandler = Backbone.Model.extend({
     $(positioned_tile.get('view')).
       removeClass("clickable").
       off("click")
+  },
+  is_previous_match: function(tile, previous_matching_sets) {
+    for (var t = 0; t < previous_matching_sets.length; ++t) {
+      var previous_matches = previous_matching_sets[t][1];
+      for (var tt = 0; tt < previous_matches.length; ++tt) {
+        if (previous_matches[tt] == tile) {
+          return true;
+        }
+      }
+    }
+    return false;
   },
   assess_clickability: function() {
     var total_tiles = this.board.get_all_positioned_tiles();
@@ -171,7 +184,9 @@ app.models.TileHandler = Backbone.Model.extend({
       for (var n = i+1; n < total_unblocked_tiles.length; ++n) {
         var tile2 = total_unblocked_tiles[n];
         if (tile1.is_matching(tile2)) {
-          matching_tiles.push(tile2)
+          if (!this.is_previous_match(tile2, tiles_having_matches)) {
+            matching_tiles.push(tile2)
+          }
         }
       }
       if (matching_tiles.length > 0) {
@@ -215,6 +230,7 @@ app.models.TileHandler = Backbone.Model.extend({
           this.remove_tiles(highlighted_data, target_data);
           this.highlighted = null;
           // BLIP
+          this.clear_hint();
           this.assess_clickability();
         } else {
           this.highlighted.removeClass('highlighted');
@@ -228,4 +244,39 @@ app.models.TileHandler = Backbone.Model.extend({
       this.highlighted = target;
     }
   },
+  show_hint: function() {
+    var tiles_having_matches = this.boardStatus.get('tiles_having_matches');
+    if (this.hint_index != null) {
+      var old_hint_index = this.hint_index;
+      this.clear_hint();
+      this.hint_index = (old_hint_index + 1) % tiles_having_matches.length;
+    } else {
+      this.hint_index = 0;
+    }
+    if (this.hint_index >= tiles_having_matches.length) {
+      // BONK
+    } {
+      var hintables = tiles_having_matches[this.hint_index];
+      if (hintables) {
+        $(hintables[0].get('view')).addClass('hinted');
+        for (var i = 0; i < hintables[1].length; i++) {
+          $(hintables[1][i].get('view')).addClass('hinted');
+        }
+      }
+    }
+  },
+  clear_hint: function() {
+    if (this.hint_index == null) {
+      return;
+    }
+    var tiles_having_matches = this.boardStatus.get('tiles_having_matches');
+    if (this.hint_index < tiles_having_matches.length) {
+      var hintables = tiles_having_matches[this.hint_index];
+      $(hintables[0].get('view')).removeClass('hinted');
+      for (var i = 0; i < hintables[1].length; i++) {
+        $(hintables[1][i].get('view')).removeClass('hinted');
+      }
+    }
+    this.hint_index = null;
+  }
 });

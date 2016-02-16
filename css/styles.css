@@ -6,6 +6,18 @@
     border-color: #ccc #bbb #666 #777;
 }
 
+.on_board {
+    box-shadow: -8px 8px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hinted {
+    box-shadow: 0px 0px 40px red;
+}
+
+.off_board {
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.0);
+}
+
 .clickable {
     background-color: #EEE;
     border-color: #FFF #EEE #777 #888;
@@ -19,6 +31,7 @@
 .clickable:hover {
     background-color: #FFF;
     border-color: #FFF #EEE #999 #AAA;
+    box-shadow: 8px 8px 10px rgba(#fff, #fff, #fff, .5);
 }
 
 .highlighted:hover {
@@ -69,6 +82,9 @@ table#history_with_scrollbar {
     display: block;
     overflow-x: scroll;
     overflow-y: hidden;
-    width: 100%;
     height: 80px;
+}
+
+#collapseOne {
+    background-color: #555;
 }

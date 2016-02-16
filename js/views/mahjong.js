@@ -1,9 +1,9 @@
 app.views.mahjong = Backbone.View.extend({
   template: _.template($("#tpl-mahjong").html()),
   events: {
-    'click button .quit': 'quit',
-    'click button .hint': 'hint',
-    'click button .undo': 'undo'
+    'click button.quit': 'quit',
+    'click button.hint': 'hint',
+    'click button.undo': 'undo'
   },
   initialize: function(options) {
     this.boardStatus = new app.models.BoardStatus();
@@ -28,6 +28,8 @@ app.views.mahjong = Backbone.View.extend({
   },
   hint: function(e) {
     e.preventDefault();
-    this.trigger("hint");
+    if (this.dealer) {
+      this.dealer.show_hint();
+    }
   },
 });

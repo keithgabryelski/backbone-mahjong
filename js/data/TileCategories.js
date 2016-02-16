@@ -2,7 +2,7 @@ app.tileCategories = new app.models.TileCategories();
 
 app.tileCategories.set(
   [
-    { ID: 1,  name: 'Wind',      short_name: 'wind',           tile_category_group: app.tileCategoryGroups.honor, tile_matching_style: app.tileMatchingStyles.category },
+    { ID: 1,  name: 'Wind',      short_name: 'wind',           tile_category_group: app.tileCategoryGroups.honor, tile_matching_style: app.tileMatchingStyles.exact },
     { ID: 2,  name: 'Dragon',    short_name: 'dragon',         tile_category_group: app.tileCategoryGroups.honor, tile_matching_style: app.tileMatchingStyles.exact },
     { ID: 3,  name: 'Character', short_name: 'character_suit', tile_category_group: app.tileCategoryGroups.suit, tile_matching_style: app.tileMatchingStyles.exact },
     { ID: 4,  name: 'Bamboo',    short_name: 'bamboo_suit',    tile_category_group: app.tileCategoryGroups.suit, tile_matching_style: app.tileMatchingStyles.exact },
