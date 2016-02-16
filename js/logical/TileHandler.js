@@ -126,9 +126,16 @@ app.models.TileHandler = Backbone.Model.extend({
     return !this.is_blocked_from_above(positioned_tile) &&
       (!this.is_blocked_from_the_left(positioned_tile) || !this.is_blocked_from_the_right(positioned_tile))
   },
+  remove_tiles: function(positioned_tile1, positioned_tile2) {
+    $("<td>").html("&nbsp;").prependTo($('tr#scroll'));
+    this.remove_tile(positioned_tile2);
+    this.remove_tile(positioned_tile1);
+  },
   remove_tile: function(positioned_tile) {
+    this.make_tile_unclickable(positioned_tile);
+    $(positioned_tile.get('view')).addClass('highlighted');
     var tile = $(positioned_tile.get('view')).remove();
-    tile.css({position: "static"})
+    tile.css({position: "static"}).css({zIndex: 1, boxShadow: ""})
     tile.appendTo($("<td>").prependTo($('tr#scroll')))
     this.board.remove_tile(positioned_tile.get('position'))
   },
@@ -205,8 +212,7 @@ app.models.TileHandler = Backbone.Model.extend({
       } else {
         if (highlighted_data.is_matching(target_data)) {
           // FLASH
-          this.remove_tile(highlighted_data);
-          this.remove_tile(target_data);
+          this.remove_tiles(highlighted_data, target_data);
           this.highlighted = null;
           // BLIP
           this.assess_clickability();
