@@ -57,16 +57,16 @@
   </div>
   </script>
 
-  <script type="text/template" id="tpl-mahjong-status">
+  <script type="text/template" id="tpl-board-status">
   <div>
   <div>Status: <span id="status"><%= status %></span></div>
-  <div>Matches Available: <span id="matches_available"><%= matches_available %></span></div>
-  <div>Tiles Left: <span id="tiles_left"><%= tiles_left %></span></div>
-  <div>Timer: <span id="timer"><%= timer %></span></div>
+  <div>Matches Available: <span id="matches_available"><%= tiles_having_matches.length %></span></div>
+  <div>Tiles Left: <span id="tiles_left"><%= tiles_on_board.length %></span></div>
+  <div>Timer: <span id="timer"><%= timer > (60 * 60) ? (new Date(timer * 1000)).toUTCString().match(/(\d\d:\d\d:\d\d)/)[0] : (new Date(timer * 1000)).toUTCString().match(/\d\d:(\d\d:\d\d)/)[1] %></span></div>
   </div>
   </script>
 
-  <script type="text/template" id="tpl-mahjong-controls">
+  <script type="text/template" id="tpl-board-controls">
   <div>
   <button>hint</button>
   <button>undo</button>
@@ -76,6 +76,9 @@
   </script>
 
   <script type="text/template" id="tpl-mahjong">
+  <div id="mahjongBoardStatus"></div>
+  <div id="mahjongBoardControls"></div>
+  <div id="mahjongBoardHistory"></div>
   <div id="mahjongBoard" style="position: relative;" width="1024" height="1024"></div>
   </script>
 
@@ -99,6 +102,7 @@
   <script src="js/models/Position.js"></script>
   <script src="js/models/PositionedTile.js"></script>
   <script src="js/models/TilePair.js"></script>
+  <script src="js/models/BoardStatus.js"></script>
 
   <script src="js/collections/Types.js"></script>
   <script src="js/collections/BoardLayouts.js"></script>
@@ -123,6 +127,8 @@
 
   <script src="js/views/splash.js"></script>
   <script src="js/views/configuration.js"></script>
+  <script src="js/views/board_status.js"></script>
+  <script src="js/views/board_controls.js"></script>
   <script src="js/views/mahjong.js"></script>
 
   <script>

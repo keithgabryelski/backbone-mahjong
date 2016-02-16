@@ -28,7 +28,6 @@ var app = (function() {
       return this;
     }
   };
-
   var ViewsFactory = {
     splash: function() {
       if (!this.splashView) {

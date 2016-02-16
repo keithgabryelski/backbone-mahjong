@@ -1,9 +1,10 @@
 app.models.Dealer = Backbone.Model.extend({
-  initialize: function(board_div, configuration) {
+  initialize: function(board_div, configuration, board_status) {
     this.boardDiv = board_div;
     this.configuration = configuration;
     this.deck = this.get_shuffled_deck();
     this.board = this.build_board();
+    this.boardStatus = board_status;
   },
   get_shuffled_deck: function() {
     var deck = app.decks.standard;
@@ -47,10 +48,11 @@ app.models.Dealer = Backbone.Model.extend({
 
     this.compute_sizings();
 
-    this.tileHandler = new app.models.TileHandler(this.board);
+    this.tileHandler = new app.models.TileHandler(this.board, this.boardStatus);
     this.generate_background(mahjongBoard[0]);
     this.show_board(mahjongBoard[0], this.board);
     this.tileHandler.assess_clickability();
+    this.boardStatus.startGame();
   },
   generate_background: function(view) {
     $("<div>").attr({
@@ -161,15 +163,14 @@ app.models.Dealer = Backbone.Model.extend({
       y: (row + row_increment) * (tile_height - (tile_depth * 0.5)),
       z: layer * tile_depth
     }
-    var order = this.compute_order(
-      projectedXY.x,
-      projectedXY.y,
-      projectedXY.z
-    )
     return {
       x: projectedXY.x,
       y: projectedXY.y,
-      order: order
+      order: this.compute_order(
+        projectedXY.x,
+        projectedXY.y,
+        projectedXY.z
+      )
     }
   },
   compute_order: function(x, y, z) {

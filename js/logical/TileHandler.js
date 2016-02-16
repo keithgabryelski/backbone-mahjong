@@ -1,6 +1,7 @@
 app.models.TileHandler = Backbone.Model.extend({
-  initialize: function(board) {
+  initialize: function(board, board_status) {
     this.board = board;
+    this.boardStatus = board_status;
     this.total_tiles = [];
     this.total_unblocked_tiles = [];
     this.tiles_having_matches = [];
@@ -141,43 +142,50 @@ app.models.TileHandler = Backbone.Model.extend({
       off("click")
   },
   assess_clickability: function() {
-    this.total_tiles = this.board.get_all_positioned_tiles();
-    this.total_unblocked_tiles = [];
+    var total_tiles = this.board.get_all_positioned_tiles();
+    this.boardStatus.set({tiles_on_board: total_tiles})
+    var total_unblocked_tiles = [];
 
-    for (var i = 0; i < this.total_tiles.length; ++i) {
-      var tile = this.total_tiles[i];
+    for (var i = 0; i < total_tiles.length; ++i) {
+      var tile = total_tiles[i];
       this.make_tile_unclickable(tile);
       if (this.is_tile_unblocked(tile)) {
         this.make_tile_clickable(tile);
-        this.total_unblocked_tiles.push(tile);
+        total_unblocked_tiles.push(tile);
       }
     }
     
-    this.tiles_having_matches = [];
-    for (var i = 0; i < this.total_unblocked_tiles.length; ++i) {
-      var tile1 = this.total_unblocked_tiles[i];
-      var matching_tiles = []
-      for (var n = i+1; n < this.total_unblocked_tiles.length; ++n) {
-        var tile2 = this.total_unblocked_tiles[n];
+    var tiles_having_matches = [];
+    for (var i = 0; i < total_unblocked_tiles.length; ++i) {
+      var tile1 = total_unblocked_tiles[i];
+      var matching_tiles = [];
+      for (var n = i+1; n < total_unblocked_tiles.length; ++n) {
+        var tile2 = total_unblocked_tiles[n];
         if (tile1.is_matching(tile2)) {
           matching_tiles.push(tile2)
         }
       }
       if (matching_tiles.length > 0) {
-        this.tiles_having_matches.push([tile1, matching_tiles])
+        tiles_having_matches.push([tile1, matching_tiles])
       }
     }
 
+    this.boardStatus.set({unblocked_tiles: total_unblocked_tiles})
+    this.boardStatus.set({tiles_having_matches: tiles_having_matches})
     this.set_status();
   },
   set_status: function() {
-    $("#tiles_left").text("" + this.total_tiles.length)
-    if (this.total_tiles.length == 0) {
-      $("#status").text("WINNER!")
-    } else if (this.tiles_having_matches.length == 0) {
-      $("#status").text("LOSER!")
+    var tiles_on_board = this.boardStatus.get('tiles_on_board')
+    var unblocked_tiles = this.boardStatus.get('unblocked_tiles')
+    var tiles_having_matches = this.boardStatus.get('tiles_having_matches')
+    if (tiles_on_board.length == 0) {
+      this.boardStatus.set({status: "WINNER!"})
+      this.boardStatus.stopGame();
+    } else if (tiles_having_matches.length == 0) {
+      this.boardStatus.set({status: "LOSER!"})
+      this.boardStatus.stopGame();
     } else {
-      $("#status").text("Playing... (" + this.tiles_having_matches.length + ")")
+      this.boardStatus.set({status: "Playing..."})
     }
   },
   highlight_tile: function(tile) {

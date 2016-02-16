@@ -6,19 +6,19 @@ app.views.mahjong = Backbone.View.extend({
     'click button .undo': 'undo'
   },
   initialize: function(options) {
-    this.timer = 0;
-    this.delegateEvents();
+    this.boardStatus = new app.models.BoardStatus();
     this.configuration = options.model;
-    this.dealer = new app.models.Dealer($("#mahjongBoard"), this.configuration)
-    this.tileHandler = null;
-
-    this.intervalId = null;     // 
-    this.startTime = null;
+    this.dealer = new app.models.Dealer($("#mahjongBoard"), this.configuration, this.boardStatus)
+    this.boardStatusView = new app.views.boardStatus({ model: this.boardStatus });
+    this.boardControlsView = new app.views.boardControls();
   },
-  render: function(index) {
+  render: function() {
     this.$el.html(this.template({status: 'ok', timer: '00:00'}));
     this.dealer.generate_board();
-    this.delegateEvents();
+    this.boardStatusView.render();
+    this.boardControlsView.render();
+    $('#mahjongBoardStatus').append(this.boardStatusView.el);
+    $('#mahjongBoardControls').append(this.boardControlsView.el);
     return this;
   },
   quit: function(e) {
