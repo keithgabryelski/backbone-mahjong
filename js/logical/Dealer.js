@@ -23,13 +23,14 @@ app.models.Dealer = Backbone.Model.extend({
     this.numRows = this.board.num_rows();
     this.numLayers = this.board.num_layers();
     this.numColumns = this.board.num_columns();
-    this.borderSize = 6;                      // in the css
-    this.perspectiveOffset = this.borderSize;
     this.boardWidth = this.divWidth - (this.boardSideMargin * 2);
-    this.tileWidth = (this.boardWidth / this.numColumns) - this.borderSize;
+    this.tileWidth = (this.boardWidth / this.numColumns);
     this.fontSize = this.tileWidth * 1.10;
+    this.lineHeight = 1.1
 
     this.tileHeight = this.tileWidth * 4 / 3;
+    this.tileDepth = this.tileWidth * 0.10;
+    this.borderSize = this.tileDepth;                      // in the css
 
     this.boardHeight = (this.boardTopBottomMargin * 2) + (this.numRows * this.tileHeight)
   },
@@ -40,8 +41,8 @@ app.models.Dealer = Backbone.Model.extend({
     // the dragon board
     var mahjongBoard = $("#mahjongBoard");
     mahjongBoard.attr({
-      margin: 0, // XXX need to set each side and top individually
-      padding: 0, // XXX this is wrong
+      margin: 0,
+      padding: 0,
     });
 
     this.compute_sizings();
@@ -54,8 +55,8 @@ app.models.Dealer = Backbone.Model.extend({
   generate_background: function(view) {
     $("<div>").attr({
       id: "background",
-      margin: 0, // XXX need to set each side and top individually
-      padding: 0, // XXX this is wrong
+      margin: 0,
+      padding: 0,
     }).css({
       position: "absolute",
       left: 0,
@@ -68,53 +69,110 @@ app.models.Dealer = Backbone.Model.extend({
     }).appendTo(view);
   },
   show_board: function(view, board) {
-    var initial_offset = this.boardSideMargin + (this.numLayers * this.perspectiveOffset);
-
     var positioned_tiles = board.get_all_positioned_tiles()
+    var xyz_tiles = []
     for (var i = 0; i < positioned_tiles.length; ++i) {
       var positioned_tile = positioned_tiles[i];
       var position = positioned_tile.get('position');
-      var tile = positioned_tile.get('tile');
-      var left = initial_offset + (position.get('column') * this.tileWidth) - (this.perspectiveOffset * position.get('layer'));
-      var top = initial_offset + (position.get('row') * this.tileHeight) - (this.perspectiveOffset * position.get('layer'));
-      switch (position.get('position')) {
-      case 1:
-        left += (this.tileWidth/2)
-        top += (this.tileHeight/2)
-        break;
-      case 2:
-        top += (this.tileHeight/2)
-        break;
-      case 4:
-        left += (this.tileWidth/2)
-        break;
-      case 8:
-        break;
-      default:
-        break;
+      var xyz = this.translatePositionToXYOrder(position, this.tileWidth, this.tileHeight, this.tileDepth);
+      xyz['positioned_tile'] = positioned_tile;
+      xyz_tiles.push(xyz)
+    }
+
+    xyz_tiles.sort(function(a, b) {
+      if (a.positioned_tile.get('position').get('layer') == b.positioned_tile.get('position').get('layer')) {
+        return a.order - b.order;
       }
+      return a.positioned_tile.get('position').get('layer') - b.positioned_tile.get('position').get('layer')
+    })
+
+    for (var i = 0; i < xyz_tiles.length; ++i) {
+      var tile_xyz = xyz_tiles[i];
+      var positioned_tile = tile_xyz.positioned_tile;
+      var tile = positioned_tile.get('tile');
       var tile_image = $("<div>").
-          addClass("tile40").
+          addClass("tile").
           addClass("category_" + tile.get('tile_category').get('short_name')).
           addClass("tile_" + tile.get('short_name')).
           css({
-            left: left,
-            top: top,
-            zIndex: position.get('layer') + 1,
+            left: tile_xyz.x + ( positioned_tile.get('position').get('layer') * this.tileDepth),
+            top: tile_xyz.y  - ( positioned_tile.get('position').get('layer') * this.tileDepth),
+            zIndex: (-1 * tile_xyz.x) + tile_xyz.y + (tile_xyz.z * 1000), // 1000 := sloppy
             position: 'absolute',
           }).
           css({
             width: this.tileWidth,
             height: this.tileHeight,
-            fontSize: this.fontSize
+          }).
+          css({
+            fontSize: this.fontSize,
+            lineHeight: this.lineHeight
+          }).
+          css({
+            borderStyle: "solid",
+            borderWidth: "1px 1px " + this.tileDepth + "px " + this.tileDepth + "px",
+            borderRadius: (this.tileWidth / 5) + "px",
+          }).
+          css({
+            boxShadow: "-" + this.tileDepth + "px " + this.tileDepth + "px 10px rgba(0, 0, 0, .5)",
           }).
           html(tile.get('value')).
           appendTo(view)[0];
       if (tile.get('short_name') == 'red_dragon') {
-        $(tile_image).addClass("tilereddragon")
+        $(tile_image).
+          css({
+            fontSize: this.fontSize * 0.80, // hack, why is this codepoint different
+            lineHeight: 1.5                 // hack, why is this codepoint different
+          })
       }
       positioned_tile.set({view: tile_image});
       jQuery.data(tile_image, 'tile', positioned_tile)
     }
   },
+  translatePositionToXYOrder: function(position, tile_width, tile_height, tile_depth) {
+    var row = position.get('row');
+    var column = position.get('column');
+    var layer = position.get('layer');
+
+    var row_increment = 0;
+    var column_increment = 0;
+    switch (position.get('position')) {
+    case 8:
+      row_increment = 0;
+      column_increment = 0;
+      break;
+    case 4:
+      row_increment = 0;
+      column_increment = 0.5;
+      break;
+    case 2:
+      row_increment = 0.5;
+      column_increment = 0;
+      break;
+    case 1:
+      row_increment = 0.5;
+      column_increment = 0.5;
+      break;
+    default:
+      break;
+    }
+    var projectedXY = {
+      x: (column + column_increment) * (tile_width - (tile_depth * 0.5)),
+      y: (row + row_increment) * (tile_height - (tile_depth * 0.5)),
+      z: layer * tile_depth
+    }
+    var order = this.compute_order(
+      projectedXY.x,
+      projectedXY.y,
+      projectedXY.z
+    )
+    return {
+      x: projectedXY.x,
+      y: projectedXY.y,
+      order: order
+    }
+  },
+  compute_order: function(x, y, z) {
+    return (-1 * x) +  y + z;
+  }
 });
