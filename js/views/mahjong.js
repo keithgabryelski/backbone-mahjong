@@ -19,6 +19,7 @@ app.views.mahjong = Backbone.View.extend({
     this.boardControlsView.render();
     $('#mahjongBoardStatus').append(this.boardStatusView.el);
     $('#mahjongBoardControls').append(this.boardControlsView.el);
+      
     return this;
   },
   quit: function(e) {

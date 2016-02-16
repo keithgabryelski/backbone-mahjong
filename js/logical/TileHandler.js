@@ -127,7 +127,9 @@ app.models.TileHandler = Backbone.Model.extend({
       (!this.is_blocked_from_the_left(positioned_tile) || !this.is_blocked_from_the_right(positioned_tile))
   },
   remove_tile: function(positioned_tile) {
-    $(positioned_tile.get('view')).remove();
+    var tile = $(positioned_tile.get('view')).remove();
+    tile.css({position: "static"})
+    tile.appendTo($("<td>").prependTo($('tr#scroll')))
     this.board.remove_tile(positioned_tile.get('position'))
   },
   make_tile_clickable: function(positioned_tile) {
@@ -179,13 +181,13 @@ app.models.TileHandler = Backbone.Model.extend({
     var unblocked_tiles = this.boardStatus.get('unblocked_tiles')
     var tiles_having_matches = this.boardStatus.get('tiles_having_matches')
     if (tiles_on_board.length == 0) {
-      this.boardStatus.set({status: "WINNER!"})
+      this.boardStatus.set({status: "WINNER!"});
       this.boardStatus.stopGame();
     } else if (tiles_having_matches.length == 0) {
-      this.boardStatus.set({status: "LOSER!"})
+      this.boardStatus.set({status: "LOSER!"});
       this.boardStatus.stopGame();
     } else {
-      this.boardStatus.set({status: "Playing..."})
+      this.boardStatus.set({status: "Playing..."});
     }
   },
   highlight_tile: function(tile) {

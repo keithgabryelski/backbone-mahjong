@@ -27,13 +27,13 @@ app.models.Dealer = Backbone.Model.extend({
     this.boardWidth = this.divWidth - (this.boardSideMargin * 2);
     this.tileWidth = (this.boardWidth / this.numColumns);
     this.fontSize = this.tileWidth * 1.10;
-    this.lineHeight = 1.1
+    this.lineHeight = 1.1;
 
     this.tileHeight = this.tileWidth * 4 / 3;
     this.tileDepth = this.tileWidth * 0.10;
     this.borderSize = this.tileDepth;                      // in the css
 
-    this.boardHeight = (this.boardTopBottomMargin * 2) + (this.numRows * this.tileHeight)
+    this.boardHeight = (this.boardTopBottomMargin * 2) + (this.numRows * this.tileHeight);
   },
   position_tile: function(positioned_tile) {
     // Position, Tile? returns PositionedTile?
