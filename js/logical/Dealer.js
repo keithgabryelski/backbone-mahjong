@@ -18,8 +18,8 @@ app.models.Dealer = Backbone.Model.extend({
   compute_sizings: function() {
     this.divWidth = $('div#mahjongBoard').innerWidth();
 
-    this.boardSideMargin = 0;
-    this.boardTopBottomMargin = 0;
+    this.boardSideMargin = 16;
+    this.boardTopBottomMargin = 16;
 
     this.numRows = this.board.num_rows();
     this.numLayers = this.board.num_layers();
@@ -60,6 +60,7 @@ app.models.Dealer = Backbone.Model.extend({
       margin: 0,
       padding: 0,
     }).css({
+      backgroundImage: "url('images/backgrounds/wood.jpg')",
       position: "absolute",
       left: 0,
       top: 0,
@@ -97,8 +98,8 @@ app.models.Dealer = Backbone.Model.extend({
           addClass("category_" + tile.get('tile_category').get('short_name')).
           addClass("tile_" + tile.get('short_name')).
           css({
-            left: tile_xyz.x + ( positioned_tile.get('position').get('layer') * this.tileDepth),
-            top: tile_xyz.y  - ( positioned_tile.get('position').get('layer') * this.tileDepth),
+            left: tile_xyz.x + this.boardSideMargin + ( positioned_tile.get('position').get('layer') * this.tileDepth),
+            top: tile_xyz.y + this.boardTopBottomMargin - ( positioned_tile.get('position').get('layer') * this.tileDepth),
             zIndex: (-1 * tile_xyz.x) + tile_xyz.y + (tile_xyz.z * 1000), // 1000 := sloppy
             position: 'absolute',
           }).
