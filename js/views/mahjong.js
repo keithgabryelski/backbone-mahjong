@@ -47,7 +47,6 @@ app.views.mahjong = Backbone.View.extend({
     Backbone.View.prototype.remove.call(this);
   },
   onResize: function () {
-    this.dealer.clearBoard();
-    this.dealer.generate_board();
+    this.dealer.refreshBoard();
   },
 });

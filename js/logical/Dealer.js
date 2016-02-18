@@ -54,6 +54,11 @@ app.models.Dealer = Backbone.Model.extend({
     this.tileHandler.assess_clickability();
     this.boardStatus.startGame();
   },
+  refreshBoard: function() {
+    this.clearBoard();
+    this.generate_board();
+    this.tileHandler.assess_clickability();
+  },
   generate_background: function(view) {
     var div = $('div#background')
     if (div.length == 0) {
