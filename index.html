@@ -49,11 +49,15 @@
   </script>
 
   <script type="text/template" id="tpl-board-status">
-  <div>
-  <div>Status: <span id="status"><%= status %></span></div>
-  <div>Matches Available: <span id="matches_available"><%= tiles_having_matches.length %></span></div>
-  <div>Tiles Left: <span id="tiles_left"><%= tiles_on_board.length %></span></div>
-  <div>Timer: <span id="timer"><%= timer > (60 * 60) ? (new Date(timer * 1000)).toUTCString().match(/(\d\d:\d\d:\d\d)/)[0] : (new Date(timer * 1000)).toUTCString().match(/\d\d:(\d\d:\d\d)/)[1] %></span></div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= status %></h3>
+    </div>
+    <div class="panel-body">
+      <div>Matches Available: <span id="matches_available"><%= tiles_having_matches.length %></span></div>
+      <div>Tiles Left: <span id="tiles_left"><%= tiles_on_board.length %></span></div>
+      <div>Timer: <span id="timer"><%= timer > (60 * 60) ? (new Date(timer * 1000)).toUTCString().match(/(\d\d:\d\d:\d\d)/)[0] : (new Date(timer * 1000)).toUTCString().match(/\d\d:(\d\d:\d\d)/)[1] %></span></div>
+    </div>
   </div>
   </script>
 
@@ -69,7 +73,7 @@
   <script type="text/template" id="tpl-mahjong">
   <div class="row">
     <div class="col-sm-3">
-      <div class="panel panel-default" id="mahjongBoardStatus"></div>
+      <div id="mahjongBoardStatus"></div>
     </div>
     <div  class="col-sm-9">
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">

@@ -82,7 +82,7 @@ table#history_with_scrollbar {
     display: block;
     overflow-x: scroll;
     overflow-y: hidden;
-    height: 80px;
+    height: 90px;
 }
 
 #collapseOne {
