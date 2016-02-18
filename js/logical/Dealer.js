@@ -26,7 +26,7 @@ app.models.Dealer = Backbone.Model.extend({
     this.numRows = this.board.num_rows();
     this.numLayers = this.board.num_layers();
     this.numColumns = this.board.num_columns();
-    this.boardWidth = this.divWidth - (this.boardSideMargin * 2);
+    this.boardWidth = this.divWidth;
     this.tileWidth = (this.boardWidth / this.numColumns);
     this.fontSize = this.tileWidth * 1.10;
     this.lineHeight = 1.1;
@@ -63,9 +63,6 @@ app.models.Dealer = Backbone.Model.extend({
       padding: 0,
     }).css({
       backgroundImage: "url('images/backgrounds/wood.jpg')",
-      position: "absolute",
-      left: 0,
-      top: 0,
       zIndex: 0,
       minHeight: this.boardHeight,
       minWidth:  this.boardWidth,
