@@ -7,13 +7,18 @@
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
  </head>
  <body>
-  <div class="container">
-   <div id="content"></div>
+  <div id="content" class="container-fluid">
   </div>
 
   <!-- Templates -->
   <script type="text/template" id="tpl-splash">
-  <div id="splashscreen" style="font-size: 512px">&#x1F000;</div>
+  <div id="splashscreen" class="jumbotron row">
+    <div class="col-sm-6">
+      <h1>Mahjong</h1>
+      <h2>by <a href="https://github.com/keithgabryelski">keithgabryelski</a></h2>
+    </div>
+    <div class="col-sm-6" style="vertical-align: top; font-size: 256px;line-height: 1.0;">&#x1F000;</div>
+  </div>
   </script>
 
   <script type="text/template" id="tpl-configuration">
@@ -62,23 +67,28 @@
   </script>
 
   <script type="text/template" id="tpl-mahjong">
-  <div id="mahjongBoardStatus"></div>
-
-  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab" id="headingOne">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-            History
-          </a>
-        </h4>
-      </div>
-      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-        <div class="panel-body">
-          <div class="row-fluid">
-            <div class="col-lg-12 col-md-10 ">
-              <div class="cover-container">
-  <div id="mahjongBoardHistory"></div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="panel panel-default" id="mahjongBoardStatus"></div>
+    </div>
+    <div  class="col-sm-9">
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                History
+              </a>
+            </h4>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+              <div class="row-fluid">
+                <div class="col-lg-12 col-md-10 ">
+                  <div class="cover-container">
+                    <div id="mahjongBoardHistory"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -86,10 +96,13 @@
       </div>
     </div>
   </div>
-
-  <div id="mahjongBoardControls"></div>
-  <div class="panel panel-default">
-  <div id="mahjongBoard" class="panel-body" style="position: relative; margin:0; padding: 0"></div>
+  <div class="row">
+    <div id="mahjongBoardControls"></div>
+  </div>
+  <div class="row">
+    <div class="panel panel-default">
+      <div id="mahjongBoard" class="panel-body" style="position: relative; margin:0; padding: 0"></div>
+    </div>
   </div>
   </script>
 

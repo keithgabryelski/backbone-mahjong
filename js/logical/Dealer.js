@@ -43,32 +43,34 @@ app.models.Dealer = Backbone.Model.extend({
   generate_board: function() {
     // the dragon board
     var mahjongBoard = $("#mahjongBoard");
-    mahjongBoard.attr({
-      margin: 0,
-      padding: 0,
-    });
 
     this.compute_sizings();
 
     this.tileHandler = new app.models.TileHandler(this.board, this.boardStatus);
     this.generate_background(mahjongBoard[0]);
     this.displayBoard(mahjongBoard[0], this.board);
+  },
+  startGame: function() {
     this.tileHandler.assess_clickability();
     this.boardStatus.startGame();
   },
   generate_background: function(view) {
-    $("<div>").attr({
-      id: "background",
-      margin: 0,
-      padding: 0,
-    }).css({
+    var div = $('div#background')
+    if (div.length == 0) {
+      div = $("<div>").attr({
+        id: "background",
+        margin: 0,
+        padding: 0,
+      }).appendTo(view);
+    }
+    div.css({
       backgroundImage: "url('images/backgrounds/wood.jpg')",
       zIndex: 0,
       minHeight: this.boardHeight,
       minWidth:  this.boardWidth,
       maxHeight: this.boardHeight,
       maxWidth:  this.boardWidth
-    }).appendTo(view);
+    })
   },
   sortForSpriteRendering: function(a, b) {
     if (a.get('position').get('layer') == b.get('position').get('layer')) {
@@ -94,8 +96,8 @@ app.models.Dealer = Backbone.Model.extend({
       this.displayTile(mahjong_div, positioned_tiles[i]);
     }
   },
-  clearBoard: function(board) {
-    var positioned_tiles = this.getSortedPositionedTiles(board);
+  clearBoard: function() {
+    var positioned_tiles = this.getSortedPositionedTiles(this.board);
 
     for (var i = 0; i < positioned_tiles.length; ++i) {
       this.tileHandler.remove_tile_from_board(positioned_tiles[i]);
@@ -195,7 +197,7 @@ app.models.Dealer = Backbone.Model.extend({
     }
 
     // remove everything from the board and from the view
-    this.clearBoard(this.board);
+    this.clearBoard();
     this.tileHandler.clear_hint();
 
     // remove tile from historical area

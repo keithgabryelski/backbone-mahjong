@@ -12,9 +12,10 @@ app.views.mahjong = Backbone.View.extend({
     this.boardStatusView = new app.views.boardStatus({ model: this.boardStatus });
     this.boardHistoryView = new app.views.boardHistory({ collection: this.boardStatus.get('history') });
     this.boardControlsView = new app.views.boardControls();
+    $(window).on('resize.resizeview', this.onResize.bind(this));
   },
   render: function() {
-    this.$el.html(this.template({status: 'ok', timer: '00:00'})); // XXX remove these settings
+    this.$el.html(this.template());
     this.dealer.generate_board();
     this.boardStatusView.render();
     this.boardHistoryView.render();
@@ -22,7 +23,7 @@ app.views.mahjong = Backbone.View.extend({
     $('#mahjongBoardStatus').append(this.boardStatusView.el);
     $('#mahjongBoardHistory').append(this.boardHistoryView.el);
     $('#mahjongBoardControls').append(this.boardControlsView.el);
-      
+    this.dealer.startGame();
     return this;
   },
   quit: function(e) {
@@ -40,5 +41,13 @@ app.views.mahjong = Backbone.View.extend({
     if (this.dealer) {
       this.dealer.undo();
     }
+  },
+  remove: function() {
+    $(window).off('resize.resizeview');
+    Backbone.View.prototype.remove.call(this);
+  },
+  onResize: function () {
+    this.dealer.clearBoard();
+    this.dealer.generate_board();
   },
 });
