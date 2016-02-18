@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/flick/jquery-ui.css" />
+  <link href="css/jquery.jspanel.min.css" rel="stylesheet">
  </head>
  <body>
   <div id="content" class="container-fluid" style="height: 100%"></div>
@@ -34,10 +36,6 @@
   </form>
   </script>
 
-  <script type="text/template" id="tpl-play-historical-item">
-  <div class="cover-item" style="background-image: url('https://d1nexqccu6ll7z.cloudfront.net/_images/s-14-197-61462CCC-uk.png')"></div>
-  </script>
-
   <script type="text/template" id="tpl-board-history">
                 <table id="history_with_scrollbar">
                   <tr id="scroll">
@@ -51,15 +49,11 @@
                 </table>
   </script>
 
-  <script type="text/template" id="tpl-board-history-tile-pair">
-  </script>
 
   <script type="text/template" id="tpl-board-status">
   <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><%= status %></h3>
-    </div>
     <div class="panel-body">
+      <h3 class="panel-title"><%= status %></h3>
       <div>Matches Available: <span id="matches_available"><%= tiles_having_matches.length %></span></div>
       <div>Tiles Left: <span id="tiles_left"><%= tiles_on_board.length %></span></div>
       <div>Timer: <span id="timer"><%= timer > (60 * 60) ? (new Date(timer * 1000)).toUTCString().match(/(\d\d:\d\d:\d\d)/)[0] : (new Date(timer * 1000)).toUTCString().match(/\d\d:(\d\d:\d\d)/)[1] %></span></div>
@@ -76,10 +70,22 @@
   </script>
 
   <script type="text/template" id="tpl-mahjong">
-  <div class="row">
-    <div class="col-sm-3">
-      <div id="mahjongBoardStatus"></div>
+  <div class="row" style="height: 100%;">
+    <div class="panel panel-default" style="height: 100%">
+      <div id="mahjongBoard" class="panel-body" style="position: relative; margin:0; padding: 0; height: 100%;"></div>
     </div>
+  </div>
+  </script>
+
+  <!-- unused -->
+
+  <script type="text/template" id="tpl-play-historical-item">
+  <div class="cover-item" style="background-image: url('https://d1nexqccu6ll7z.cloudfront.net/_images/s-14-197-61462CCC-uk.png')"></div>
+  </script>
+  <script type="text/template" id="tpl-board-history-tile-pair">
+  <div class="row">
+    <div id="mahjongBoardControls"></div>
+  </div>
     <div  class="col-sm-9">
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
         <div class="panel panel-default">
@@ -104,23 +110,17 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div id="mahjongBoardControls"></div>
-  </div>
-  <div class="row" style="height: 100%">
-    <div class="panel panel-default" style="height: 100%">
-      <div id="mahjongBoard" class="panel-body" style="position: relative; margin:0; padding: 0; height: 100%;"></div>
-    </div>
-  </div>
   </script>
 
   <!-- Templates -->
 
-  <script src="js/vendor/jquery-1.10.2.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script src="js/vendor/underscore.js"></script>
   <script src="js/vendor/backbone.js"></script>
+  <script src="js/vendor/jquery.jspanel.min.js"></script>
 
   <script src="js/App.js"></script>
 

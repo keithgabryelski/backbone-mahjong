@@ -22,9 +22,31 @@ app.views.mahjong = Backbone.View.extend({
     this.boardStatusView.render();
     this.boardHistoryView.render();
     this.boardControlsView.render();
-    $('#mahjongBoardStatus').append(this.boardStatusView.el);
-    $('#mahjongBoardHistory').append(this.boardHistoryView.el);
-    $('#mahjongBoardControls').append(this.boardControlsView.el);
+    this.boardStatusPanel = $.jsPanel({
+      title:     'Status',
+      size:     { height: "auto", width: 200 },
+      position: 'bottom right',
+      content:  this.boardStatusView.el,
+      resizable: "disabled",
+      controls:  { close: "disable", maximize: "disable" },
+    });
+    this.boardHistoryPanel = $.jsPanel({
+      title:     'History',
+      size:     { height: "auto", width: this.dealer.boardWidth },
+      position: 'bottom left',
+      content:  this.boardHistoryView.el,
+      resizable: "disabled",
+      controls:  { smallify: "disable", close: "disable", maximize: "disable" },
+      panelstatus: "minimized"
+    });
+    this.boardControlsPanel = $.jsPanel({
+      size:     { width:  "auto", height: "auto" },
+      resizable: "disabled",
+      position: 'top left',
+      removeHeader: true,
+      draggable: {handle: 'div.jsPanel-content'},
+      content:       this.boardControlsView.el
+    });
     this.dealer.startGame();
     return this;
   },

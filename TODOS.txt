@@ -1,0 +1,41 @@
+ugly:
+ why is &#1f004; different than other code points (size and such)
+ why is line-height needed
+ what is the correct way to calculate font size
+ what is the font height vs width?
+
+bugs:
+ splash icon is not fitted on top of icon bottom correctly
+
+features:
+ configuration should be cookied preferences so they save across refresh
+
+ mahjong board should be full width/height 
+  overlay controls
+  slide in history
+  overlay/insert required status (timer)
+  iconified advanced status
+  modal for win/lose
+
+ add audio for moves, add mute button
+
+ use bootstrap icons for controls
+
+ configuration should be prettier (images for selects)
+
+ implement more board layouts
+
+wishes:
+ resize tiles as tiles are removed
+
+ implement play tree examination
+   is this board winnable
+   is it currently winnable
+
+ implement: ensure winnable starting board
+
+ restructure play board to be entirely backbone
+ 
+ implement tiles with colored bottoms
+
+ implement other tile sets (gnome png, self owned colorized png)
