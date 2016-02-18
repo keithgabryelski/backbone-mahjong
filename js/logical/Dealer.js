@@ -18,23 +18,42 @@ app.models.Dealer = Backbone.Model.extend({
   },
   compute_sizings: function() {
     this.divWidth = $('div#mahjongBoard').innerWidth();
-
-    this.boardSideMargin = 16;
-    this.boardTopBottomMargin = 16*4;
+    this.divHeight = $('div#mahjongBoard').innerHeight();
 
     this.numRows = this.board.num_rows();
     this.numLayers = this.board.num_layers();
     this.numColumns = this.board.num_columns();
+
+    this.horizontalMarginInColumns = 2;
+    this.verticalMarginInColumns = 2;
+
     this.boardWidth = this.divWidth;
-    this.tileWidth = (this.boardWidth / this.numColumns);
-    this.fontSize = this.tileWidth * 1.10;
-    this.lineHeight = 1.1;
+    this.boardHeight = this.divHeight;
 
-    this.tileHeight = this.tileWidth * 4 / 3;
+    this.tileWidth = this.boardWidth / (this.numColumns + this.horizontalMarginInColumns);
+    this.tileHeight = this.tileWidth * 4 / 3; // this seems about right
+
+    // do the tiles vertically?
+    if ((this.tileHeight * this.numRows) > this.boardHeight) {
+      // fit to vertical size then
+      this.tileHeight = this.boardHeight / (this.numColumns + this.verticalMarginInColumns);
+      this.tileWidth = this.tileHeight * 3 / 4;
+    }
+
+    this.boardSideMargin = this.tileWidth * this.horizontalMarginInColumns / 2;
+    this.boardTopBottomMargin = this.tileHeight * this.verticalMarginInColumns / 2;
+
+    /// this.boardWidth = this.divWidth;
+    /// this.tileWidth = (this.boardWidth / this.numColumns);
+    this.fontSize = this.tileWidth * 1.10; // this seems correct except for &#x1f004;
+    this.lineHeight = 1.1;                 // this seems correct
+
+    /// this.tileHeight = this.tileWidth * 4 / 3;
+
     this.tileDepth = this.tileWidth * 0.10;
-    this.borderSize = this.tileDepth;                      // in the css
 
-    this.boardHeight = (this.boardTopBottomMargin * 2) + (this.numRows * this.tileHeight);
+    ////// not used: this.borderSize = this.tileDepth;                      // in the css
+    /// this.boardHeight = (this.boardTopBottomMargin * 2) + (this.numRows * this.tileHeight);
   },
   position_tile: function(positioned_tile) {
     // Position, Tile? returns PositionedTile?

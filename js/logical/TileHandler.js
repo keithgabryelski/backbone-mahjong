@@ -82,7 +82,7 @@ app.models.TileHandler = Backbone.Model.extend({
       break;
     case 1:
       search.push([l, r,   c-1, 4+1])
-      search.push([l, r+1, c-1,   1])
+      search.push([l, r+1, c-1,   4])
       break;
     }
 

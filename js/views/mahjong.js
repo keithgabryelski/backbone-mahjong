@@ -1,4 +1,5 @@
 app.views.mahjong = Backbone.View.extend({
+  tagName: 'div',
   template: _.template($("#tpl-mahjong").html()),
   events: {
     'click button.quit': 'quit',
@@ -15,6 +16,7 @@ app.views.mahjong = Backbone.View.extend({
     $(window).on('resize.resizeview', this.onResize.bind(this));
   },
   render: function() {
+    this.$el.css({height: "100%"})
     this.$el.html(this.template());
     this.dealer.generate_board();
     this.boardStatusView.render();
