@@ -43,17 +43,13 @@ app.models.Dealer = Backbone.Model.extend({
     this.boardSideMargin = this.tileWidth * this.horizontalMarginInColumns / 2;
     this.boardTopBottomMargin = this.tileHeight * this.verticalMarginInColumns / 2;
 
-    /// this.boardWidth = this.divWidth;
-    /// this.tileWidth = (this.boardWidth / this.numColumns);
     this.fontSize = this.tileWidth * 1.10; // this seems correct except for &#x1f004;
     this.lineHeight = 1.1;                 // this seems correct
 
-    /// this.tileHeight = this.tileWidth * 4 / 3;
-
     this.tileDepth = this.tileWidth * 0.10;
 
-    ////// not used: this.borderSize = this.tileDepth;                      // in the css
-    /// this.boardHeight = (this.boardTopBottomMargin * 2) + (this.numRows * this.tileHeight);
+    this.left = (this.boardWidth - (this.boardSideMargin + (this.tileWidth * this.numColumns) + this.boardSideMargin)) / 2;
+    this.top = (this.boardHeight - (this.boardTopBottomMargin + (this.tileHeight * this.numRows) + this.boardTopBottomMargin)) / 2;
   },
   position_tile: function(positioned_tile) {
     // Position, Tile? returns PositionedTile?
@@ -136,8 +132,8 @@ app.models.Dealer = Backbone.Model.extend({
         addClass("tile_" + tile.get('short_name')).
         addClass("on_board").
         css({
-          left: xyz.x + this.boardSideMargin + ( positioned_tile.get('position').get('layer') * this.tileDepth),
-          top: xyz.y + this.boardTopBottomMargin - ( positioned_tile.get('position').get('layer') * this.tileDepth),
+          left: xyz.x + this.boardSideMargin + (positioned_tile.get('position').get('layer') * this.tileDepth),
+          top: xyz.y + this.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDepth),
           zIndex: (-1 * xyz.x) + xyz.y + (xyz.z * 1000), // 1000 := sloppy
           position: 'absolute',
         }).
