@@ -14,14 +14,13 @@ app.models.Dealer = Backbone.Model.extend({
     return deck;
   },
   build_board: function() {
-    var board_layout = app.boardLayouts.findWhere({ID: 1})
-    return this.deck.deal(board_layout);
+    return this.deck.deal(this.configuration.board_layout());
   },
   compute_sizings: function() {
     this.divWidth = $('div#mahjongBoard').innerWidth();
 
     this.boardSideMargin = 16;
-    this.boardTopBottomMargin = 16;
+    this.boardTopBottomMargin = 16*4;
 
     this.numRows = this.board.num_rows();
     this.numLayers = this.board.num_layers();

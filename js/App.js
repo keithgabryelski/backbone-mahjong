@@ -54,6 +54,9 @@ var app = (function() {
       if (!this.mahjongView) {
 	this.mahjongView = new api.views.mahjong({
 	  model: api.configuration
+	}).on("quit", function() {
+	  api.router.navigate("configuration");
+          window.location.reload();
 	})
       }
       return this.mahjongView;

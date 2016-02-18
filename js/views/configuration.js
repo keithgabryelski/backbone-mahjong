@@ -1,7 +1,7 @@
 app.views.configuration = Backbone.View.extend({
   template: _.template($("#tpl-configuration").html()),
   events: {
-    'click button': 'play'
+    'submit': 'play'
   },
   initialize: function() {
     this.render();
@@ -13,6 +13,8 @@ app.views.configuration = Backbone.View.extend({
   },
   play: function(e) {
     e.preventDefault();
+    var board_layout_id = parseInt(this.$('#layout').val());
+    this.model.set({ board_layout_id: board_layout_id})
     this.trigger("play");
   }
 });
