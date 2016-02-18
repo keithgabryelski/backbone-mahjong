@@ -35,7 +35,8 @@ app.models.Board = Backbone.Model.extend({
   remove_tile: function(position) {
     this.get('positioned_tiles')[position.get('layer')][position.get('row')][position.get('column')] = null;
   },
-  tile_move: function(tile1, tile2) {
-    this.history.push[tile1, tile2]
-  }
+  add_tile: function(positioned_tile) {
+    var position = positioned_tile.get('position');
+    this.get('positioned_tiles')[position.get('layer')][position.get('row')][position.get('column')] = positioned_tile;
+  },
 });

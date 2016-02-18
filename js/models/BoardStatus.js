@@ -4,6 +4,7 @@ app.models.BoardStatus = Backbone.Model.extend({
     tiles_on_board: [],
     unblocked_tiles: [],
     tiles_having_matches: [],
+    history: new app.models.TilePairs(),
     timer: 0,
     gameTimer: null
   },

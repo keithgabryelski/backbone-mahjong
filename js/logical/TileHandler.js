@@ -125,11 +125,13 @@ app.models.TileHandler = Backbone.Model.extend({
       (!this.is_blocked_from_the_left(positioned_tile) || !this.is_blocked_from_the_right(positioned_tile))
   },
   remove_tiles: function(positioned_tile1, positioned_tile2) {
-    $("<td>").html("&nbsp;").prependTo($('tr#scroll'));
     this.remove_tile(positioned_tile2);
     this.remove_tile(positioned_tile1);
+    this.boardStatus.get('history').unshift(
+      new app.models.TilePair({tile1: positioned_tile1, tile2: positioned_tile2})
+    );
   },
-  remove_tile: function(positioned_tile) {
+  remove_tile_from_board: function(positioned_tile) {
     this.make_tile_unclickable(positioned_tile);
     $(positioned_tile.get('view')).
       addClass('highlighted').
@@ -137,8 +139,11 @@ app.models.TileHandler = Backbone.Model.extend({
       removeClass('hinted').
       addClass('off_board');
     var tile = $(positioned_tile.get('view')).remove();
+    return tile;
+  },
+  remove_tile: function(positioned_tile) {
+    var tile = this.remove_tile_from_board(positioned_tile);
     tile.css({position: "static"}).css({zIndex: 1, boxShadow: ""})
-    tile.appendTo($("<td>").prependTo($('tr#scroll')))
     this.board.remove_tile(positioned_tile.get('position'))
   },
   make_tile_clickable: function(positioned_tile) {
@@ -278,5 +283,5 @@ app.models.TileHandler = Backbone.Model.extend({
       }
     }
     this.hint_index = null;
-  }
+  },
 });

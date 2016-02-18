@@ -1,9 +1,10 @@
 app.models.Dealer = Backbone.Model.extend({
-  initialize: function(board_div, configuration, board_status) {
+  initialize: function(board_div, configuration, board_status, board_history) {
     this.boardDiv = board_div;
     this.configuration = configuration;
     this.deck = this.get_shuffled_deck();
     this.board = this.build_board();
+    this.board.set({history: board_history});
     this.boardStatus = board_status;
     this.tileHandler = null;
   },
@@ -51,7 +52,7 @@ app.models.Dealer = Backbone.Model.extend({
 
     this.tileHandler = new app.models.TileHandler(this.board, this.boardStatus);
     this.generate_background(mahjongBoard[0]);
-    this.show_board(mahjongBoard[0], this.board);
+    this.displayBoard(mahjongBoard[0], this.board);
     this.tileHandler.assess_clickability();
     this.boardStatus.startGame();
   },
@@ -72,64 +73,75 @@ app.models.Dealer = Backbone.Model.extend({
       maxWidth:  this.boardWidth
     }).appendTo(view);
   },
-  show_board: function(view, board) {
+  sortForSpriteRendering: function(a, b) {
+    if (a.get('position').get('layer') == b.get('position').get('layer')) {
+      return a.get('xyz').order - b.get('xyz').order;
+    }
+    return a.get('position').get('layer') - b.get('position').get('layer');
+  },
+  getSortedPositionedTiles: function(board) {
     var positioned_tiles = board.get_all_positioned_tiles()
-    var xyz_tiles = []
     for (var i = 0; i < positioned_tiles.length; ++i) {
       var positioned_tile = positioned_tiles[i];
       var position = positioned_tile.get('position');
       var xyz = this.translatePositionToXYOrder(position, this.tileWidth, this.tileHeight, this.tileDepth);
-      xyz['positioned_tile'] = positioned_tile;
-      xyz_tiles.push(xyz)
+      positioned_tile.set({xyz: xyz});
     }
+    positioned_tiles.sort(this.sortForSpriteRendering)
+    return positioned_tiles;
+  },
+  displayBoard: function(mahjong_div, board) {
+    var positioned_tiles = this.getSortedPositionedTiles(board);
 
-    xyz_tiles.sort(function(a, b) {
-      if (a.positioned_tile.get('position').get('layer') == b.positioned_tile.get('position').get('layer')) {
-        return a.order - b.order;
-      }
-      return a.positioned_tile.get('position').get('layer') - b.positioned_tile.get('position').get('layer')
-    })
-
-    for (var i = 0; i < xyz_tiles.length; ++i) {
-      var tile_xyz = xyz_tiles[i];
-      var positioned_tile = tile_xyz.positioned_tile;
-      var tile = positioned_tile.get('tile');
-      var tile_image = $("<div>").
-          addClass("tile").
-          addClass("category_" + tile.get('tile_category').get('short_name')).
-          addClass("tile_" + tile.get('short_name')).
-          addClass("on_board").
-          css({
-            left: tile_xyz.x + this.boardSideMargin + ( positioned_tile.get('position').get('layer') * this.tileDepth),
-            top: tile_xyz.y + this.boardTopBottomMargin - ( positioned_tile.get('position').get('layer') * this.tileDepth),
-            zIndex: (-1 * tile_xyz.x) + tile_xyz.y + (tile_xyz.z * 1000), // 1000 := sloppy
-            position: 'absolute',
-          }).
-          css({
-            width: this.tileWidth,
-            height: this.tileHeight,
-          }).
-          css({
-            fontSize: this.fontSize,
-            lineHeight: this.lineHeight
-          }).
-          css({
-            borderStyle: "solid",
-            borderWidth: "1px 1px " + this.tileDepth + "px " + this.tileDepth + "px",
-            borderRadius: (this.tileWidth / 5) + "px",
-          }).
-          html(tile.get('value')).
-          appendTo(view)[0];
-      if (tile.get('short_name') == 'red_dragon') {
-        $(tile_image).
-          css({
-            fontSize: this.fontSize * 0.80, // hack, why is this codepoint different
-            lineHeight: 1.5                 // hack, why is this codepoint different
-          })
-      }
-      positioned_tile.set({view: tile_image});
-      jQuery.data(tile_image, 'tile', positioned_tile)
+    for (var i = 0; i < positioned_tiles.length; ++i) {
+      this.displayTile(mahjong_div, positioned_tiles[i]);
     }
+  },
+  clearBoard: function(board) {
+    var positioned_tiles = this.getSortedPositionedTiles(board);
+
+    for (var i = 0; i < positioned_tiles.length; ++i) {
+      this.tileHandler.remove_tile_from_board(positioned_tiles[i]);
+    }
+  },
+  displayTile: function(mahjong_div, positioned_tile) {
+    var tile = positioned_tile.get('tile');
+    var xyz = positioned_tile.get('xyz');
+    var tile_image = $("<div>").
+        addClass("tile").
+        addClass("category_" + tile.get('tile_category').get('short_name')).
+        addClass("tile_" + tile.get('short_name')).
+        addClass("on_board").
+        css({
+          left: xyz.x + this.boardSideMargin + ( positioned_tile.get('position').get('layer') * this.tileDepth),
+          top: xyz.y + this.boardTopBottomMargin - ( positioned_tile.get('position').get('layer') * this.tileDepth),
+          zIndex: (-1 * xyz.x) + xyz.y + (xyz.z * 1000), // 1000 := sloppy
+          position: 'absolute',
+        }).
+        css({
+          width: this.tileWidth,
+          height: this.tileHeight,
+        }).
+        css({
+          fontSize: this.fontSize,
+          lineHeight: this.lineHeight
+        }).
+        css({
+          borderStyle: "solid",
+          borderWidth: "1px 1px " + this.tileDepth + "px " + this.tileDepth + "px",
+          borderRadius: (this.tileWidth / 5) + "px",
+        }).
+        html(tile.get('value')).
+        appendTo(mahjong_div)[0];
+    if (tile.get('short_name') == 'red_dragon') {
+      $(tile_image).
+        css({
+          fontSize: this.fontSize * 0.80, // hack, why is this codepoint different
+          lineHeight: 1.5                 // hack, why is this codepoint different
+        })
+    }
+    positioned_tile.set({view: tile_image});
+    jQuery.data(tile_image, 'tile', positioned_tile);
   },
   translatePositionToXYOrder: function(position, tile_width, tile_height, tile_depth) {
     var row = position.get('row');
@@ -177,8 +189,29 @@ app.models.Dealer = Backbone.Model.extend({
     return (-1 * x) +  y + z;
   },
   show_hint: function() {
-    if (this.tileHandler != null) {
-      this.tileHandler.show_hint();
+    this.tileHandler.show_hint();
+  },
+  undo: function() {
+    if (this.boardStatus.get('history').length == 0) {
+      // BONK -- nothing to undo
+      return;
     }
+
+    // remove everything from the board and from the view
+    this.clearBoard(this.board);
+    this.tileHandler.clear_hint();
+
+    // remove tile from historical area
+    var tile_pair = this.boardStatus.get('history').shift();
+
+    // add historical tile pair to board
+    this.board.add_tile(tile_pair.get('tile1'));
+    this.board.add_tile(tile_pair.get('tile2'));
+
+    // re-write the board
+    var mahjongBoard = $("#mahjongBoard");
+    this.displayBoard(mahjongBoard[0], this.board);
+
+    this.tileHandler.assess_clickability();
   }
 });

@@ -27,9 +27,38 @@
   <div class="cover-item" style="background-image: url('https://d1nexqccu6ll7z.cloudfront.net/_images/s-14-197-61462CCC-uk.png')"></div>
   </script>
 
-  <script type="text/template" id="tpl-play-history">
-  </ul>
-
+  <script type="text/template" id="tpl-board-history">
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            History
+          </a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+          <div class="row-fluid">
+            <div class="col-lg-12 col-md-10 ">
+              <div class="cover-container">
+                <table id="history_with_scrollbar">
+                  <tr id="scroll">
+                    <% _.each(collection, function(tile_pair, index, collection) { %>
+                    <% tile_pair = collection.at(index); %>
+                    <td><%= tile_pair.get('tile1').get('view').outerHTML %></td>
+                    <td><%= tile_pair.get('tile2').get('view').outerHTML %></td>
+                    <td>&nbsp;</td>
+                    <% }); %>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   </script>
 
   <script type="text/template" id="tpl-board-status">
@@ -52,32 +81,7 @@
 
   <script type="text/template" id="tpl-mahjong">
   <div id="mahjongBoardStatus"></div>
-  <div id="mahjongBoardHistory">
-  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab" id="headingOne">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-            History
-          </a>
-        </h4>
-      </div>
-      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-        <div class="panel-body">
-          <div class="row-fluid">
-            <div class="col-lg-12 col-md-10 ">
-              <div class="cover-container">
-                <!-- START PANEL -->
-                <table id="history_with_scrollbar"><tr id="scroll"></tr></table>
-                <!-- END PANEL -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <div id="mahjongBoardHistory"></div>
   <div id="mahjongBoardControls"></div>
   <div id="mahjongBoard" style="position: relative;" width="1024" height="1024"></div>
   </script>
@@ -102,7 +106,6 @@
   <script src="js/models/Position.js"></script>
   <script src="js/models/PositionedTile.js"></script>
   <script src="js/models/TilePair.js"></script>
-  <script src="js/models/BoardStatus.js"></script>
 
   <script src="js/collections/Types.js"></script>
   <script src="js/collections/BoardLayouts.js"></script>
@@ -112,6 +115,8 @@
   <script src="js/collections/Tiles.js"></script>
   <script src="js/collections/Decks.js"></script>
   <script src="js/collections/TilePairs.js"></script>
+
+  <script src="js/models/BoardStatus.js"></script>
 
   <script src="js/data/BoardLayouts.js"></script>
   <script src="js/data/TileMatchingStyles.js"></script>
@@ -129,6 +134,8 @@
   <script src="js/views/configuration.js"></script>
   <script src="js/views/board_status.js"></script>
   <script src="js/views/board_controls.js"></script>
+  <script src="js/views/board_history.js"></script>
+  <script src="js/views/board_history_tile_pair.js"></script>
   <script src="js/views/mahjong.js"></script>
 
   <script>
