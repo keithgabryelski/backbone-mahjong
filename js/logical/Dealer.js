@@ -65,6 +65,7 @@ app.models.Dealer = Backbone.Model.extend({
     }
     div.css({
       backgroundImage: "url('images/backgrounds/wood.jpg')",
+      backgroundRepeat: "repeat",
       zIndex: 0,
       minHeight: this.boardHeight,
       minWidth:  this.boardWidth,
