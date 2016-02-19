@@ -152,6 +152,12 @@ app.models.Dealer = Backbone.Model.extend({
           borderRadius: (this.tileWidth / 5) + "px",
         }).
         html(tile.get('value')).
+        tooltip({
+          title: tile.get('name'),
+//          delay: {
+//            show: 2000,
+//          }
+        }).
         appendTo(mahjong_div)[0];
 
     if (tile.get('short_name') == 'red_dragon') {

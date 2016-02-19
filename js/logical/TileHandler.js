@@ -49,6 +49,12 @@ app.models.TileHandler = Backbone.Model.extend({
     }
     return false;
   },
+  disable_tooltip_for_tile: function(tile) {
+    $(tile.get('view')).tooltip('disable');
+  },
+  enable_tooltip_for_tile: function(tile) {
+    $(tile.get('view')).tooltip('enable');
+  },
   assess_clickability: function() {
     var total_tiles = this.board.get_all_positioned_tiles();
     this.boardStatus.set({tiles_on_board: total_tiles})
@@ -60,6 +66,10 @@ app.models.TileHandler = Backbone.Model.extend({
       if (!this.hitMaster.is_tile_blocked(tile)) {
         this.make_tile_clickable(tile);
         total_unblocked_tiles.push(tile);
+      }
+      this.disable_tooltip_for_tile(tile);
+      if (this.hitMaster.is_tile_visible(tile)) {
+        this.enable_tooltip_for_tile(tile);
       }
     }
     
