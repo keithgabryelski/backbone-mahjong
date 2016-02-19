@@ -62,7 +62,7 @@ html,body {
 }
 
 .category_bamboo_suit {
-    color: #009900;
+    color: #62A148;
 }
 
 .category_circle_suit {
@@ -77,12 +77,30 @@ html,body {
     color: #990000;
 }
 
-.category_season {
-    color: #009966;
+.tile_winter_season {
+    color: #402c69;
+}
+.tile_spring_season {
+    color: #00CC4f;
+}
+.tile_summer_season {
+    color: #ff4e50;
+}
+.tile_autumn_season {
+    color: #B0703C;
 }
 
-.category_flower {
-    color: #FF6600;
+.tile_orchid_flower {
+    color: #da70d6;
+}
+.tile_plum_flower {
+    color: #8E4585;
+}
+.tile_bamboo_flower {
+    color: #6f6b76;
+}
+.tile_chrysanthemum_flower {
+    color: #e15d98;
 }
 
 .category_joker {
