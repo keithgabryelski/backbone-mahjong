@@ -47,6 +47,10 @@ app.views.mahjong = Backbone.View.extend({
       draggable: {handle: 'div.jsPanel-content'},
       content:       this.boardControlsView.el
     });
+    this.$el.append(this.boardControlsPanel);
+    this.$el.append(this.boardHistoryPanel);
+    this.$el.append(this.boardStatusPanel);
+    this.delegateEvents();
     this.dealer.startGame();
     return this;
   },

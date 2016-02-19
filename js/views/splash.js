@@ -57,6 +57,7 @@ app.views.splash = Backbone.View.extend({
         }).html("&#x1F000;").appendTo($('#splash_icon'))[0];
 
     this.delegateEvents();
+    return this;
   },
 
   start_timer: function() {
