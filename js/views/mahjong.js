@@ -35,7 +35,6 @@ app.views.mahjong = Backbone.View.extend({
       size:     { height: "auto", width: this.dealer.boardWidth },
       position: 'bottom left',
       content:  this.boardHistoryView.el,
-      resizable: "disabled",
       controls:  { smallify: "disable", close: "disable", maximize: "disable" },
       panelstatus: "minimized"
     });

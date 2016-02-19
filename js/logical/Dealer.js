@@ -36,7 +36,7 @@ app.models.Dealer = Backbone.Model.extend({
     // do the tiles vertically?
     if ((this.tileHeight * this.numRows) > this.boardHeight) {
       // fit to vertical size then
-      this.tileHeight = this.boardHeight / (this.numColumns + this.verticalMarginInColumns);
+      this.tileHeight = this.boardHeight / (this.numRows + this.verticalMarginInColumns);
       this.tileWidth = this.tileHeight * 3 / 4;
     }
 
