@@ -31,7 +31,6 @@ features:
 
  animation for moves
 
- hover over tile names
 
 wishes:
  resize tiles as tiles are removed

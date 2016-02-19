@@ -1,5 +1,10 @@
 // original name: HitMasterMcDragonTile
 
+// microsoft sucks
+Math.log2 = Math.log2 || function(x) {
+  return Math.log(x) / Math.LN2;
+};
+
 app.models.HitMaster = Backbone.Model.extend({
   initialize: function(board) {
     this.board = board;
