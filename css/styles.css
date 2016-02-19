@@ -3,11 +3,13 @@ html,body {
 }
 
 .splash_icon_top {
+    font-family: "Symbola";
     background-color: #FFF;
     border-color: #FFF #EEE #AAA #BBB;
     box-shadow: 0px 0px 0px;
 }
 .splash_icon_bottom {
+    font-family: "Symbola";
     background-color: #FF6600;  /* fix */
     border-color: #FF6600 #FF6600 #FF6600 #FF6600;
     box-shadow: -8px 8px 10px rgba(0, 0, 0, 0.5);
@@ -17,6 +19,7 @@ html,body {
 }
 
 .tile {
+    font-family: "Symbola";
     background-color: #AAA;
     border-color: #ccc #bbb #666 #777;
 }

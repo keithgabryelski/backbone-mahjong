@@ -44,7 +44,7 @@ app.models.Dealer = Backbone.Model.extend({
     this.boardTopBottomMargin = this.tileHeight * this.verticalMarginInColumns / 2;
 
     this.fontSize = this.tileWidth * 1.10; // this seems correct except for &#x1f004;
-    this.lineHeight = 1.1;                 // this seems correct
+    this.lineHeight = 1.2;                 // this seems correct
 
     this.tileDepth = this.tileWidth * 0.10;
 
