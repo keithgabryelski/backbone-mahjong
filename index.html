@@ -32,6 +32,11 @@
             <option value="<%= layout.get('ID') %>"><%= layout.get('name') %></option>
         <% }); %>
     </select>
+    <select id="background">
+        <% app.backgrounds.each(function(background) { %>
+            <option value="<%= background.get('ID') %>"><%= background.get('name') %></option>
+        <% }); %>
+    </select>
     <button>play</button>
   </form>
   </script>
@@ -126,6 +131,7 @@
 
   <script src="js/models/Type.js"></script>
   <script src="js/models/BoardLayout.js"></script>
+  <script src="js/models/Background.js"></script>
   <script src="js/models/Configuration.js"></script>
   <script src="js/models/Deck.js"></script>
   <script src="js/models/TileMatchingStyle.js"></script>
@@ -138,6 +144,7 @@
 
   <script src="js/collections/Types.js"></script>
   <script src="js/collections/BoardLayouts.js"></script>
+  <script src="js/collections/Backgrounds.js"></script>
   <script src="js/collections/TileMatchingStyles.js"></script>
   <script src="js/collections/TileCategories.js"></script>
   <script src="js/collections/TileCategoryGroups.js"></script>
@@ -148,6 +155,7 @@
   <script src="js/models/BoardStatus.js"></script>
 
   <script src="js/data/BoardLayouts.js"></script>
+  <script src="js/data/Backgrounds.js"></script>
   <script src="js/data/TileMatchingStyles.js"></script>
   <script src="js/data/TileCategoryGroups.js"></script>
   <script src="js/data/TileCategories.js"></script>

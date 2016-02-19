@@ -1,6 +1,6 @@
 app.models.Configuration = Backbone.Model.extend({
   defaults: {
-    background_style_name: "wood",
+    background_id: 1,
     deck_id: 1,
     board_layout_id: 1,
     time_limit: true,
@@ -14,5 +14,14 @@ app.models.Configuration = Backbone.Model.extend({
   },
   board_layout: function() {
     return app.boardLayouts.findWhere({ID: this.get('board_layout_id')});
+  },
+  background: function() {
+    return app.backgrounds.findWhere({ID: this.get('background_id')});
+  },
+  background_image_url: function() {
+    return this.background().get('image_url')
+  },
+  background_repeat: function() {
+    return this.background().get('repeat')
   }
 });
