@@ -85,6 +85,7 @@ app.models.Dealer = Backbone.Model.extend({
     div.css({
       backgroundImage: this.configuration.background_image_url(),
       backgroundRepeat: this.configuration.background_repeat(),
+      backgroundSize: "cover",
       zIndex: 0,
       minHeight: this.boardHeight,
       minWidth:  this.boardWidth,
@@ -152,6 +153,7 @@ app.models.Dealer = Backbone.Model.extend({
         }).
         html(tile.get('value')).
         appendTo(mahjong_div)[0];
+
     if (tile.get('short_name') == 'red_dragon') {
       $(tile_image).
         css({
