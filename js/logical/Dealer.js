@@ -44,7 +44,7 @@ app.models.Dealer = Backbone.Model.extend({
     this.boardTopBottomMargin = this.tileHeight * this.verticalMarginInColumns / 2;
 
     this.fontSize = this.tileWidth * 1.10; // this seems correct except for &#x1f004;
-    this.lineHeight = 1.2;                 // this seems correct
+    this.lineHeight = 1.1;                 // this seems correct
 
     this.tileDepth = this.tileWidth * 0.10;
 
@@ -160,13 +160,6 @@ app.models.Dealer = Backbone.Model.extend({
         }).
         appendTo(mahjong_div)[0];
 
-    if (tile.get('short_name') == 'red_dragon') {
-      $(tile_image).
-        css({
-          fontSize: this.fontSize * 0.80, // hack, why is this codepoint different
-          lineHeight: 1.5                 // hack, why is this codepoint different
-        })
-    }
     positioned_tile.set({view: tile_image});
     jQuery.data(tile_image, 'tile', positioned_tile);
   },

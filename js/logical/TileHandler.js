@@ -51,6 +51,7 @@ app.models.TileHandler = Backbone.Model.extend({
     return false;
   },
   disable_tooltip_for_tile: function(tile) {
+    $(tile.get('view')).tooltip('hide');
     $(tile.get('view')).tooltip('disable');
   },
   enable_tooltip_for_tile: function(tile) {

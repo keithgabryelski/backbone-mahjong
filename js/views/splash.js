@@ -30,7 +30,7 @@ app.views.splash = Backbone.View.extend({
           height: height + depth,
         }).css({
           fontSize: width * 1.1,
-          lineHeight: 1.2
+          lineHeight: 1.1
         }).css({
           borderStyle: "solid",
           borderWidth: "1px 1px " + depth + "px " + depth + "px",
@@ -49,7 +49,7 @@ app.views.splash = Backbone.View.extend({
           height: height,
         }).css({
           fontSize: width * 1.1,
-          lineHeight: 1.2
+          lineHeight: 1.1
         }).css({
           borderStyle: "solid",
           borderWidth: "1px 1px " + depth + "px " + depth + "px",
