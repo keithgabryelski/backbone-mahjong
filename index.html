@@ -33,18 +33,18 @@
 
   <script type="text/template" id="tpl-configuration">
   <p>When you are ready, press play</p>
-  <form>
-    <select id="layout">
+  <form role="form">
+    <select id="layout" class="form-control">
         <% app.boardLayouts.each(function(layout) { %>
             <option value="<%= layout.get('ID') %>"><%= layout.get('name') %></option>
         <% }); %>
     </select>
-    <select id="background">
+    <select id="background" class="form-control">
         <% app.backgrounds.each(function(background) { %>
             <option value="<%= background.get('ID') %>"><%= background.get('name') %></option>
         <% }); %>
     </select>
-    <button>play</button>
+    <button class="btn btn-default">play</button>
   </form>
   </script>
 

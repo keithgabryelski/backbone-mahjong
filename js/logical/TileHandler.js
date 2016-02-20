@@ -32,7 +32,12 @@ app.models.TileHandler = Backbone.Model.extend({
     var self = this;
     $(positioned_tile.get('view')).
       addClass("clickable").
-      on("click", function(e) { self.tile_click($(e.target)) })
+      on("click", function(e) {
+        self.tile_click($(e.target));
+      }).
+      on('touchstart', function(event) {
+        self.tile_click($(e.target));
+      });
   },
   make_tile_unclickable: function(positioned_tile) {
     $(positioned_tile.get('view')).
