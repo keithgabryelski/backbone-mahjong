@@ -38,7 +38,6 @@ app.views.mahjong = Backbone.View.extend({
     this.dealer.refreshBoard();
   },
   quit: function(e) {
-    alert("quit")
     e.preventDefault();
     this.trigger("quit");
   },
