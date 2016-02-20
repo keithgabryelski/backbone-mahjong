@@ -26,39 +26,49 @@
       <h1>Mahjong Solitaire</h1>
       <h2>by <a href="https://github.com/keithgabryelski">keithgabryelski</a></h2>
     </div>
-    <div id="splash_icon" class="col-sm-6"></div>
+    <div id="splash_icon" class="col-sm-6">
+      <span id="splash_icon_bottom" class="splash_icon_bottom splash_icon_piece"></span>
+      <span id="splash_icon_top" class="splash_icon_top splash_icon_piece"></span>
+    </div>
   </div>
   </div>
   </script>
 
   <script type="text/template" id="tpl-configuration">
-  <p>When you are ready, press play</p>
-  <form role="form">
-    <select id="layout" class="form-control">
-        <% app.boardLayouts.each(function(layout) { %>
-            <option value="<%= layout.get('ID') %>"><%= layout.get('name') %></option>
-        <% }); %>
-    </select>
-    <select id="background" class="form-control">
-        <% app.backgrounds.each(function(background) { %>
-            <option value="<%= background.get('ID') %>"><%= background.get('name') %></option>
-        <% }); %>
-    </select>
-    <button class="btn btn-default">play</button>
-  </form>
+    <p>When you are ready, press play</p>
+
+    <form role="form">
+      <div class="form-group">
+        <label for="layout">Board Layout</label>
+        <select id="layout" class="form-control">
+            <% app.boardLayouts.each(function(layout) { %>
+                <option value="<%= layout.get('ID') %>"><%= layout.get('name') %></option>
+            <% }); %>
+        </select>
+      </div
+      <div class="form-group">
+        <label for="background">Background</label>
+        <select id="background" class="form-control">
+            <% app.backgrounds.each(function(background) { %>
+                <option value="<%= background.get('ID') %>"><%= background.get('name') %></option>
+            <% }); %>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-default">play</button>
+    </form>
   </script>
 
   <script type="text/template" id="tpl-board-history">
-                <table id="history_with_scrollbar">
-                  <tr id="scroll">
-                    <% _.each(collection, function(tile_pair, index, collection) { %>
-                    <% tile_pair = collection.at(index); %>
-                    <td><%= tile_pair.get('tile1').get('view').outerHTML %></td>
-                    <td><%= tile_pair.get('tile2').get('view').outerHTML %></td>
-                    <td>&nbsp;</td>
-                    <% }, this); %>
-                  </tr>
-                </table>
+    <table id="history_with_scrollbar">
+      <tr id="scroll">
+        <% _.each(collection, function(tile_pair, index, collection) { %>
+        <% tile_pair = collection.at(index); %>
+        <td><%= tile_pair.get('tile1').get('view').outerHTML %></td>
+        <td><%= tile_pair.get('tile2').get('view').outerHTML %></td>
+        <td>&nbsp;</td>
+        <% }, this); %>
+      </tr>
+    </table>
   </script>
 
 

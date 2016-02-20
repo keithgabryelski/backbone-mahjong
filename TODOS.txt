@@ -5,7 +5,7 @@ ugly:
  what is the font height vs width?
 
 bugs:
- splash icon is not fitted on top of icon bottom correctly
+ splash icon is not fitted on top of icon bottom correctly, it should not be different sizes, just adjusted
 
  unicode characters not showing on windows 7
 
@@ -47,3 +47,5 @@ wishes:
 
  implement other tile sets (gnome png, self owned colorized png)
 
+ need something like requirejs to organize the templates
+ 

@@ -83,7 +83,7 @@ app.models.Dealer = Backbone.Model.extend({
       }).appendTo(view);
     }
     div.css({
-      backgroundImage: this.configuration.background_image_url(),
+      backgroundImage: "url('" + this.configuration.background_image_url() + "')",
       backgroundRepeat: this.configuration.background_repeat(),
       backgroundSize: "cover",
       zIndex: 0,
