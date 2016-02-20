@@ -20,9 +20,7 @@ app.models.Dealer = Backbone.Model.extend({
     this.divWidth = $('div#mahjongBoard').innerWidth();
     this.divHeight = $('div#mahjongBoard').innerHeight();
 
-    this.numRows = this.board.num_rows();
-    this.numLayers = this.board.num_layers();
-    this.numColumns = this.board.num_columns();
+    this.dimensions = this.board.current_dimensions();
 
     this.horizontalMarginInColumns = 2;
     this.verticalMarginInColumns = 2;
@@ -30,13 +28,13 @@ app.models.Dealer = Backbone.Model.extend({
     this.boardWidth = this.divWidth;
     this.boardHeight = this.divHeight;
 
-    this.tileWidth = this.boardWidth / (this.numColumns + this.horizontalMarginInColumns);
+    this.tileWidth = this.boardWidth / (this.dimensions.numColumns + this.horizontalMarginInColumns);
     this.tileHeight = this.tileWidth * 4 / 3; // this seems about right
 
     // do the tiles vertically?
-    if ((this.tileHeight * this.numRows) > this.boardHeight) {
+    if ((this.tileHeight * (this.dimensions.numRows + this.verticalMarginInColumns)) > this.boardHeight) {
       // fit to vertical size then
-      this.tileHeight = this.boardHeight / (this.numRows + this.verticalMarginInColumns);
+      this.tileHeight = this.boardHeight / (this.dimensions.numRows + this.verticalMarginInColumns);
       this.tileWidth = this.tileHeight * 3 / 4;
     }
 
@@ -48,8 +46,8 @@ app.models.Dealer = Backbone.Model.extend({
 
     this.tileDepth = this.tileWidth * 0.10;
 
-    this.left = (this.boardWidth - (this.boardSideMargin + (this.tileWidth * this.numColumns) + this.boardSideMargin)) / 2;
-    this.top = (this.boardHeight - (this.boardTopBottomMargin + (this.tileHeight * this.numRows) + this.boardTopBottomMargin)) / 2;
+    this.left = (this.boardWidth - (this.boardSideMargin + (this.tileWidth * this.dimensions.numColumns) + this.boardSideMargin)) / 2;
+    this.top = (this.boardHeight - (this.boardTopBottomMargin + (this.tileHeight * this.dimensions.numRows) + this.boardTopBottomMargin)) / 2;
   },
   position_tile: function(positioned_tile) {
     // Position, Tile? returns PositionedTile?
@@ -154,9 +152,9 @@ app.models.Dealer = Backbone.Model.extend({
         html(tile.get('value')).
         tooltip({
           title: tile.get('name'),
-//          delay: {
-//            show: 2000,
-//          }
+          delay: {
+            show: 2000,
+          }
         }).
         appendTo(mahjong_div)[0];
 
@@ -164,9 +162,9 @@ app.models.Dealer = Backbone.Model.extend({
     jQuery.data(tile_image, 'tile', positioned_tile);
   },
   translatePositionToXYOrder: function(position, tile_width, tile_height, tile_depth) {
-    var row = position.get('row');
-    var column = position.get('column');
-    var layer = position.get('layer');
+    var row = position.get('row') - this.dimensions.top;
+    var column = position.get('column') - this.dimensions.left;
+    var layer = position.get('layer') - this.dimensions.back;
 
     var row_increment = 0;
     var column_increment = 0;

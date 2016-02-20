@@ -14,6 +14,37 @@ app.models.Board = Backbone.Model.extend({
   num_rows: function() {
     return this.get('positioned_tiles')[0].length;
   },
+  current_dimensions: function() {
+    var tiles = new app.models.PositionedTiles(this.get_all_positioned_tiles());
+    var positions = new app.models.Positions(tiles.pluck('position'));
+    var left_column = Math.min.apply(Math, positions.pluck('column'));
+    var right_column = Math.max.apply(Math, positions.pluck('column'));
+    var top_row = Math.min.apply(Math, positions.pluck('row'));
+    var bottom_row = Math.max.apply(Math, positions.pluck('row'));
+    var back_layer = Math.min.apply(Math, positions.pluck('layer'));
+    var front_layer = Math.max.apply(Math, positions.pluck('layer'));
+
+    if (left_column == null) {
+      left_column = 0;
+      right_column = 0;
+      top_row = 0;
+      bottom_row = 0;
+      back_layer = 0;
+      front_layer = 0;
+    }
+    
+    return {
+      top: top_row,
+      right: right_column,
+      bottom: bottom_row,
+      left: left_column,
+      front: front_layer,
+      back: back_layer,
+      numRows: bottom_row - top_row,
+      numColumns: right_column - left_column,
+      numLayers: front_layer - back_layer
+    };
+  },
   num_columns: function() {
     return this.get('positioned_tiles')[0][0].length
   },

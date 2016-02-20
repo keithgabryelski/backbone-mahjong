@@ -9,6 +9,12 @@ bugs:
 
  unicode characters not showing on windows 7
 
+
+mobile:
+  tooltips on mobile suck
+  interface on mobile is clunkly (tapping twice to select)
+  tapping twice causes scaling (maybe disable two tap? or make it resize to fit)
+
 features:
  configuration should be cookied preferences so they save across refresh
 
