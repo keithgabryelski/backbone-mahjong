@@ -19,6 +19,7 @@ app.models.TileHandler = Backbone.Model.extend({
       removeClass('on_board').
       removeClass('hinted').
       addClass('off_board');
+    this.disable_tooltip_for_tile(positioned_tile);
     var tile = $(positioned_tile.get('view')).remove();
     return tile;
   },
