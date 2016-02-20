@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/flick/jquery-ui.css" />
-  <link href="css/jquery.jspanel.min.css" rel="stylesheet">
+  <link href="css/jasny-bootstrap.min.css" rel="stylesheet">
  </head>
  <body>
   <div id="content" class="container-fluid" style="height: 100%"></div>
@@ -71,7 +71,6 @@
     </table>
   </script>
 
-
   <script type="text/template" id="tpl-board-status">
   <div class="panel panel-default">
     <div class="panel-body">
@@ -81,6 +80,19 @@
       <div>Timer: <span id="timer"><%= timer > (60 * 60) ? (new Date(timer * 1000)).toUTCString().match(/(\d\d:\d\d:\d\d)/)[0] : (new Date(timer * 1000)).toUTCString().match(/\d\d:(\d\d:\d\d)/)[1] %></span></div>
     </div>
   </div>
+  </script>
+
+  <script type="text/template" id="tpl-game-timer">
+  <%= timer > (60 * 60) ? (new Date(timer * 1000)).toUTCString().match(/(\d\d:\d\d:\d\d)/)[0] : (new Date(timer * 1000)).toUTCString().match(/\d\d:(\d\d:\d\d)/)[1] %>
+  </script>
+
+  <script type="text/template" id="tpl-game-status">
+  <%= status %>
+  </script>
+
+  <script type="text/template" id="tpl-game-details">
+  <div>Matches Available: <span id="matches_available"><%= tiles_having_matches.length %></span></div>
+  <div>Tiles Left: <span id="tiles_left"><%= tiles_on_board.length %></span></div>
   </script>
 
   <script type="text/template" id="tpl-board-controls">
@@ -96,42 +108,33 @@
     <div class="panel panel-default" style="height: 100%">
       <div id="mahjongBoard" class="panel-body" style="position: relative; margin:0; padding: 0; height: 100%;"></div>
     </div>
-  </div>
-  </script>
 
-  <!-- unused -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="#history_area">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="navbar-brand"><%= board_layout_name %></div>
+      <div id="mahjongGameTimer" class="navbar-text" style="position: absolute; width: 100%; left: 0; text-align: center; margin: auto;"></div>
+    </nav>
 
-  <script type="text/template" id="tpl-play-historical-item">
-  <div class="cover-item" style="background-image: url('https://d1nexqccu6ll7z.cloudfront.net/_images/s-14-197-61462CCC-uk.png')"></div>
-  </script>
-  <script type="text/template" id="tpl-board-history-tile-pair">
-  <div class="row">
-    <div id="mahjongBoardControls"></div>
-  </div>
-    <div  class="col-sm-9">
-      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
-        <div class="panel panel-default">
-          <div class="panel-heading" role="tab" id="headingOne">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                History
-              </a>
-            </h4>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body">
-              <div class="row-fluid">
-                <div class="col-lg-12 col-md-10 ">
-                  <div class="cover-container">
-                    <div id="mahjongBoardHistory"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="navbar navbar-inverse navbar-fixed-bottom">
+      <button id="quit" class="btn btn-large btn-danger navbar-btn quit pull-right">quit</button>
+      <button class="btn btn-large navbar-btn undo pull-right">undo</button>
+      <button class="btn btn-large navbar-btn hint pull-right">hint</button>
+      <div id="mahjongGameStatus" class="navbar-brand" style="position: absolute; width: 100%; left: 0; text-align: center; margin: auto;"></div>
+      <p id="mahjongGameDetails" class="navbar-text pull-left"></p>
     </div>
+
+    <div id="history_area" class="panel panel-default panel-bottom offcanvas navbar-fixed-bottom">
+      <div class="panel-heading">
+        <h3 class="panel-title">History</h3>
+      </div>
+      <div id="mahjongBoardHistory" class="panel-body"></div>
+    </div>
+
+  </div>
   </script>
 
   <!-- Templates -->
@@ -141,9 +144,9 @@
 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.3.1/mobile-detect.min.js"></script>
+  <script src="js/vendor/jasny-bootstrap.min.js"></script>
   <script src="js/vendor/underscore.js"></script>
   <script src="js/vendor/backbone.js"></script>
-  <script src="js/vendor/jquery.jspanel.min.js"></script>
 
   <script src="js/App.js"></script>
 
@@ -191,7 +194,9 @@
   <script src="js/views/board_status.js"></script>
   <script src="js/views/board_controls.js"></script>
   <script src="js/views/board_history.js"></script>
-  <script src="js/views/board_history_tile_pair.js"></script>
+  <script src="js/views/game_timer.js"></script>
+  <script src="js/views/game_status.js"></script>
+  <script src="js/views/game_details.js"></script>
   <script src="js/views/mahjong.js"></script>
 
   <script>

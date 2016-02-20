@@ -68,6 +68,7 @@ html,body {
 .highlighted {
     background-color: #FFF;
     border-color: #FFF #EEE #AAA #BBB;
+    box-shadow: 0px 0px 40px white;
 }
 
 .clickable:hover {
@@ -147,4 +148,8 @@ table#history_with_scrollbar {
 
 #collapseOne {
     background-color: #555;
+}
+
+.navbar-toggle {
+    display: block;
 }
