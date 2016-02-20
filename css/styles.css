@@ -153,3 +153,15 @@ table#history_with_scrollbar {
 .navbar-toggle {
     display: block;
 }
+
+.nav.nav-center {
+    display: inline-block;
+    left: 0;
+    right: 0;
+    margin:0;
+    float:none;
+}
+
+.navbar-inner{
+    text-align:center;
+}

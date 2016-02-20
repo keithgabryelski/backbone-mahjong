@@ -91,16 +91,11 @@
   </script>
 
   <script type="text/template" id="tpl-game-details">
-  <div>Matches Available: <span id="matches_available"><%= tiles_having_matches.length %></span></div>
-  <div>Tiles Left: <span id="tiles_left"><%= tiles_on_board.length %></span></div>
+  <div>Tiles Left: <%= tiles_on_board.length %></div>
+  <div>Matches Available: <%= tiles_having_matches.length %></div>
   </script>
 
   <script type="text/template" id="tpl-board-controls">
-  <div>
-    <button class="btn btn-large hint">hint</button>
-    <button class="btn btn-large undo">undo</button>
-    <button id="quit" class="btn btn-large btn-danger quit">quit</button>
-  </div>
   </script>
 
   <script type="text/template" id="tpl-mahjong">
@@ -110,22 +105,20 @@
     </div>
 
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="#history_area">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <div class="navbar-brand"><%= board_layout_name %></div>
-      <div id="mahjongGameTimer" class="navbar-text" style="position: absolute; width: 100%; left: 0; text-align: center; margin: auto;"></div>
+      <div class="navbar-inner">
+        <div class="navbar-brand nav pull-left"><%= board_layout_name %></div>
+        <div id="mahjongGameTimer" class="nav navbar-text"></div>
+        <div id="mahjongGameStatus" class="nav navbar-text"></div>
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="#history_area">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <button id="hintButton" class="btn btn-default navbar-btn hint pull-right">hint</button>
+        <button id="undoButton" class="btn btn-default navbar-btn undo pull-right">undo</button>
+        <button id="quitButton" class="btn navbar-btn btn-danger quit pull-right">quit</button>
+      </div>
     </nav>
-
-    <div class="navbar navbar-inverse navbar-fixed-bottom">
-      <button id="quit" class="btn btn-large btn-danger navbar-btn quit pull-right">quit</button>
-      <button class="btn btn-large navbar-btn undo pull-right">undo</button>
-      <button class="btn btn-large navbar-btn hint pull-right">hint</button>
-      <div id="mahjongGameStatus" class="navbar-brand" style="position: absolute; width: 100%; left: 0; text-align: center; margin: auto;"></div>
-      <p id="mahjongGameDetails" class="navbar-text pull-left"></p>
-    </div>
 
     <div id="history_area" class="panel panel-default panel-bottom offcanvas navbar-fixed-bottom">
       <div class="panel-heading">
