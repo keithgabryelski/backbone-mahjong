@@ -9,7 +9,7 @@ app.views.mahjong = Backbone.View.extend({
   initialize: function(options) {
     this.boardStatus = new app.models.BoardStatus();
     this.configuration = options.model;
-    this.dealer = new app.models.Dealer($("#mahjongBoard"), this.configuration, this.boardStatus)
+    this.mahjongGame = new app.models.MahjongGame();
     this.boardHistoryView = new app.views.boardHistory({ collection: this.boardStatus.get('history') });
     this.boardGameTimerView = new app.views.gameTimer({ model: this.boardStatus });
     this.boardGameStatusView = new app.views.gameStatus({ model: this.boardStatus });
@@ -19,15 +19,15 @@ app.views.mahjong = Backbone.View.extend({
   render: function() {
     this.$el.css({height: "100%"})
     this.$el.html(this.template({board_layout_name: this.configuration.board_layout().get('name')}));
-    this.dealer.generate_board();
     this.boardHistoryView.render();
     this.boardGameTimerView.render();
     this.boardGameStatusView.render();
+    this.mahjongGame.setupGame($("#mahjongBoard"), this.configuration, this.boardStatus);
     $('#mahjongBoardHistory').append(this.boardHistoryView.el);
     $('#mahjongGameTimer').append(this.boardGameTimerView.el);
     $('#mahjongGameStatus').append(this.boardGameStatusView.el);
+    this.mahjongGame.startGame();
     this.delegateEvents();
-    this.dealer.startGame();
     return this;
   },
   remove: function() {
@@ -35,7 +35,7 @@ app.views.mahjong = Backbone.View.extend({
     Backbone.View.prototype.remove.call(this);
   },
   onResize: function () {
-    this.dealer.refreshBoard();
+    this.mahjongGame.refreshBoard();
   },
   quit: function(e) {
     e.preventDefault();
@@ -43,14 +43,14 @@ app.views.mahjong = Backbone.View.extend({
   },
   hint: function(e) {
     e.preventDefault();
-    if (this.dealer) {
-      this.dealer.show_hint();
+    if (this.mahjongGame) {
+      this.mahjongGame.show_hint();
     }
   },
   undo: function(e) {
     e.preventDefault();
-    if (this.dealer) {
-      this.dealer.undo();
+    if (this.mahjongGame) {
+      this.mahjongGame.undo();
     }
   },
 });

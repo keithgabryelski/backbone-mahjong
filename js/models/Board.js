@@ -5,8 +5,7 @@ app.models.Board = Backbone.Model.extend({
     positioned_tiles: [],
     pulled_tiles: [],
     highlighted_tile: null,
-    current_matches: [],
-    history: new app.models.TilePairs()
+    current_matches: []
   },
   num_layers: function() {
     return this.get('positioned_tiles').length;

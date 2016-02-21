@@ -1,7 +1,9 @@
 bugs:
- splash icon should resize
+ timer can wrap
 
 features:
+ splash icon should resize
+
  configuration should be cookied preferences so they save across refresh
 
  mahjong board should be full width/height 
@@ -24,7 +26,7 @@ features:
  animation for moves
 
 wishes:
- resize tiles as tiles are removed
+ resize tiles but don't adjust x/y alone
 
  implement play tree examination
    is this board winnable
