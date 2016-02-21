@@ -73,7 +73,6 @@ var app = (function() {
     splash: function() {
       var view = ViewsFactory.splash();
       api.title("Mahjong Splash").changeContent(view.$el);
-      //XXX render is done in the initializer --- ooops
       view.render();
     },
     configuration: function() {
