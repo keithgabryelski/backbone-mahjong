@@ -14,6 +14,9 @@ app.models.Board = Backbone.Model.extend({
   num_rows: function() {
     return this.get('positioned_tiles')[0].length;
   },
+  num_columns: function() {
+    return this.get('positioned_tiles')[0][0].length
+  },
   current_dimensions: function() {
     var tiles = new app.models.PositionedTiles(this.get_all_positioned_tiles());
     var positions = new app.models.Positions(tiles.pluck('position'));
@@ -32,7 +35,7 @@ app.models.Board = Backbone.Model.extend({
       back_layer = 0;
       front_layer = 0;
     }
-    
+
     return {
       top: top_row,
       right: right_column,
@@ -40,13 +43,10 @@ app.models.Board = Backbone.Model.extend({
       left: left_column,
       front: front_layer,
       back: back_layer,
-      numRows: bottom_row - top_row,
-      numColumns: right_column - left_column,
-      numLayers: front_layer - back_layer
+      numRows: (bottom_row - top_row) + 1,
+      numColumns: (right_column - left_column) + 1,
+      numLayers: (front_layer - back_layer) + 1
     };
-  },
-  num_columns: function() {
-    return this.get('positioned_tiles')[0][0].length
   },
   get_all_positioned_tiles: function() {
     var tiles = [];

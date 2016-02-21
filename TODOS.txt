@@ -1,19 +1,5 @@
-ugly:
- why is &#1f004; different than other code points (size and such)
- why is line-height needed
- what is the correct way to calculate font size
- what is the font height vs width?
-
 bugs:
- splash icon is not fitted on top of icon bottom correctly, it should not be different sizes, just adjusted
-
- unicode characters not showing on windows 7
-
-
-mobile:
-  tooltips on mobile suck
-  interface on mobile is clunkly (tapping twice to select)
-  tapping twice causes scaling (maybe disable two tap? or make it resize to fit)
+ splash icon should resize
 
 features:
  configuration should be cookied preferences so they save across refresh
@@ -37,7 +23,6 @@ features:
 
  animation for moves
 
-
 wishes:
  resize tiles as tiles are removed
 
@@ -55,3 +40,6 @@ wishes:
 
  need something like requirejs to organize the templates
  
+ rewrite tiles is be more like splash screen (span)
+
+ clean up hit master to calculate coordinates in a more readible way

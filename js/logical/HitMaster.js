@@ -14,7 +14,7 @@ app.models.HitMaster = Backbone.Model.extend({
   ],
   hitMatrixOriginX: 3,
   hitMatrixOriginY: 3,
-  layerAboveHitMatrix: [
+  aboveLayerHitMask: [
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
@@ -24,7 +24,7 @@ app.models.HitMaster = Backbone.Model.extend({
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
   ],
-  sameLayerLeftHitMatrix: [
+  sameLayerLeftHitMask: [
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
@@ -34,7 +34,7 @@ app.models.HitMaster = Backbone.Model.extend({
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
   ],
-  sameLayerRightHitMatrix: [
+  sameLayerRightHitMask: [
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
@@ -45,12 +45,12 @@ app.models.HitMaster = Backbone.Model.extend({
     [ 0, 0, 0, 0, 0, 0, 0, 0 ],
   ],
   sameLayerHitAreaMatrix: [
-    [-1,-1],[ 0,-1],[ 1 -1],
+    [-1,-1],[ 0,-1],[ 1,-1],
     [-1, 0],        [ 1, 0],
     [-1, 1],[ 0, 1],[ 1, 1],
   ],
   layerAboveHitAreaMatrix: [
-    [-1,-1],[ 0,-1],[ 1 -1],
+    [-1,-1],[ 0,-1],[ 1,-1],
     [-1, 0],[ 0, 0],[ 1, 0],
     [-1, 1],[ 0, 1],[ 1, 1],
   ],
@@ -85,20 +85,16 @@ app.models.HitMaster = Backbone.Model.extend({
       return false;             // not blocked on the left?  great! winner!
     }
 
-    if (!this.is_tile_blocked_from_the_right(positioned_tiles, l, r, c, translate_y, translate_x)) {
-      return false;             // not blocked from the right? great! winner!
-    }
-
-    return true;                // blocked!
+    return this.is_tile_blocked_from_the_right(positioned_tiles, l, r, c, translate_y, translate_x);
   },
   is_tile_blocked_from_above: function(positioned_tiles, l, r, c, translate_y, translate_x) {
-    return this.is_tile_blocked_at_layer(positioned_tiles, this.layerAboveHitMatrix, l+1, r, c, translate_y, translate_x, this.layerAboveHitAreaMatrix);
+    return this.is_tile_blocked_at_layer(positioned_tiles, this.aboveLayerHitMask, l+1, r, c, translate_y, translate_x, this.layerAboveHitAreaMatrix);
   },
   is_tile_blocked_from_the_left: function(positioned_tiles, l, r, c, translate_y, translate_x) {
-    return this.is_tile_blocked_at_layer(positioned_tiles, this.sameLayerLeftHitMatrix, l, r, c, translate_y, translate_x, this.sameLayerHitAreaMatrix);
+    return this.is_tile_blocked_at_layer(positioned_tiles, this.sameLayerLeftHitMask, l, r, c, translate_y, translate_x, this.sameLayerHitAreaMatrix);
   },
   is_tile_blocked_from_the_right: function(positioned_tiles, l, r, c, translate_y, translate_x) {
-    return this.is_tile_blocked_at_layer(positioned_tiles, this.sameLayerRightHitMatrix, l, r, c, translate_y, translate_x, this.sameLayerHitAreaMatrix);
+    return this.is_tile_blocked_at_layer(positioned_tiles, this.sameLayerRightHitMask, l, r, c, translate_y, translate_x, this.sameLayerHitAreaMatrix);
   },
   is_tile_blocked_at_layer: function(positioned_tiles, hit_matrix, l, r, c, translate_y, translate_x, hit_area_matrix) {
     for (var i = 0; i < hit_area_matrix.length; ++i) {
@@ -131,7 +127,7 @@ app.models.HitMaster = Backbone.Model.extend({
     return false;
   },
   is_tile_fully_covered: function(positioned_tiles, l, r, c, translate_y, translate_x) {
-    var hit_matrix = this.layerAboveHitMatrix
+    var hit_matrix = this.aboveLayerHitMask
     var hit_area_matrix = this.layerAboveHitAreaMatrix
     l += 1
     var hits = 0;
