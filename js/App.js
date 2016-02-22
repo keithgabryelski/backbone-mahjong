@@ -21,7 +21,7 @@ var app = (function() {
         the_cookie.set('data', this.configuration);
         the_cookie.save();
       }
-      this.configuration = the_cookie.get('data');
+      this.configuration = new api.models.Configuration(the_cookie.get('data'));
       Backbone.history.start();
       return this;
     },
