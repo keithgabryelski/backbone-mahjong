@@ -16,6 +16,9 @@ app.models.BoardManager = Backbone.Model.extend({
     this.hitMaster = new app.models.HitMaster(this.board);
     this.tileManager = new app.models.TileManager(this.board, this.configuration, this.boardDiv, this.tileClickHandler);
   },
+  prepareToStartGame: function() {
+    this.tileManager.prepareToStartGame()
+  },
   current_dimensions: function() {
     return this.board.current_dimensions();
   },

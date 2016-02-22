@@ -5,6 +5,9 @@ app.models.TileAdapter = Backbone.Model.extend({
     klass = configuration.tile_rendering_plug_class();
     this.plug = new klass(this.boardDiv, configuration);
   },
+  prepareToStartGame: function() {
+    this.plug.prepareToStartGame();
+  },
   get_positioned_tile: function(event) {
     return this.plug.get_positioned_tile(event);
   },

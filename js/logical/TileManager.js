@@ -62,6 +62,9 @@ app.models.TileManager = Backbone.Model.extend({
   unhighlight_tile: function(positioned_tile) {
     this.tileAdapter.realize_tile_as_unhighlighted(positioned_tile);
   },
+  prepareToStartGame: function() {
+    this.tileAdapter.prepareToStartGame();
+  },
   prepare_for_board_update: function(dimensions) {
     this.dimensions = dimensions;
     this.tileAdapter.prepare_for_board_update(dimensions)

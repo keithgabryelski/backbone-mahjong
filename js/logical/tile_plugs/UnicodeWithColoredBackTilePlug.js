@@ -67,9 +67,15 @@ app.models.UnicodeWithColoredBackTilePlug = app.models.UnicodeTilePlug.extend({
     tile_image.
       appendTo(this.boardDiv);
 
-    tile_image.animate({
-      top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
-    }, (Math.random() * 1000) + 1000);
+    if (this.preGame) {
+      tile_image.animate({
+        top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth)
+      }, (Math.random() * 1000) + 1000);
+    } else {
+      tile_image.css({
+        top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth)
+      })
+    }
 
     var tile_image_div = tile_image[0];
     positioned_tile.set({view: tile_image_div});

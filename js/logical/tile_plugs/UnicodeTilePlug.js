@@ -2,6 +2,10 @@ app.models.UnicodeTilePlug = Backbone.Model.extend({
   initialize: function(board_div, configuration) {
     this.boardDiv = board_div;
     this.configuration = configuration;
+    this.preGame = true;
+  },
+  prepareToStartGame: function() {
+    this.preGame = false;
   },
   prepare_for_board_update: function(board_dimensions, tile_dimensions) {
     this.boardDimensions = board_dimensions;
@@ -63,9 +67,15 @@ app.models.UnicodeTilePlug = Backbone.Model.extend({
         }).
         appendTo(this.boardDiv)[0];
 
-    $(tile_image).animate({
-      top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
-    }, (Math.random() * 1000) + 1000);
+    if (this.preGame) {
+      $(tile_image).animate({
+        top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
+      }, (Math.random() * 1000) + 1000);
+    } else {
+      $(tile_image).css({
+        top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth)
+      })
+    }
 
     positioned_tile.set({view: tile_image});
     jQuery.data(tile_image, 'tile', positioned_tile);

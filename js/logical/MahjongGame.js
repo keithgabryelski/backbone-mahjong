@@ -18,6 +18,7 @@ app.models.MahjongGame = Backbone.Model.extend({
     this.boardManager.displayTilesOnBoard();
   },
   startGame: function() {
+    this.boardManager.prepareToStartGame();
     this.boardManager.setBoardStatusAndTileState();
     this.boardStatus.startGame();
     app.audioBoard.play_start_game();
