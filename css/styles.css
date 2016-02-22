@@ -37,47 +37,56 @@ html,body {
     content: '\01f001';
 }
 
+.tile_bottom {
+    background-color: #ff6600;
+    border-color: #FF6600 #FF6600 #DD4400 #FF6600;
+}
+
+.tile_top {
+    border-color: #FFF #EEE #AAA #CCC;
+}
+
 .mahjongBoard {
     -webkit-user-select: none;
 }
 
-.tile {
+div.tile, .tile > span.tile_top {
     font-family: "Symbola";
     background-color: #AAA;
     border-color: #ccc #bbb #666 #777;
     -webkit-user-select: none;
 }
 
-.on_board {
+div.on_board, .on_board > span.tile_bottom {
     box-shadow: -8px 8px 10px rgba(0, 0, 0, 0.5);
 }
 
-.hinted {
+div.hinted, .hinted > span.tile_bottom {
     box-shadow: 0px 0px 40px red;
 }
 
-.off_board {
+div.off_board, .off_board > span.tile_bottom {
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.0);
 }
 
-.clickable {
+div.clickable, .clickable > span.tile_top {
     background-color: #EEE;
     border-color: #FFF #EEE #777 #888;
 }
 
-.highlighted {
+div.highlighted, .highlighted > span.tile_top {
     background-color: #FFF;
     border-color: #FFF #EEE #AAA #BBB;
     box-shadow: 0px 0px 40px white;
 }
 
-.clickable:hover {
+div.clickable:hover, .clickable:hover > span.tile_top {
     background-color: #FFF;
     border-color: #FFF #EEE #999 #AAA;
     box-shadow: 8px 8px 10px rgba(#fff, #fff, #fff, .5);
 }
 
-.highlighted:hover {
+div.highlighted:hover, .highlighted:hover > span.tile_top {
     background-color: #FFF;
     border-color: #FFF #EEE #AAA #BBB;
 }
@@ -152,16 +161,4 @@ table#history_with_scrollbar {
 
 .navbar-toggle {
     display: block;
-}
-
-.nav.nav-center {
-    display: inline-block;
-    left: 0;
-    right: 0;
-    margin:0;
-    float:none;
-}
-
-.navbar-inner{
-    text-align:center;
 }

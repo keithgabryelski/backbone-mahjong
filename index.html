@@ -55,8 +55,8 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="tile_renderers">Tile Renderer</label>
-        <select id="tile_renderers" class="form-control">
+        <label for="tile_renderer">Tile Renderer</label>
+        <select id="tile_renderer" class="form-control">
             <% app.tileRenderers.each(function(tile_renderer) { %>
                 <option value="<%= tile_renderer.get('ID') %>"><%= tile_renderer.get('name') %></option>
             <% }); %>
@@ -192,7 +192,6 @@
   <script src="js/logical/Dealer.js"></script>
   <script src="js/logical/TileManager.js"></script>
   <script src="js/logical/BoardManager.js"></script>
-  <script src="js/logical/tile_plugs/BasicUnicodeTilePlug.js"></script>
   <script src="js/logical/tile_plugs/UnicodeTilePlug.js"></script>
   <script src="js/logical/tile_plugs/UnicodeWithColoredBackTilePlug.js"></script>
   <script src="js/logical/TileAdapter.js"></script>

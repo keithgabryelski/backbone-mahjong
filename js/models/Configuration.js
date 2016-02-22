@@ -2,7 +2,7 @@ app.models.Configuration = Backbone.Model.extend({
   defaults: {
     background_id: 1,
     deck_id: 1,
-    tile_render_id: 1,
+    tile_renderer_id: 1,
     board_layout_id: 1,
     time_limit: true,
     show_hints: true,
@@ -14,7 +14,7 @@ app.models.Configuration = Backbone.Model.extend({
     scale_as_tiles_are_removed: false
   },
   tile_renderer: function() {
-    return app.tileRenderers.findWhere({ID: this.get('tile_render_id')});
+    return app.tileRenderers.findWhere({ID: this.get('tile_renderer_id')});
   },
   tile_rendering_plug_class: function() {
     return this.tile_renderer().get('rendering_plug_class')
