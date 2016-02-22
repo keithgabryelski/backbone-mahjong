@@ -52,4 +52,7 @@ app.models.MahjongGame = Backbone.Model.extend({
   clear_hint: function() {
     this.boardManager.resetHints();
   },
+  select_hint: function() {
+    this.boardManager.selectCurrentHint();
+  },
 });

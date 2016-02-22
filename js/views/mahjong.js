@@ -44,7 +44,11 @@ app.views.mahjong = Backbone.View.extend({
   hint: function(e) {
     e.preventDefault();
     if (this.mahjongGame) {
-      this.mahjongGame.show_hint();
+      if (e.shiftKey) {
+        this.mahjongGame.select_hint();
+      } else {
+        this.mahjongGame.show_hint();
+      }
     }
   },
   undo: function(e) {

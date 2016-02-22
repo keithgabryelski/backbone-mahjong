@@ -21,8 +21,8 @@ app.models.TileManager = Backbone.Model.extend({
     }
   },
   remove_tile_from_board: function(positioned_tile) {
-    var tile = this.tileAdapter.erase_tile(positioned_tile);
-    this.tileAdapter.move_tile_to_history(tile);
+    this.tileAdapter.erase_tile(positioned_tile);
+    this.tileAdapter.move_tile_to_history(positioned_tile);
     this.board.remove_tile(positioned_tile.get('position'))
   },
   make_tile_clickable: function(positioned_tile) {

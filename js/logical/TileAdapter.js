@@ -2,117 +2,67 @@ app.models.TileAdapter = Backbone.Model.extend({
   initialize: function(board_div, configuration) {
     this.boardDiv = board_div;
     this.configuration = configuration;
-    this.plug = new app.models.UnicodeTilePlug(configuration);
+    klass = configuration.tile_rendering_plug_class();
+    this.plug = new klass(this.boardDiv, configuration);
   },
   prepare_for_board_update: function(board_dimensions) {
-    this.divWidth = this.boardDiv.innerWidth();
-    this.divHeight = this.boardDiv.innerHeight();
-
     this.dimensions = board_dimensions;
 
-    this.horizontalMarginInColumns = 2;
-    this.verticalMarginInColumns = 2;
-
-    this.boardWidth = this.divWidth;
-    this.boardHeight = this.divHeight;
-
-    this.tileWidth = this.boardWidth / (this.dimensions.numColumns + this.horizontalMarginInColumns);
-    this.tileHeight = this.tileWidth * 4 / 3; // this seems about right
-
-    // do the tiles vertically?
-    if ((this.tileHeight * (this.dimensions.numRows + this.verticalMarginInColumns)) > this.boardHeight) {
-      // fit to vertical size then
-      this.tileHeight = this.boardHeight / (this.dimensions.numRows + this.verticalMarginInColumns);
-      this.tileWidth = this.tileHeight * 3 / 4;
+    this.tileDimensions = {
+      divWidth: this.boardDiv.innerWidth(),
+      divHeight: this.boardDiv.innerHeight(),
+      horizontalMarginInColumns: 2,
+      verticalMarginInColumns: 2,
+      boardWidth: this.boardDiv.innerWidth(),
+      boardHeight: this.boardDiv.innerHeight(),
     }
 
-    this.boardSideMargin = this.tileWidth * this.horizontalMarginInColumns / 2;
-    this.boardTopBottomMargin = this.tileHeight * this.verticalMarginInColumns / 2;
+    var tileWidth = this.tileDimensions.boardWidth / (this.dimensions.numColumns + this.tileDimensions.horizontalMarginInColumns);
+    var tileHeight = tileWidth * 4 / 3; // this seems about right
 
-    this.fontSize = this.tileWidth * 1.10; // this seems correct except for &#x1f004;
-    this.lineHeight = 1.1;                 // this seems correct
+    // do the tiles vertically?
+    if ((tileHeight * (this.dimensions.numRows + this.tileDimensions.verticalMarginInColumns)) > this.tileDimensions.boardHeight) {
+      // fit to vertical size then
+      tileHeight = this.tileDimensions.boardHeight / (this.dimensions.numRows + this.tileDimensions.verticalMarginInColumns);
+      tileWidth = tileHeight * 3 / 4;
+    }
 
-    this.tileDepth = this.tileWidth * 0.10;
+    this.tileDimensions.tileHeight = tileHeight;
+    this.tileDimensions.tileWidth = tileWidth;
+    
+    this.tileDimensions.boardSideMargin = tileWidth * this.tileDimensions.horizontalMarginInColumns / 2;
+    this.tileDimensions.boardTopBottomMargin = tileHeight * this.tileDimensions.verticalMarginInColumns / 2;
 
-    this.left = (this.boardWidth - (this.boardSideMargin + (this.tileWidth * this.dimensions.numColumns) + this.boardSideMargin)) / 2;
-    this.top = (this.boardHeight - (this.boardTopBottomMargin + (this.tileHeight * this.dimensions.numRows) + this.boardTopBottomMargin)) / 2;
+    this.tileDimensions.left = (this.tileDimensions.boardWidth - (this.tileDimensions.boardSideMargin + (tileWidth * this.dimensions.numColumns) + this.tileDimensions.boardSideMargin)) / 2;
+    this.tileDimensions.top = (this.tileDimensions.boardHeight - (this.tileDimensions.boardTopBottomMargin + (tileHeight * this.dimensions.numRows) + this.tileDimensions.boardTopBottomMargin)) / 2;
+    this.plug.prepare_for_board_update(board_dimensions, this.tileDimensions)
   },
-  disable_tooltip_for_tile: function(tile) {
-    $(tile.get('view')).tooltip('hide');
-    $(tile.get('view')).tooltip('disable');
+  disable_tooltip_for_tile: function(positioned_tile) {
+    this.plug.disable_tooltip_for_tile(positioned_tile);
   },
-  enable_tooltip_for_tile: function(tile) {
-    $(tile.get('view')).tooltip('enable');
+  enable_tooltip_for_tile: function(positioned_tile) {
+    this.plug.enable_tooltip_for_tile(positioned_tile);
   },
   erase_tile: function(positioned_tile) {
-    this.realize_tile_as_unclickable(positioned_tile);
-    $(positioned_tile.get('view')).
-      addClass('highlighted').
-      removeClass('on_board').
-      removeClass('hinted').
-      addClass('off_board');
-    this.disable_tooltip_for_tile(positioned_tile);
-    var tile = $(positioned_tile.get('view')).remove();
-    return tile;
+    this.plug.erase_tile(positioned_tile);
   },
   draw_tile: function(mahjong_div, positioned_tile) {
-    var tile = positioned_tile.get('tile');
-    var xyz = positioned_tile.get('xyz');
-    var tile_image = $("<div>").
-        addClass("tile").
-        addClass("category_" + tile.get('tile_category').get('short_name')).
-        addClass("tile_" + tile.get('short_name')).
-        addClass("on_board").
-        css({
-          left: xyz.x + this.boardSideMargin + (positioned_tile.get('position').get('layer') * this.tileDepth),
-          top: xyz.y + this.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDepth),
-          zIndex: (-1 * xyz.x) + xyz.y + (xyz.z * 1000), // 1000 := sloppy
-          position: 'absolute',
-        }).
-        css({
-          width: this.tileWidth,
-          height: this.tileHeight,
-        }).
-        css({
-          fontSize: this.fontSize,
-          lineHeight: this.lineHeight
-        }).
-        css({
-          borderStyle: "solid",
-          borderWidth: "1px 1px " + this.tileDepth + "px " + this.tileDepth + "px",
-          borderRadius: (this.tileWidth / 5) + "px",
-        }).
-        html(tile.get('value')).
-        tooltip({
-          title: tile.get('name'),
-          delay: {
-            show: 2000,
-          }
-        }).
-        appendTo(mahjong_div)[0];
-
-    positioned_tile.set({view: tile_image});
-    jQuery.data(tile_image, 'tile', positioned_tile);
+    this.plug.draw_tile(positioned_tile);
   },
-  move_tile_to_history: function(tile)  {
-    // XXX remove this next line, hvae board-history-tile-pair render directlly
-    tile.css({position: "static"}).css({zIndex: 1, boxShadow: ""})
+  move_tile_to_history: function(positioned_tile)  {
+    this.plug.move_tile_to_history(positioned_tile);
   },
   realize_tile_as_clickable: function(positioned_tile) {
-    $(positioned_tile.get('view')).
-      addClass("clickable")
+    this.plug.realize_tile_as_clickable(positioned_tile);
   },
   realize_tile_as_unclickable: function(positioned_tile) {
-    $(positioned_tile.get('view')).
-      removeClass("clickable")
+    this.plug.realize_tile_as_unclickable(positioned_tile);
   },
   realize_tile_as_highlighted: function(positioned_tile) {
-    $(positioned_tile.get('view')).
-      addClass("highlighted")
+    this.plug.realize_tile_as_highlighted(positioned_tile);
   },
   realize_tile_as_unhighlighted: function(positioned_tile) {
-    $(positioned_tile.get('view')).
-      removeClass("highlighted")
+    this.plug.realize_tile_as_unhighlighted(positioned_tile);
   },
   sortForSpriteRendering: function(a, b) {
     if (a.get('position').get('layer') == b.get('position').get('layer')) {
@@ -124,7 +74,7 @@ app.models.TileAdapter = Backbone.Model.extend({
     for (var i = 0; i < positioned_tiles.length; ++i) {
       var positioned_tile = positioned_tiles[i];
       var position = positioned_tile.get('position');
-      var xyz = this.translatePositionToXYOrder(position, this.tileWidth, this.tileHeight, this.tileDepth);
+      var xyz = this.translatePositionToXYOrder(position, this.tileDimensions.tileWidth, this.tileDimensions.tileHeight, this.tileDimensions.tileDepth);
       positioned_tile.set({xyz: xyz});
     }
     positioned_tiles.sort(this.sortForSpriteRendering)
@@ -158,8 +108,8 @@ app.models.TileAdapter = Backbone.Model.extend({
       break;
     }
     var projectedXY = {
-      x: (column + column_increment) * (tile_width - (tile_depth * 0.5)),
-      y: (row + row_increment) * (tile_height - (tile_depth * 0.5)),
+      x: this.tileDimensions.left + (column + column_increment) * (tile_width - (tile_depth * 0.5)),
+      y: this.tileDimensions.top + (row + row_increment) * (tile_height - (tile_depth * 0.5)),
       z: layer * tile_depth
     }
     return {

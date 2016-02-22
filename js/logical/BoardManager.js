@@ -140,7 +140,6 @@ app.models.BoardManager = Backbone.Model.extend({
       this.tileManager.highlight_tile(this.selectedTile);
     }
   },
-
   resetHints: function() {
     if (this.hintIndex == null) {
       return;
@@ -177,5 +176,15 @@ app.models.BoardManager = Backbone.Model.extend({
         }
       }
     }
+  },
+  selectCurrentHint: function() {
+    if (this.hintIndex == null) {
+      // BONK
+      return
+    }
+    var tiles_having_matches = this.boardStatus.get('tiles_having_matches');
+    var hint = tiles_having_matches[this.hintIndex];
+    this.selectedTile = hint[0];
+    this.selectTile(hint[1][0])
   }
 });
