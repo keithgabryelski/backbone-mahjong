@@ -6,7 +6,7 @@ app.models.UnicodeWithColoredBackTilePlug = app.models.UnicodeTilePlug.extend({
     var tile_image = $("<span>").
         css({
           left: xyz.x + this.tileDimensions.boardSideMargin + (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
-          top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
+          top: -100, //xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
           zIndex: (-1 * xyz.x) + xyz.y + (xyz.z * 1000), // 1000 := sloppy
           position: 'absolute',
         }).
@@ -66,6 +66,11 @@ app.models.UnicodeWithColoredBackTilePlug = app.models.UnicodeTilePlug.extend({
         appendTo(tile_image);
     tile_image.
       appendTo(this.boardDiv);
+
+    tile_image.animate({
+      top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
+    }, (Math.random() * 1000) + 1000);
+
     var tile_image_div = tile_image[0];
     positioned_tile.set({view: tile_image_div});
     jQuery.data(tile_image_div, 'tile', positioned_tile);

@@ -8,13 +8,7 @@ app.views.configuration = Backbone.View.extend({
   },
   render: function(index) {
     this.$el.html(this.template(this.model.toJSON()));
-    $("#audio_volume").slider({
-      tooltip: 'always',
-      precision: 2,
-      formatter: function(value) {
-	return 'Current value: ' + value;
-      }
-    });
+    $("#audio_volume").slider();
     this.delegateEvents();
     return this;
   },

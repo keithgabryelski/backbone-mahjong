@@ -37,7 +37,7 @@ app.models.UnicodeTilePlug = Backbone.Model.extend({
         addClass("on_board").
         css({
           left: xyz.x + this.tileDimensions.boardSideMargin + (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
-          top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
+          top: -100, //xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
           zIndex: (-1 * xyz.x) + xyz.y + (xyz.z * 1000), // 1000 := sloppy
           position: 'absolute',
         }).
@@ -62,6 +62,10 @@ app.models.UnicodeTilePlug = Backbone.Model.extend({
           }
         }).
         appendTo(this.boardDiv)[0];
+
+    $(tile_image).animate({
+      top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
+    }, (Math.random() * 1000) + 1000);
 
     positioned_tile.set({view: tile_image});
     jQuery.data(tile_image, 'tile', positioned_tile);

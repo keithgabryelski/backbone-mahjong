@@ -137,6 +137,7 @@ app.models.BoardManager = Backbone.Model.extend({
           this.selectedTile = positioned_tile;
           this.tileManager.highlight_tile(this.selectedTile);
           app.audioBoard.play_bonk();
+          app.audioBoard.play_undo_selection();
         }
       }
     } else {
