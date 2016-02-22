@@ -8,6 +8,13 @@ app.views.configuration = Backbone.View.extend({
   },
   render: function(index) {
     this.$el.html(this.template(this.model.toJSON()));
+    $("#audio_volume").slider({
+      tooltip: 'always',
+      precision: 2,
+      formatter: function(value) {
+	return 'Current value: ' + value;
+      }
+    });
     this.delegateEvents();
     return this;
   },
@@ -19,9 +26,15 @@ app.views.configuration = Backbone.View.extend({
     this.model.set({ background_id: background_id})
     var tile_renderer_id = parseInt(this.$('#tile_renderer').val());
     this.model.set({ tile_renderer_id: tile_renderer_id})
+
+    var audio_volume = parseInt(this.$('#audio_volume').data('slider').getValue()) / 100.0;
+    this.model.set({ audio_volume: audio_volume})
+
     var the_cookie = new Cookie({id: 'mahjong'});
     the_cookie.set('data', this.model.attributes);
     the_cookie.save();
+
+    app.audioBoard.set_volume(audio_volume);
     this.trigger("play");
   }
 });

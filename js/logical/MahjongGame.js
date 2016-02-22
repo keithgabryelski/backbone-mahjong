@@ -20,6 +20,7 @@ app.models.MahjongGame = Backbone.Model.extend({
   startGame: function() {
     this.boardManager.setBoardStatusAndTileState();
     this.boardStatus.startGame();
+    app.audioBoard.play_start_game();
   },
   refreshBoard: function() {
     this.boardManager.refreshBoard();
@@ -28,13 +29,16 @@ app.models.MahjongGame = Backbone.Model.extend({
     this.boardManager.selectTile(positioned_tile);
   },
   show_hint: function() {
+    // XXX need audio here for success and failure
     this.boardManager.showNextHint();
   },
   undo: function() {
     if (this.boardStatus.get('history').length == 0) {
-      // BONK -- nothing to undo
+      app.audioBoard.play_bonk();
       return;
     }
+
+    app.audioBoard.play_undo();
 
     this.boardManager.resetHints();
 

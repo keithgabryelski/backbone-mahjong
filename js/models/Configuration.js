@@ -11,7 +11,8 @@ app.models.Configuration = Backbone.Model.extend({
     allow_undo: true,
     allow_reshuffle: true,
     ensure_solvable: false,
-    scale_as_tiles_are_removed: false
+    scale_as_tiles_are_removed: false,
+    audio_volume: .75
   },
   tile_renderer: function() {
     return app.tileRenderers.findWhere({ID: this.get('tile_renderer_id')});

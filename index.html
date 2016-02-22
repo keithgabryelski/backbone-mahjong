@@ -14,6 +14,7 @@
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/flick/jquery-ui.css" />
   <link href="css/jasny-bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-slider.css" rel="stylesheet">
  </head>
  <body>
   <div id="content" class="container-fluid" style="height: 100%"></div>
@@ -35,7 +36,7 @@
   </script>
 
   <script type="text/template" id="tpl-configuration">
-    <p>When you are ready, press play</p>
+    <p>Welcome to Mahjong Solitaire</p>
 
     <form role="form">
       <div class="form-group">
@@ -62,7 +63,11 @@
             <% }); %>
         </select>
       </div>
-      <button type="submit" class="btn btn-default">play</button>
+      <div class="form-group">
+        <label for="audio_volume">Audio Volume</label>
+        <input id="audio_volume" data-slider-id='audioVolumeSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="5" data-slider-value="75"/>
+      </div>
+      <button type="submit" class="btn btn-default">Start Game</button>
     </form>
   </script>
 
@@ -148,6 +153,7 @@
   <script src="js/vendor/backbone.js"></script>
   <script src="js/vendor/jquery.cookie.js"></script>
   <script src="js/vendor/backbone-cookies.js"></script>
+  <script src="js/vendor/bootstrap-slider.js"></script>
 
   <script src="js/App.js"></script>
 
@@ -164,6 +170,7 @@
   <script src="js/models/PositionedTile.js"></script>
   <script src="js/models/TilePair.js"></script>
   <script src="js/models/TileRenderer.js"></script>
+  <script src="js/models/AudioBoard.js"></script>
 
   <script src="js/collections/Types.js"></script>
   <script src="js/collections/BoardLayouts.js"></script>
@@ -189,6 +196,8 @@
   <script src="js/data/Decks.js"></script>
 
   <script src="js/models/Board.js"></script>
+
+  <script src="js/data/AudioBoard.js"></script>
 
   <script src="js/logical/HitMaster.js"></script>
   <script src="js/logical/Dealer.js"></script>

@@ -33,9 +33,11 @@ app.models.BoardManager = Backbone.Model.extend({
     if (tiles_on_board.length == 0) {
       this.boardStatus.set({status: "WINNER!"});
       this.boardStatus.stopGame();
+      app.audioBoard.play_game_over_success();
     } else if (tiles_having_matches.length == 0) {
       this.boardStatus.set({status: "LOSER!"});
       this.boardStatus.stopGame();
+      app.audioBoard.play_game_over_fail();
     } else {
       this.boardStatus.set({status: "Playing..."});
     }
@@ -113,8 +115,10 @@ app.models.BoardManager = Backbone.Model.extend({
       if (this.selectedTile == positioned_tile) {
         this.tileManager.unhighlight_tile(positioned_tile);
         // BONKETY
+        app.audioBoard.play_undo_selection();
       } else {
         if (this.selectedTile.is_matching(positioned_tile)) {
+          app.audioBoard.play_tile_pair_selected();
           var old_dimensions = this.current_dimensions();
           // FLASH
           this.remove_tiles(this.selectedTile, positioned_tile);
@@ -132,10 +136,11 @@ app.models.BoardManager = Backbone.Model.extend({
           this.tileManager.unhighlight_tile(this.selectedTile);
           this.selectedTile = positioned_tile;
           this.tileManager.highlight_tile(this.selectedTile);
-          // BONK
+          app.audioBoard.play_bonk();
         }
       }
     } else {
+      app.audioBoard.play_first_tile_selected();
       this.selectedTile = positioned_tile;
       this.tileManager.highlight_tile(this.selectedTile);
     }
@@ -166,6 +171,7 @@ app.models.BoardManager = Backbone.Model.extend({
     }
     if (this.hintIndex >= tiles_having_matches.length) {
       // BONK
+      app.audioBoard.play_bonk();
     } {
       var hintables = tiles_having_matches[this.hintIndex];
       // XXX this needs to be in tile manager
@@ -180,8 +186,10 @@ app.models.BoardManager = Backbone.Model.extend({
   selectCurrentHint: function() {
     if (this.hintIndex == null) {
       // BONK
+      app.audioBoard.play_bonk();
       return
     }
+    app.audioBoard.play_tile_pair_selected();
     var tiles_having_matches = this.boardStatus.get('tiles_having_matches');
     var hint = tiles_having_matches[this.hintIndex];
     this.selectedTile = hint[0];
