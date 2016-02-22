@@ -117,6 +117,7 @@ app.models.BoardManager = Backbone.Model.extend({
     if (this.selectedTile) {
       if (this.selectedTile == positioned_tile) {
         this.tileManager.unhighlight_tile(positioned_tile);
+        this.selectedTile = null;
         // BONKETY
         app.audioBoard.play_undo_selection();
       } else {
