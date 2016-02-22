@@ -24,9 +24,7 @@ app.models.MahjongGame = Backbone.Model.extend({
   refreshBoard: function() {
     this.boardManager.refreshBoard();
   },
-  tileClickHandler: function(event) {
-    var target = $(event.target);
-    var positioned_tile = jQuery.data(target[0], 'tile')
+  tileClickHandler: function(positioned_tile) {
     this.boardManager.selectTile(positioned_tile);
   },
   show_hint: function() {

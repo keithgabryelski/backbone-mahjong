@@ -48,8 +48,8 @@ app.models.UnicodeWithColoredBackTilePlug = app.models.UnicodeTilePlug.extend({
         addClass("category_" + tile.get('tile_category').get('short_name')).
         addClass("tile_" + tile.get('short_name')).
         css({
-          left: (this.tileDimensions.tileDepth * 1) - 2, // the 2 here is bogus
-          top: 0 - (this.tileDimensions.tileDepth * 1),
+          left: 2,
+          top: -2,
           position: 'absolute',
         }).
         css({
@@ -68,7 +68,10 @@ app.models.UnicodeWithColoredBackTilePlug = app.models.UnicodeTilePlug.extend({
       appendTo(this.boardDiv);
     var tile_image_div = tile_image[0];
     positioned_tile.set({view: tile_image_div});
-    jQuery.data(tile_image, 'tile', positioned_tile);
+    jQuery.data(tile_image_div, 'tile', positioned_tile);
+  },
+  get_positioned_tile: function(event) {
+    return (jQuery.data($(event.target).parent()[0], 'tile') || jQuery.data(event.target, 'tile'));
   },
   move_tile_to_history: function(positioned_tile)  {
     $(positioned_tile.get('view')).

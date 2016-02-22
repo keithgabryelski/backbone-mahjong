@@ -66,6 +66,9 @@ app.models.UnicodeTilePlug = Backbone.Model.extend({
     positioned_tile.set({view: tile_image});
     jQuery.data(tile_image, 'tile', positioned_tile);
   },
+  get_positioned_tile: function(event) {
+    return jQuery.data(event.target, 'tile');
+  },
   move_tile_to_history: function(positioned_tile)  {
     $(positioned_tile.get('view')).
       css({position: "static"}).css({zIndex: 1, boxShadow: ""})

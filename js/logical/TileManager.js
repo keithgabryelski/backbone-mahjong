@@ -27,8 +27,13 @@ app.models.TileManager = Backbone.Model.extend({
   },
   make_tile_clickable: function(positioned_tile) {
     this.tileAdapter.realize_tile_as_clickable(positioned_tile);
+    var handler = $.proxy(this.click_handler, this)
     $(positioned_tile.get('view')).
-      on("click", this.tileClickHandler);
+      on("click", handler);
+  },
+  click_handler: function(event) {
+    var positioned_tile = this.tileAdapter.get_positioned_tile(event);
+    this.tileClickHandler(positioned_tile);
   },
   make_tile_unclickable: function(positioned_tile) {
     this.tileAdapter.realize_tile_as_unclickable(positioned_tile);

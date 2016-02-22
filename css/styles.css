@@ -34,11 +34,13 @@ html,body {
 }
 
 .tile_bottom {
+    font-family: "Symbola";
     background-color: #ff6600;
     border-color: #FF6600 #FF6600 #DD4400 #FF6600;
 }
 
 .tile_top {
+    font-family: "Symbola";
     border-color: #FFF #EEE #AAA #CCC;
 }
 
@@ -91,7 +93,7 @@ div.highlighted:hover, .highlighted:hover > span.tile_top {
 }
 
 .category_wind {
-    color: #00AAAA;
+    color: #000000;
 }
 
 .category_bamboo_suit {
@@ -134,6 +136,16 @@ div.highlighted:hover, .highlighted:hover > span.tile_top {
 }
 .tile_chrysanthemum_flower {
     color: #e15d98;
+}
+
+.tile_red_dragon {
+    color: #990000;
+}
+.tile_white_dragon {
+    color: #000000;
+}
+.tile_green_dragon {
+    color: #009900;
 }
 
 .category_joker {
