@@ -15,7 +15,13 @@ var app = (function() {
     decks: {},
     init: function() {
       this.content = $("#content");
-      this.configuration = new api.models.Configuration();
+      var the_cookie = new Cookie({id: 'mahjong'});
+      if (the_cookie.isEmpty()) {
+        this.configuration = new api.models.Configuration();
+        the_cookie.set('data', this.configuration);
+        the_cookie.save();
+      }
+      this.configuration = the_cookie.get('data');
       Backbone.history.start();
       return this;
     },
