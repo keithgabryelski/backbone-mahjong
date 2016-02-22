@@ -20,7 +20,7 @@ app.views.configuration = Backbone.View.extend({
     var tile_renderer_id = parseInt(this.$('#tile_renderer').val());
     this.model.set({ tile_renderer_id: tile_renderer_id})
     var the_cookie = new Cookie({id: 'mahjong'});
-    the_cookie.set('data', this.model);
+    the_cookie.set('data', this.model.attributes);
     the_cookie.save();
     this.trigger("play");
   }

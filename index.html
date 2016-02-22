@@ -42,7 +42,7 @@
         <label for="layout">Board Layout</label>
         <select id="layout" class="form-control">
             <% app.boardLayouts.each(function(layout) { %>
-                <option value="<%= layout.get('ID') %>"<%= attributes.layout_id == layout.get('ID') ? " SELECTED" : "" %> ><%= layout.get('name') %></option>
+                <option value="<%= layout.get('ID') %>"<%= this.layout_id == layout.get('ID') ? " SELECTED" : "" %> ><%= layout.get('name') %></option>
             <% }); %>
         </select>
       </div
@@ -50,7 +50,7 @@
         <label for="background">Background</label>
         <select id="background" class="form-control">
             <% app.backgrounds.each(function(background) { %>
-                <option value="<%= background.get('ID') %>"<%= attributes.background_id == background.get('ID') ? " SELECTED" : "" %> ><%= background.get('name') %></option>
+                <option value="<%= background.get('ID') %>"<%= this.background_id == background.get('ID') ? " SELECTED" : "" %> ><%= background.get('name') %></option>
             <% }); %>
         </select>
       </div>
@@ -58,7 +58,7 @@
         <label for="tile_renderer">Tile Renderer</label>
         <select id="tile_renderer" class="form-control">
             <% app.tileRenderers.each(function(tile_renderer) { %>
-                <option value="<%= tile_renderer.get('ID') %>"<%= attributes.tile_renderer_id == tile_renderer.get('ID') ? " SELECTED" : "" %> ><%= tile_renderer.get('name') %></option>
+                <option value="<%= tile_renderer.get('ID') %>"<%= this.tile_renderer_id == tile_renderer.get('ID') ? " SELECTED" : "" %> ><%= tile_renderer.get('name') %></option>
             <% }); %>
         </select>
       </div>

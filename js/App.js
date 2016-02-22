@@ -18,7 +18,7 @@ var app = (function() {
       var the_cookie = new Cookie({id: 'mahjong'});
       if (the_cookie.isEmpty()) {
         this.configuration = new api.models.Configuration();
-        the_cookie.set('data', this.configuration);
+        the_cookie.set('data', this.configuration.attributes);
         the_cookie.save();
       }
       this.configuration = new api.models.Configuration(the_cookie.get('data'));
