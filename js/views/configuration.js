@@ -7,7 +7,7 @@ app.views.configuration = Backbone.View.extend({
     this.render();
   },
   render: function(index) {
-    this.$el.html(this.template(this.model.attributes));
+    this.$el.html(this.template(this.model.toJSON()));
     this.delegateEvents();
     return this;
   },

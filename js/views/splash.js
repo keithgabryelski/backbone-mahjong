@@ -11,6 +11,8 @@ app.views.splash = Backbone.View.extend({
   },
 
   render: function() {
+    var unicode_value = app.decks.standard.shuffle()[0].get('value');
+
     this.$el.html(this.template());
     var width = $('body').innerWidth() / 3;
     var fontSize = width;
@@ -28,7 +30,8 @@ app.views.splash = Backbone.View.extend({
         borderStyle: "solid",
         borderWidth: "1px 1px " + depth + "px " + depth + "px",
         borderRadius: radius + "px",
-      })
+      }).
+      html(unicode_value)
     $('#splash_icon_top').
       css({
         position: "absolute",
@@ -41,7 +44,8 @@ app.views.splash = Backbone.View.extend({
         borderStyle: "solid",
         borderWidth: "1px 1px " + depth + "px " + depth + "px",
         borderRadius: radius + "px",
-      })
+      }).
+      html(unicode_value)
     this.delegateEvents();
     return this;
   },

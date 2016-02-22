@@ -33,10 +33,6 @@ html,body {
     line-height: 1.1;
 }
 
-.splash_icon_piece:after {
-    content: '\01f001';
-}
-
 .tile_bottom {
     background-color: #ff6600;
     border-color: #FF6600 #FF6600 #DD4400 #FF6600;
