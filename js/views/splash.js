@@ -11,8 +11,7 @@ app.views.splash = Backbone.View.extend({
   },
 
   render: function() {
-    var unicode_value = app.decks.standard.shuffle()[0].get('value');
-
+    var tile = app.decks.standard.shuffle()[0]
     this.$el.html(this.template());
     var width = $('body').innerWidth() / 3;
     var fontSize = width;
@@ -31,8 +30,10 @@ app.views.splash = Backbone.View.extend({
         borderWidth: "1px 1px " + depth + "px " + depth + "px",
         borderRadius: radius + "px",
       }).
-      html(unicode_value)
+      html(tile.get('value'))
     $('#splash_icon_top').
+      addClass("category_" + tile.get('tile_category').get('short_name')).
+      addClass("tile_" + tile.get('short_name')).
       css({
         position: "absolute",
         left: $('#splash_icon_bottom')[0].offsetLeft + 14,
@@ -45,7 +46,7 @@ app.views.splash = Backbone.View.extend({
         borderWidth: "1px 1px " + depth + "px " + depth + "px",
         borderRadius: radius + "px",
       }).
-      html(unicode_value)
+      html(tile.get('value'))
     this.delegateEvents();
     return this;
   },
