@@ -24,10 +24,12 @@ app.views.mahjong = Backbone.View.extend({
     this.boardHistoryView.render();
     this.boardGameTimerView.render();
     this.boardGameStatusView.render();
+    this.boardGameDetailsView.render();
     this.mahjongGame.setupGame($("#mahjongBoard"), this.configuration, this.boardStatus);
     $('#mahjongBoardHistory').append(this.boardHistoryView.el);
     $('#mahjongGameTimer').append(this.boardGameTimerView.el);
     $('#mahjongGameStatus').append(this.boardGameStatusView.el);
+    $('#mahjongGameDetails').append(this.boardGameDetailsView.el);
     this.mahjongGame.startGame();
     this.delegateEvents();
     return this;
