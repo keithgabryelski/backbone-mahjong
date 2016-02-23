@@ -26,6 +26,7 @@
     <div class="col-sm-6">
       <h1>Mahjong Solitaire</h1>
       <h2>by <a href="https://github.com/keithgabryelski">keithgabryelski</a></h2>
+      <h3>version 0.8</h3>
     </div>
     <div id="splash_icon" class="col-sm-6">
       <span id="splash_icon_bottom" class="splash_icon_bottom"></span>
@@ -40,32 +41,40 @@
 
     <form role="form">
       <div class="form-group">
-        <label for="layout">Board Layout</label>
-        <select id="layout" class="form-control">
+        <label for="layout" class="col-md-4 control-label">Board Layout</label>
+        <div class="col-md-8">
+          <select id="layout" class="form-control">
             <% app.boardLayouts.each(function(layout) { %>
                 <option value="<%= layout.get('ID') %>"<%= board_layout_id == layout.get('ID') ? " SELECTED" : "" %> ><%= layout.get('name') %></option>
             <% }); %>
-        </select>
-      </div
-      <div class="form-group">
-        <label for="background">Background</label>
-        <select id="background" class="form-control">
-            <% app.backgrounds.each(function(background) { %>
-                <option value="<%= background.get('ID') %>"<%= background_id == background.get('ID') ? " SELECTED" : "" %> ><%= background.get('name') %></option>
-            <% }); %>
-        </select>
+          </select>
+        </div>
       </div>
       <div class="form-group">
-        <label for="tile_renderer">Tile Renderer</label>
-        <select id="tile_renderer" class="form-control">
-            <% app.tileRenderers.each(function(tile_renderer) { %>
-                <option value="<%= tile_renderer.get('ID') %>"<%= tile_renderer_id == tile_renderer.get('ID') ? " SELECTED" : "" %> ><%= tile_renderer.get('name') %></option>
-            <% }); %>
-        </select>
+        <label for="background" class="col-md-4 control-label">Background</label>
+        <div class="col-md-8">
+          <select id="background" class="form-control">
+              <% app.backgrounds.each(function(background) { %>
+                  <option value="<%= background.get('ID') %>"<%= background_id == background.get('ID') ? " SELECTED" : "" %> ><%= background.get('name') %></option>
+              <% }); %>
+          </select>
+        </div>
       </div>
       <div class="form-group">
-        <label for="audio_volume">Audio Volume</label>
-        <input id="audio_volume" data-slider-id="audioVolumeSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="5" data-slider-value="75"/>
+        <label for="tile_renderer" class="col-md-4 control-label">Tile Renderer</label>
+        <div class="col-md-8">
+          <select id="tile_renderer" class="form-control">
+              <% app.tileRenderers.each(function(tile_renderer) { %>
+                  <option value="<%= tile_renderer.get('ID') %>"<%= tile_renderer_id == tile_renderer.get('ID') ? " SELECTED" : "" %> ><%= tile_renderer.get('name') %></option>
+              <% }); %>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="audio_volume" class="col-md-4 control-label">Audio Volume</label>
+        <div class="col-md-8">
+          <input id="audio_volume" data-slider-id="audioVolumeSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="5" data-slider-value="75"/>
+        </div>
       </div>
       <button type="submit" class="btn btn-default">Start Game</button>
     </form>
