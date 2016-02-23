@@ -1,4 +1,49 @@
-app.models.CssSpriteTilePlug = Backbone.Model.extend({
+app.models.ImageTilePlug = Backbone.Model.extend({
+  GnomeImages: {
+    'white_dragon': 'images/gnome/_dragon_white.png',
+    'bamboo_flower': 'images/gnome/_flower_bamboo.png',
+    'chrysanthemum_flower': 'images/gnome/_flower_chrysanthemum.png',
+    'orchid_flower': 'images/gnome/_flower_orchid.png',
+    'plum_flower': 'images/gnome/_flower_plum.png',
+    'autumn_season': 'images/gnome/_season_autumn.png',
+    'spring_season': 'images/gnome/_season_spring.png',
+    'summer_season': 'images/gnome/_season_summer.png',
+    'winter_season': 'images/gnome/_season_winter.png',
+    'one_of_bamboos': 'images/gnome/bamboo_1.png',
+    'two_of_bamboos': 'images/gnome/bamboo_2.png',
+    'three_of_bamboos': 'images/gnome/bamboo_3.png',
+    'four_of_bamboos': 'images/gnome/bamboo_4.png',
+    'five_of_bamboos': 'images/gnome/bamboo_5.png',
+    'six_of_bamboos': 'images/gnome/bamboo_6.png',
+    'seven_of_bamboos': 'images/gnome/bamboo_7.png',
+    'eight_of_bamboos': 'images/gnome/bamboo_8.png',
+    'nine_of_bamboos': 'images/gnome/bamboo_9.png',
+    'blank': 'images/gnome/blank.png',
+    'one_of_characters': 'images/gnome/character_1.png',
+    'two_of_characters': 'images/gnome/character_2.png',
+    'three_of_characters': 'images/gnome/character_3.png',
+    'four_of_characters': 'images/gnome/character_4.png',
+    'five_of_characters': 'images/gnome/character_5.png',
+    'six_of_characters': 'images/gnome/character_6.png',
+    'seven_of_characters': 'images/gnome/character_7.png',
+    'eight_of_characters': 'images/gnome/character_8.png',
+    'nine_of_characters': 'images/gnome/character_9.png',
+    'one_of_circles': 'images/gnome/circle_1.png',
+    'two_of_circles': 'images/gnome/circle_2.png',
+    'three_of_circles': 'images/gnome/circle_3.png',
+    'four_of_circles': 'images/gnome/circle_4.png',
+    'five_of_circles': 'images/gnome/circle_5.png',
+    'six_of_circles': 'images/gnome/circle_6.png',
+    'seven_of_circles': 'images/gnome/circle_7.png',
+    'eight_of_circles': 'images/gnome/circle_8.png',
+    'nine_of_circles': 'images/gnome/circle_9.png',
+    'green_dragon': 'images/gnome/dragon_green.png',
+    'red_dragon': 'images/gnome/dragon_red.png',
+    'east_wind': 'images/gnome/honor_east.png',
+    'north_wind': 'images/gnome/honor_north.png',
+    'south_wind': 'images/gnome/honor_south.png',
+    'west_wind': 'images/gnome/honor_west.png',
+  },
   initialize: function(board_div, configuration) {
     this.boardDiv = board_div;
     this.configuration = configuration;
@@ -30,9 +75,11 @@ app.models.CssSpriteTilePlug = Backbone.Model.extend({
     $(positioned_tile.get('view')).remove();
   },
   get_tile_image: function(tile) {
-    var tile_image = $('<img src="images/img_trans.gif">').
-        addClass("tileset_chinasage").
-        addClass("tileset_chinasage_" + tile.get('short_name')).
+    var tile_image_path = this.GnomeImages[tile.get('short_name')]
+    if (!tile_image_path) {
+      tile_image_path = this.GnomeImages['blank']
+    }
+    var tile_image = $('<img src="' + tile_image_path + '">').
         addClass("tile").
         addClass("category_" + tile.get('tile_category').get('short_name')).
         addClass("tile_" + tile.get('short_name')).
