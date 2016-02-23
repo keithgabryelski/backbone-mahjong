@@ -20,5 +20,11 @@ app.tileRenderers.set(
       short_name: 'chinasage',
       rendering_plug_class: app.models.CssSpriteTilePlug
     },
+    {
+      ID: 4,
+      name: 'Gnome',
+      short_name: 'gnome',
+      rendering_plug_class: app.models.ImageTilePlug
+    },
   ]
 );
