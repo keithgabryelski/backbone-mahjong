@@ -2,10 +2,6 @@ bugs:
  timer can wrap
 
 features:
- splash icon should resize
-
- configuration should be cookied preferences so they save across refresh
-
  mahjong board should be full width/height 
   overlay controls
   slide in history
@@ -13,11 +9,7 @@ features:
   iconified advanced status
   modal for win/lose
 
- add audio for moves, add mute button
-
  use bootstrap icons for controls
-
- configuration should be prettier (images for selects)
 
  implement more board layouts
 
@@ -36,12 +28,6 @@ wishes:
 
  restructure play board to be entirely backbone
  
- implement tiles with colored bottoms
-
  implement other tile sets (gnome png, self owned colorized png)
 
  need something like requirejs to organize the templates
- 
- rewrite tiles is be more like splash screen (span)
-
- clean up hit master to calculate coordinates in a more readible way
