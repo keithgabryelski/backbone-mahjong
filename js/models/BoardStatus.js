@@ -16,5 +16,11 @@ app.models.BoardStatus = Backbone.Model.extend({
   },
   stopGame: function() {
     clearInterval(this.get('gameTimer'));
+  },
+  pauseTimer: function() {
+    this.stopGame();
+  },
+  unpauseTimer: function() {
+    this.startGame();
   }
 });

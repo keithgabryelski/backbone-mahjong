@@ -23,6 +23,12 @@ app.models.MahjongGame = Backbone.Model.extend({
     this.boardStatus.startGame();
     app.audioBoard.play_start_game();
   },
+  pauseGame: function() {
+    this.boardStatus.pauseTimer();
+  },
+  unpauseGame: function() {
+    this.boardStatus.unpauseTimer();
+  },
   refreshBoard: function() {
     this.boardManager.refreshBoard();
   },

@@ -4,7 +4,9 @@ app.views.mahjong = Backbone.View.extend({
   events: {
     'click #quitButton': 'quit',
     'click #hintButton': 'hint',
-    'click #undoButton': 'undo'
+    'click #undoButton': 'undo',
+    'click #mahjongGameTimer': 'pause',
+    'click #pausePanelClose': 'unpause'
   },
   initialize: function(options) {
     this.boardStatus = new app.models.BoardStatus();
@@ -55,6 +57,18 @@ app.views.mahjong = Backbone.View.extend({
     e.preventDefault();
     if (this.mahjongGame) {
       this.mahjongGame.undo();
+    }
+  },
+  pause: function(e) {
+    e.preventDefault();
+    if (this.mahjongGame) {
+      this.mahjongGame.pauseGame();
+    }
+  },
+  unpause: function(e) {
+    e.preventDefault();
+    if (this.mahjongGame) {
+      this.mahjongGame.unpauseGame();
     }
   },
 });
