@@ -2,7 +2,7 @@ app.models.TileAdapter = Backbone.Model.extend({
   initialize: function(board_div, configuration) {
     this.boardDiv = board_div;
     this.configuration = configuration;
-    klass = configuration.tile_rendering_plug_class();
+    var klass = configuration.tile_rendering_plug_class();
     this.plug = new klass(this.boardDiv, configuration);
   },
   prepareToStartGame: function() {

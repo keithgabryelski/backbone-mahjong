@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/flick/jquery-ui.css" />
   <link href="css/jasny-bootstrap.min.css" rel="stylesheet">
   <link href="css/bootstrap-slider.css" rel="stylesheet">
+  <link href="css/tilesets/chinasage/style.css" rel="stylesheet">
  </head>
  <body>
   <div id="content" class="container-fluid" style="height: 100%"></div>
@@ -212,9 +213,28 @@
   <button id="backButton" class="btn btn-primary">Back</button>
   </script>
   
+  <script type="text/template" id="tpl-tile-set-gallery">
+  <h2>The mahjong tile sets</h2>
+  <p>
+  Here are some tiles
+  </p>
+<p>
+        <% for (var i = 0; i < collection.length; ++i) { %>
+        <% var tile = collection[i]; %>
+        <% var tile_image = this.plug.get_tile_image(tile); %>
+        <%= tile_image.addClass("highlighted").css({float: "left"})[0].outerHTML %>
+        <% } %>
+</p>
+<p>
+<br/>
+<br/>
+  <button id="backButton" class="btn btn-primary">Back</button>
+</p>
+  </script>
+
   <script type="text/template" id="tpl-configuration">
   <p class="lead">Welcome to Mahjong Solitaire!</p>
-  <p>For information on how to play, please see the <a href="#instructions">instructions</a></p>
+  <p>For information on how to play, please see the <a href="#instructions">instructions</a>, you can also visit the <a href="#tile_set_gallery">Tile Set Gallery</a></p>
 
     <form role="form">
       <div class="form-group">
@@ -424,12 +444,14 @@
   <script src="js/logical/BoardManager.js"></script>
   <script src="js/logical/tile_plugs/UnicodeTilePlug.js"></script>
   <script src="js/logical/tile_plugs/UnicodeWithColoredBackTilePlug.js"></script>
+  <script src="js/logical/tile_plugs/CssSpriteTilePlug.js"></script>
   <script src="js/logical/TileAdapter.js"></script>
   <script src="js/logical/TileManager.js"></script>
   <script src="js/logical/MahjongGame.js"></script>
 
   <script src="js/views/splash.js"></script>
   <script src="js/views/instructions.js"></script>
+  <script src="js/views/tile_set_gallery.js"></script>
   <script src="js/views/configuration.js"></script>
   <script src="js/views/board_status.js"></script>
   <script src="js/views/board_controls.js"></script>

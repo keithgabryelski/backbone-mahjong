@@ -67,19 +67,12 @@ app.models.UnicodeWithColoredBackTilePlug = app.models.UnicodeTilePlug.extend({
     tile_image.
       appendTo(this.boardDiv);
 
-    if (this.preGame) {
-      tile_image.animate({
-        top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth)
-      }, (Math.random() * 1000) + 1000);
-    } else {
-      tile_image.css({
-        top: xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth)
-      })
-    }
-
-    var tile_image_div = tile_image[0];
-    positioned_tile.set({view: tile_image_div});
-    jQuery.data(tile_image_div, 'tile', positioned_tile);
+    this.set_positioned_tile_position(tile_image, positioned_tile);
+    this.set_positioned_tile(tile_image[0], positioned_tile);
+  },
+  set_positioned_tile: function(tile_image, positioned_tile) {
+    positioned_tile.set({view: tile_image});
+    jQuery.data(tile_image, 'tile', positioned_tile);
   },
   get_positioned_tile: function(event) {
     return (jQuery.data($(event.target).parent()[0], 'tile') || jQuery.data(event.target, 'tile'));

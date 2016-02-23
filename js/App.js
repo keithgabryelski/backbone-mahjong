@@ -77,6 +77,16 @@ var app = (function() {
       }
       return this.instructionsView;
     },
+    tile_set_gallery: function() {
+      if (!this.tileSetGalleryView) {
+	this.tileSetGalleryView = new api.views.tile_set_gallery({
+        }).on("back", function() {
+	  api.router.navigate("configuration");
+          window.location.reload();
+	})
+      }
+      return this.tileSetGalleryView;
+    },
   };
 
   var Router = Backbone.Router.extend({
@@ -85,6 +95,7 @@ var app = (function() {
       "configuration": "configuration",
       "mahjong": "mahjong",
       "instructions": "instructions",
+      "tile_set_gallery": "tile_set_gallery",
       "": "splash"
     },
     splash: function() {
@@ -105,6 +116,11 @@ var app = (function() {
     instructions: function() {
       var view = ViewsFactory.instructions();
       api.title("Mahjong Solitaire Instructions").changeContent(view.$el);
+      view.render();
+    },
+    tile_set_gallery: function() {
+      var view = ViewsFactory.tile_set_gallery();
+      api.title("Mahjong Solitaire Tile Set Gallery").changeContent(view.$el);
       view.render();
     },
   });

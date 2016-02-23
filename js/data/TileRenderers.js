@@ -14,5 +14,11 @@ app.tileRenderers.set(
       short_name: 'unicode_with_colored_back',
       rendering_plug_class: app.models.UnicodeWithColoredBackTilePlug
     },
+    {
+      ID: 3,
+      name: 'China Sage',
+      short_name: 'chinasage',
+      rendering_plug_class: app.models.CssSpriteTilePlug
+    },
   ]
 );

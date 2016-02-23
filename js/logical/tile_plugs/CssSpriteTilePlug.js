@@ -1,4 +1,4 @@
-app.models.UnicodeTilePlug = Backbone.Model.extend({
+app.models.CssSpriteTilePlug = Backbone.Model.extend({
   initialize: function(board_div, configuration) {
     this.boardDiv = board_div;
     this.configuration = configuration;
@@ -10,8 +10,6 @@ app.models.UnicodeTilePlug = Backbone.Model.extend({
   prepare_for_board_update: function(board_dimensions, tile_dimensions) {
     this.boardDimensions = board_dimensions;
     this.tileDimensions = tile_dimensions;
-    tile_dimensions.fontSize = tile_dimensions.tileWidth * 1.10; // this seems correct except for &#x1f004;
-    tile_dimensions.lineHeight = 1.1; // this seems correct
     tile_dimensions.tileDepth = tile_dimensions.tileWidth * 0.10;
   },
   disable_tooltip_for_tile: function(tile) {
@@ -32,24 +30,12 @@ app.models.UnicodeTilePlug = Backbone.Model.extend({
     $(positioned_tile.get('view')).remove();
   },
   get_tile_image: function(tile) {
-    var tile_image = $("<div>").
+    var tile_image = $('<img src="images/img_trans.gif">').
+        addClass("tileset_chinasage").
+        addClass("tileset_chinasage_" + tile.get('short_name')).
         addClass("tile").
         addClass("category_" + tile.get('tile_category').get('short_name')).
         addClass("tile_" + tile.get('short_name')).
-        css({
-          width: this.tileDimensions.tileWidth,
-          height: this.tileDimensions.tileHeight,
-        }).
-        css({
-          fontSize: this.tileDimensions.fontSize,
-          lineHeight: this.tileDimensions.lineHeight
-        }).
-        css({
-          borderStyle: "solid",
-          borderWidth: "1px 1px " + this.tileDimensions.tileDepth + "px " + this.tileDimensions.tileDepth + "px",
-          borderRadius: (this.tileDimensions.tileWidth / 5) + "px",
-        }).
-        html(tile.get('value')).
         tooltip({
           title: tile.get('name'),
           delay: {

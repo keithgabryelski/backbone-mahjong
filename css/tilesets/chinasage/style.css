@@ -1,0 +1,137 @@
+.tileset_chinasage {
+    width: 85px;
+    height: 108px;
+}
+
+.tileset_chinasage_east_wind {
+    background: url(MahjongWinds.png) 0px 0px;
+}
+.tileset_chinasage_south_wind {
+    background: url(MahjongWinds.png) -91px 0px;
+}
+.tileset_chinasage_west_wind {
+    background: url(MahjongWinds.png) -182px 0px;
+}
+.tileset_chinasage_north_wind {
+    background: url(MahjongWinds.png) -273px 0px;
+}
+
+.tileset_chinasage_red_dragon {
+    background: url(MahjongDragons.png) 0px 0px;
+}
+.tileset_chinasage_green_dragon {
+    background: url(MahjongDragons.png) -91px 0px;
+}
+.tileset_chinasage_white_dragon {
+    background: url(MahjongDragons.png) -182px 0px;
+}
+
+.tileset_chinasage_one_of_bamboos {
+    background: url(MahjongBamboos.png) 0px 0px;
+}
+.tileset_chinasage_two_of_bamboos {
+    background: url(MahjongBamboos.png) -89px 0px;
+}
+.tileset_chinasage_three_of_bamboos {
+    background: url(MahjongBamboos.png) -178px 0px;
+}
+.tileset_chinasage_four_of_bamboos {
+    background: url(MahjongBamboos.png) -266px 0px;
+}
+.tileset_chinasage_five_of_bamboos {
+    background: url(MahjongBamboos.png) -358px 0px;
+}
+.tileset_chinasage_six_of_bamboos {
+    background: url(MahjongBamboos.png) -440px 0px;
+}
+.tileset_chinasage_seven_of_bamboos {
+    background: url(MahjongBamboos.png) -532px 0px;
+}
+.tileset_chinasage_eight_of_bamboos {
+    background: url(MahjongBamboos.png) -624px 0px;
+}
+.tileset_chinasage_nine_of_bamboos {
+    background: url(MahjongBamboos.png) -716px 0px;
+}
+
+.tileset_chinasage_one_of_circles {
+    background: url(MahjongCircles.png) 0px 0px;
+}
+.tileset_chinasage_two_of_circles {
+    background: url(MahjongCircles.png) -89px 0px;
+}
+.tileset_chinasage_three_of_circles {
+    background: url(MahjongCircles.png) -178px 0px;
+}
+.tileset_chinasage_four_of_circles {
+    background: url(MahjongCircles.png) -266px 0px;
+}
+.tileset_chinasage_five_of_circles {
+    background: url(MahjongCircles.png) -358px 0px;
+}
+.tileset_chinasage_six_of_circles {
+    background: url(MahjongCircles.png) -440px 0px;
+}
+.tileset_chinasage_seven_of_circles {
+    background: url(MahjongCircles.png) -532px 0px;
+}
+.tileset_chinasage_eight_of_circles {
+    background: url(MahjongCircles.png) -624px 0px;
+}
+.tileset_chinasage_nine_of_circles {
+    background: url(MahjongCircles.png) -716px 0px;
+}
+
+.tileset_chinasage_one_of_characters {
+    background: url(MahjongCharacters.png) 0px 0px;
+}
+.tileset_chinasage_two_of_characters {
+    background: url(MahjongCharacters.png) -89px 0px;
+}
+.tileset_chinasage_three_of_characters {
+    background: url(MahjongCharacters.png) -178px 0px;
+}
+.tileset_chinasage_four_of_characters {
+    background: url(MahjongCharacters.png) -266px 0px;
+}
+.tileset_chinasage_five_of_characters {
+    background: url(MahjongCharacters.png) -358px 0px;
+}
+.tileset_chinasage_six_of_characters {
+    background: url(MahjongCharacters.png) -440px 0px;
+}
+.tileset_chinasage_seven_of_characters {
+    background: url(MahjongCharacters.png) -532px 0px;
+}
+.tileset_chinasage_eight_of_characters {
+    background: url(MahjongCharacters.png) -624px 0px;
+}
+.tileset_chinasage_nine_of_characters {
+    background: url(MahjongCharacters.png) -716px 0px;
+}
+
+.tileset_chinasage_spring_season {
+    background: url(MahjongSeasons.png) 0px 0px;
+}
+.tileset_chinasage_summer_season {
+    background: url(MahjongSeasons.png) -91px 0px;
+}
+.tileset_chinasage_autumn_season {
+    background: url(MahjongSeasons.png) -182px 0px;
+}
+.tileset_chinasage_winter_season {
+    background: url(MahjongSeasons.png) -273px 0px;
+}
+
+.tileset_chinasage_plum_flower {
+    background: url(MahjongFlowers.png) 0px 0px;
+}
+.tileset_chinasage_orchid_flower {
+    background: url(MahjongFlowers.png) -91px 0px;
+}
+.tileset_chinasage_bamboo_flower {
+    background: url(MahjongFlowers.png) -182px 0px;
+}
+.tileset_chinasage_chrysanthemum_flower {
+    background: url(MahjongFlowers.png) -273px 0px;
+}
