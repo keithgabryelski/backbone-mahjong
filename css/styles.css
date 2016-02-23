@@ -44,6 +44,18 @@ html,body {
     border-color: #FFF #EEE #AAA #CCC;
 }
 
+.tile_sample {
+    font-family: "Symbola";
+    font-size: 64px;
+    border-style: solid;
+    border-color: #000 #000 #333 #666;
+    border-width: 1px 1px 6px 6px;
+    border-radius: 6px;
+    margin-left: 10px;
+    line-height: 1.1;
+    box-shadow: -8px 8px 10px rgba(0, 0, 0, 0.5);
+}
+
 .mahjongBoard {
     -webkit-user-select: none;
 }

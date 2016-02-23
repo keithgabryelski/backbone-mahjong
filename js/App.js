@@ -67,6 +67,16 @@ var app = (function() {
       }
       return this.mahjongView;
     },
+    instructions: function() {
+      if (!this.instructionsView) {
+	this.instructionsView = new api.views.instructions({
+        }).on("back", function() {
+	  api.router.navigate("configuration");
+          window.location.reload();
+	})
+      }
+      return this.instructionsView;
+    },
   };
 
   var Router = Backbone.Router.extend({
@@ -74,6 +84,7 @@ var app = (function() {
       "splash": "splash",
       "configuration": "configuration",
       "mahjong": "mahjong",
+      "instructions": "instructions",
       "": "splash"
     },
     splash: function() {
@@ -89,6 +100,11 @@ var app = (function() {
     mahjong: function() {
       var view = ViewsFactory.mahjong();
       api.title("Mahjong").changeContent(view.$el);
+      view.render();
+    },
+    instructions: function() {
+      var view = ViewsFactory.instructions();
+      api.title("Mahjong Solitaire Instructions").changeContent(view.$el);
       view.render();
     },
   });

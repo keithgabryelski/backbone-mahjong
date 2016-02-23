@@ -37,8 +37,136 @@
   </div>
   </script>
 
+  <script type="text/template" id="tpl-instructions">
+  <h2>How To Play Mahjong!</h2>
+
+  <h3>The Game</h3>
+  <p>
+  Mahjong is a matching game using a set of 144 <i>Mahjong Tiles</i>
+  arranged in a special layout.
+  </p>
+  <h3>The Objective</h3>
+  You win by removing all tiles from the board.
+
+  <h3>The Play</h3>
+  <p>
+  You can remove one pair of tiles at a time. The pair must <i>match</i> and must be <i>unblocked</i>.
+  </p>
+  <p>
+  Unblocked tiles are those tiles that are not covered and are not adjacent to another tile either on its
+  left or right.
+  </p>
+  
+  <h3>The Tiles</h3>
+  <p>
+  There are two honor tile sets: <i>Dragons</i> and <i>Winds</i>,
+  three suited tile sets: <i>Character</i>, <i>Bamboo</i>, and
+  <i>Circle</i> and two other tile sets known as <i>Seasons</i> and
+  <i>Flowers</i>
+  Honor and suited tiles match when they are identical. All season tiles match each other and all flower tiles match themselves.
+  </p>
+
+  <h4>Wind Honor Tiles</h4>
+  <p>
+  There are four sets of each of the wind tiles: <i>East Wind</i>, <i>South Wind</i>, <i>West Wind</i>, and <i>North Wind</i>.
+  </p>
+  <p align="center">
+  <span class="tile tile_sample on_board highlighted category_wind"><span class="tile_top">&#x1f000;</span></span>
+  <span class="tile tile_sample on_board highlighted category_wind"><span class="tile_top">&#x1f001;</span></span>
+  <span class="tile tile_sample on_board highlighted category_wind"><span class="tile_top">&#x1f002;</span></span>
+  <span class="tile tile_sample on_board highlighted category_wind"><span class="tile_top">&#x1f003;</span></span>
+  </p>
+
+  <h4>Dragon Honer Tiles</h4>
+  <p>
+  There are four sets of each of the dragon tiles: <i>Red Dragon</i>, <i>Green Dragon</i>, and <i>White Dragon</i>.
+  </p>
+  <p align="center">
+  <span class="tile tile_sample on_board highlighted category_dragon tile_red_dragon"><span class="tile_top">&#x1f004;</span></span>
+  <span class="tile tile_sample on_board highlighted category_dragon tile_green_dragon"><span class="tile_top">&#x1f005;</span></span>
+  <span class="tile tile_sample on_board highlighted category_dragon tile_white_dragon"><span class="tile_top">&#x1f006;</span></span>
+  </p>
+
+  <p>
+  There are three suited tiles: Characters, Bamboos, and Circles
+  </p>
+
+  <h4>Character Suit Tiles</h4>
+  <p>
+  There are four sets of the nine character suited tiles numbered 1 through 9.
+  </p>
+  <p align="center">
+  <span class="tile tile_sample on_board highlighted category_character_suit"><span class="tile_top">&#x1f007;</span></span>
+  <span class="tile tile_sample on_board highlighted category_character_suit"><span class="tile_top">&#x1f008;</span></span>
+  <span class="tile tile_sample on_board highlighted category_character_suit"><span class="tile_top">&#x1f009;</span></span>
+  <span class="tile tile_sample on_board highlighted category_character_suit"><span class="tile_top">&#x1f00A;</span></span>
+  <span class="tile tile_sample on_board highlighted category_character_suit"><span class="tile_top">&#x1f00B;</span></span>
+  <span class="tile tile_sample on_board highlighted category_character_suit"><span class="tile_top">&#x1f00C;</span></span>
+  <span class="tile tile_sample on_board highlighted category_character_suit"><span class="tile_top">&#x1f00D;</span></span>
+  <span class="tile tile_sample on_board highlighted category_character_suit"><span class="tile_top">&#x1f00E;</span></span>
+  <span class="tile tile_sample on_board highlighted category_character_suit"><span class="tile_top">&#x1f00F;</span></span>
+  </p>
+
+  <h4>Bamboo Suit Tiles</h4>
+  <p>
+  There are four sets of the nine bamboo suited tiles numbered 1 through 9.
+  </p>
+  <p align="center">
+  <span class="tile tile_sample on_board highlighted category_bamboo_suit"><span class="tile_top">&#x1f010;</span></span>
+  <span class="tile tile_sample on_board highlighted category_bamboo_suit"><span class="tile_top">&#x1f011;</span></span>
+  <span class="tile tile_sample on_board highlighted category_bamboo_suit"><span class="tile_top">&#x1f012;</span></span>
+  <span class="tile tile_sample on_board highlighted category_bamboo_suit"><span class="tile_top">&#x1f013;</span></span>
+  <span class="tile tile_sample on_board highlighted category_bamboo_suit"><span class="tile_top">&#x1f014;</span></span>
+  <span class="tile tile_sample on_board highlighted category_bamboo_suit"><span class="tile_top">&#x1f015;</span></span>
+  <span class="tile tile_sample on_board highlighted category_bamboo_suit"><span class="tile_top">&#x1f016;</span></span>
+  <span class="tile tile_sample on_board highlighted category_bamboo_suit"><span class="tile_top">&#x1f017;</span></span>
+  <span class="tile tile_sample on_board highlighted category_bamboo_suit"><span class="tile_top">&#x1f018;</span></span>
+  </p>
+
+  <h4>Circle Suit Tiles</h4>
+  <p>
+  There are four sets of the nine circle suited tiles numbered 1 through 9.
+  </p>
+  <p align="center">
+  <span class="tile tile_sample on_board highlighted category_circle_suit"><span class="tile_top">&#x1f019;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit"><span class="tile_top">&#x1f01a;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit"><span class="tile_top">&#x1f01b;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit"><span class="tile_top">&#x1f01c;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit"><span class="tile_top">&#x1f01d;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit"><span class="tile_top">&#x1f01e;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit"><span class="tile_top">&#x1f01f;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit"><span class="tile_top">&#x1f020;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit"><span class="tile_top">&#x1f021;</span></span>
+  </p>
+
+  <h4>Flower Tiles</h4>
+  <p>
+  There is one set of flower tiles.
+  </p>
+  <p align="center">
+  <span class="tile tile_sample on_board highlighted category_circle_suit tile_plum_flower"><span class="tile_top">&#x1f022;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit tile_orchid_flower"><span class="tile_top">&#x1f023;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit tile_bamboo_flower"><span class="tile_top">&#x1f024;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit tile_chrysanthemum_flower"><span class="tile_top">&#x1f025;</span></span>
+  </p>
+
+  <h4>Season Tiles</h4>
+  <p>
+  There is one set of season tiles.
+  </p>
+  <p align="center">
+  <span class="tile tile_sample on_board highlighted category_circle_suit tile_spring_season"><span class="tile_top">&#x1f026;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit tile_summer_season"><span class="tile_top">&#x1f027;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit tile_autumn_season"><span class="tile_top">&#x1f028;</span></span>
+  <span class="tile tile_sample on_board highlighted category_circle_suit tile_winter_season"><span class="tile_top">&#x1f029;</span></span>
+  </p>
+
+  <button id="backButton" class="btn btn-primary">Back</button>
+  </script>
+  
   <script type="text/template" id="tpl-configuration">
-    <p>Welcome to Mahjong Solitaire</p>
+  <p class="lead">Welcome to Mahjong Solitaire!</p>
+  <p>For information on how to play, please see the <a href="#instructions">instructions</a></p>
 
     <form role="form">
       <div class="form-group">
@@ -138,7 +266,7 @@
           <div id="mahjongGameStatus" class="nav navbar-text"></div>
         </div>
         <div class="col-sm-offset-1 col-sm-1">
-          <button id="mahjongGameTimer" class="btn navbar-btn btn-danger" data-toggle="modal" data-target="#myModal"></button>
+          <button id="mahjongGameTimer" class="btn navbar-btn btn-danger" data-toggle="modal" data-target="#pauseModal"></button>
         </div>
         <div class="col-sm-offset-2 col-sm-4">
          <button id="hintButton" class="btn btn-default navbar-btn hint">hint</button>
@@ -152,26 +280,26 @@
       </div>
     </nav>
 
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+    <div id="pauseModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Mahjong Solitaire Paused</h4>
-      </div>
-      <div class="modal-body">
-        <p>The Game is Paused.</p>
-      </div>
-      <div class="modal-footer">
-        <button id="quitButton" type="button" class="btn btn-default btn-danger" data-dismiss="modal">Quit</button>
-        <button id="pausePanelClose" class="btn btn-default" data-dismiss="modal">Continue</button>
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Mahjong Solitaire Paused</h4>
+          </div>
+          <div class="modal-body">
+            <p class="lead">The Game is Paused.</p>
+          </div>
+          <div class="modal-footer">
+            <button id="quitButton" type="button" class="btn btn-default btn-danger" data-dismiss="modal">Quit</button>
+            <button id="pausePanelClose" class="btn btn-default" data-dismiss="modal">Continue</button>
+          </div>
+        </div>
+
       </div>
     </div>
-
-  </div>
-</div>
 
     <div id="history_area" class="panel panel-default panel-bottom offcanvas navbar-fixed-bottom">
       <div class="panel-heading">
@@ -252,6 +380,7 @@
   <script src="js/logical/MahjongGame.js"></script>
 
   <script src="js/views/splash.js"></script>
+  <script src="js/views/instructions.js"></script>
   <script src="js/views/configuration.js"></script>
   <script src="js/views/board_status.js"></script>
   <script src="js/views/board_controls.js"></script>
