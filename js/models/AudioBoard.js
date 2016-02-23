@@ -30,6 +30,9 @@ app.models.AudioBoard = Backbone.Model.extend({
   play_game_over_fail: function() {
     this.play(this.get('game_over_fail'));
   },
+  play_game_over_success: function() {
+    this.play(this.get('game_over_success'));
+  },
   play_undo: function() {
     this.play(this.get('undo'));
   },
