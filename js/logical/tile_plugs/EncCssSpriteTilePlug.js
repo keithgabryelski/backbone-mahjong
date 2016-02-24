@@ -1,4 +1,4 @@
-app.models.CssSpriteTilePlug = Backbone.Model.extend({
+app.models.EncCssSpriteTilePlug = Backbone.Model.extend({
   initialize: function(board_div, configuration) {
     this.boardDiv = board_div;
     this.configuration = configuration;
@@ -31,8 +31,8 @@ app.models.CssSpriteTilePlug = Backbone.Model.extend({
   },
   get_tile_image: function(tile) {
     var tile_image = $('<img src="images/img_trans.gif">').
-        addClass("tileset_chinasage").
-        addClass("tileset_chinasage_" + tile.get('short_name')).
+        addClass("tileset_enc").
+        addClass("tileset_enc_" + tile.get('short_name')).
         addClass("tile").
         addClass("category_" + tile.get('tile_category').get('short_name')).
         addClass("tile_" + tile.get('short_name')).
@@ -55,8 +55,7 @@ app.models.CssSpriteTilePlug = Backbone.Model.extend({
         top: -100, //xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
         zIndex: (-1 * xyz.x) + xyz.y + (xyz.z * 1000), // 1000 := sloppy
         position: 'absolute'
-      }).
-      appendTo(this.boardDiv);
+      }).appendTo(this.boardDiv);
     
     this.set_positioned_tile_position(tile_image, positioned_tile);
     this.set_positioned_tile(tile_image[0], positioned_tile);

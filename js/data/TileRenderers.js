@@ -26,5 +26,11 @@ app.tileRenderers.set(
       short_name: 'gnome',
       rendering_plug_class: app.models.ImageTilePlug
     },
+    {
+      ID: 5,
+      name: 'Enc (not fully working)',
+      short_name: 'enc',
+      rendering_plug_class: app.models.EncCssSpriteTilePlug
+    },
   ]
 );
