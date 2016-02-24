@@ -17,6 +17,8 @@ features:
 
  animation for moves
 
+ highlights not quite working for gnome tiles
+
 wishes:
  resize tiles but don't adjust x/y alone
 
