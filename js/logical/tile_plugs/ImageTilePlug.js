@@ -1,14 +1,14 @@
 app.models.ImageTilePlug = Backbone.Model.extend({
   GnomeImages: {
-    'white_dragon': 'images/gnome/_dragon_white.png',
-    'bamboo_flower': 'images/gnome/_flower_bamboo.png',
-    'chrysanthemum_flower': 'images/gnome/_flower_chrysanthemum.png',
-    'orchid_flower': 'images/gnome/_flower_orchid.png',
-    'plum_flower': 'images/gnome/_flower_plum.png',
-    'autumn_season': 'images/gnome/_season_autumn.png',
-    'spring_season': 'images/gnome/_season_spring.png',
-    'summer_season': 'images/gnome/_season_summer.png',
-    'winter_season': 'images/gnome/_season_winter.png',
+    'white_dragon': 'images/gnome/dragon_white.png',
+    'bamboo_flower': 'images/gnome/flower_bamboo.png',
+    'chrysanthemum_flower': 'images/gnome/flower_chrysanthemum.png',
+    'orchid_flower': 'images/gnome/flower_orchid.png',
+    'plum_flower': 'images/gnome/flower_plum.png',
+    'autumn_season': 'images/gnome/season_autumn.png',
+    'spring_season': 'images/gnome/season_spring.png',
+    'summer_season': 'images/gnome/season_summer.png',
+    'winter_season': 'images/gnome/season_winter.png',
     'one_of_bamboos': 'images/gnome/bamboo_1.png',
     'two_of_bamboos': 'images/gnome/bamboo_2.png',
     'three_of_bamboos': 'images/gnome/bamboo_3.png',
@@ -98,20 +98,15 @@ app.models.ImageTilePlug = Backbone.Model.extend({
     tile_image.
       addClass("on_board").
       css({
+        width: this.tileDimensions.tileWidth,
+        height: this.tileDimensions.tileHeight,
+      }).
+      css({
         left: xyz.x + this.tileDimensions.boardSideMargin + (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
         top: -100, //xyz.y + this.tileDimensions.boardTopBottomMargin - (positioned_tile.get('position').get('layer') * this.tileDimensions.tileDepth),
         zIndex: (-1 * xyz.x) + xyz.y + (xyz.z * 1000), // 1000 := sloppy
         position: 'absolute'
-      })
-
-    var outer_image = $("<span>").
-        css({
-          backgroundSize: "100% 100%",
-          width: "25%",
-          height: "64px",
-        }).appendTo(this.boardDiv);
-    tile_image.appendTo(outer_image)
-    tile_image = outer_image
+      }).appendTo(this.boardDiv);
     
     this.set_positioned_tile_position(tile_image, positioned_tile);
     this.set_positioned_tile(tile_image[0], positioned_tile);

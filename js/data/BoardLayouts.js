@@ -5,7 +5,7 @@ app.boardLayouts.set(
     {
       ID: 1,
       name: 'The Turtle',
-      image_url: null,
+      image_url: "images/layouts/the-turtle-layout.png",
       difficulty: "hard",
       layout: [
         [
@@ -63,7 +63,7 @@ app.boardLayouts.set(
     {
       ID: 2,
       name: 'Castle',
-      image_url: null,
+      image_url: "images/layouts/the-castle-layout.png",
       difficulty: "extreme",
       layout: [
         [
@@ -116,7 +116,7 @@ app.boardLayouts.set(
     {
       ID: 3,
       name: 'Harmony',
-      image_url: null,
+      image_url: "images/layouts/harmony-layout.png",
       difficulty: "normal",
       layout: [
         [

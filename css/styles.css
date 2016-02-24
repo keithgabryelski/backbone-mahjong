@@ -84,10 +84,22 @@ div.clickable, .clickable > span.tile_top {
     border-color: #FFF #EEE #777 #888;
 }
 
+img.clickable {
+    box-shadow: 0px 0px 40px black;
+}
+
+img.hinted {
+    box-shadow: 0px 0px 40px red;
+}
+
 div.highlighted, .highlighted > span.tile_top {
     background-color: #FFF;
     border-color: #FFF #EEE #AAA #BBB;
     box-shadow: 0px 0px 40px white;
+}
+
+img.highlighted {
+    box-shadow: 0px 0px 40px yellow;
 }
 
 div.clickable:hover, .clickable:hover > span.tile_top {
@@ -96,9 +108,17 @@ div.clickable:hover, .clickable:hover > span.tile_top {
     box-shadow: 8px 8px 10px rgba(#fff, #fff, #fff, .5);
 }
 
+img.clickable:hover {
+    box-shadow: 0px 0px 40px orange;
+}
+
 div.highlighted:hover, .highlighted:hover > span.tile_top {
     background-color: #FFF;
     border-color: #FFF #EEE #AAA #BBB;
+}
+
+img.highlighted:hover {
+    box-shadow: 0px 0px 40px white;
 }
 
 .category_dragon {
