@@ -118,7 +118,7 @@ img.highlighted:hover {
 }
 
 img.highlighted {
-    box-shadow: 0px 0px 40px yellow;
+/*    box-shadow: 0px 0px 40px yellow; */
 }
 
 .category_dragon {

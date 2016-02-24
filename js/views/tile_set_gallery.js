@@ -7,7 +7,7 @@ app.views.tile_set_gallery = Backbone.View.extend({
   initialize: function() {
     this.tiles = app.tiles
     this.plug = new app.models.UnicodeTilePlug();
-    //this.plug = new app.models.ImageTilePlug();
+    this.plug = new app.models.EncCssSpriteTilePlug();
     this.plug.tileDimensions = {
       tileWidth: 48,
       tileHeight: 64,
