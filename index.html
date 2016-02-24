@@ -219,6 +219,13 @@
   <h2>The mahjong tile sets</h2>
   <p>
   Here are some tiles
+<form>
+          <select id="tile_renderer_selector" class="form-control">
+              <% app.tileRenderers.each(function(tile_renderer) { %>
+                  <option value="<%= tile_renderer.get('ID') %>"<%= this.plug_id == tile_renderer.get('ID') ? " SELECTED" : "" %> ><%= tile_renderer.get('name') %></option>
+              <% }); %>
+          </select>
+</form>
   </p>
 <p>
         <% for (var i = 0; i < collection.length; ++i) { %>
