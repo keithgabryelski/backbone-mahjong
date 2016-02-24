@@ -239,10 +239,14 @@
   <p>For information on how to play, please see the <a href="#instructions">instructions</a>, you can also visit the <a href="#tile_set_gallery">Tile Set Gallery</a></p>
 
     <form role="form">
-      <div class="form-group">
-        <label for="layout" class="col-md-4 control-label">Board Layout</label>
-        <div class="col-md-8">
-          <select id="layout" class="form-control">
+<fieldset>
+    <legend>Board Layout</legend>
+      <div class="row form-group">
+        <div class="col-sm-2 pull-top">
+          <img id="layout_img" src="<%= app.boardLayouts.findWhere({ID: parseInt(board_layout_id)}).get('image_url') %>" height="96" width="128" style="min-width: 128px;max-width: 128px;min-height: 96px;max-height: 96px;">
+        </div>
+        <div class="col-sm-10 pull-top">
+          <select id="layout_selector" class="form-control">
             <% app.boardLayouts.each(function(layout) { %>
             <% var selected = (board_layout_id == layout.get('ID') ? " SELECTED" : ""); %>
               <option value="<%= layout.get('ID') %>" <%= selected %> > <%= layout.get('name') %> </option>
@@ -250,11 +254,16 @@
           </select>
         </div>
       </div>
+</fieldset>
 
-      <div class="form-group">
-        <label for="background" class="col-md-4 control-label">Background</label>
-        <div class="col-md-8">
-          <select id="background" class="form-control">
+<fieldset>
+    <legend>Background</legend>
+      <div class="form-group row">
+        <div class="col-sm-2 pull-top">
+          <img id="background_img" src="<%= app.backgrounds.findWhere({ID: parseInt(background_id)}).get('image_url') %>" height="96" width="128" style="min-width: 128px;max-width: 128px;min-height: 96px;max-height: 96px;">
+        </div>
+        <div class="col-sm-10 pull-top">
+          <select id="background_selector" class="form-control">
               <% app.backgrounds.each(function(background) { %>
               <% var selected = (background_id == background.get('ID') ? " SELECTED" : ""); %>
                   <option value="<%= background.get('ID') %>"<%= selected %> ><%= background.get('name') %></option>
@@ -262,23 +271,31 @@
           </select>
         </div>
       </div>
-      <div class="form-group">
-        <label for="tile_renderer" class="col-md-4 control-label">Tile Renderer</label>
-        <div class="col-md-8">
-          <select id="tile_renderer" class="form-control">
+</fieldset>
+
+<fieldset>
+    <legend>Tiles</legend>
+      <div class="form-group row">
+        <div class="col-sm-12 pull-top">
+          <select id="tile_renderer_selector" class="form-control">
               <% app.tileRenderers.each(function(tile_renderer) { %>
                   <option value="<%= tile_renderer.get('ID') %>"<%= tile_renderer_id == tile_renderer.get('ID') ? " SELECTED" : "" %> ><%= tile_renderer.get('name') %></option>
               <% }); %>
           </select>
         </div>
       </div>
-      <div class="form-group">
-        <label for="audio_volume" class="col-md-4 control-label">Audio Volume</label>
-        <div class="col-md-8">
-          <input id="audio_volume" data-slider-id="audioVolumeSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="5" data-slider-value="75"/>
+</fieldset>
+
+<fieldset>
+    <legend>Volume</legend>
+      <div class="form-group row">
+        <div class="col-xs-12">
+          <input size="64" id="audio_volume_slider" data-slider-id="audioVolumeSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="5" data-slider-value="75"/>
         </div>
       </div>
-      <div class="form-group">
+</fieldset>
+
+      <div class="form-group row">
         <div class="col-xs-12">
           <button type="submit" class="btn btn-primary">Start Game</button>
         </div>
