@@ -5,7 +5,7 @@ app.models.Tile = Backbone.Model.extend({
     short_name: null,
     value: null,
   },
-  is_matching: function(other_tile) {
+  isMatching: function(other_tile) {
     var this_matching_style = this.get('tile_category').get('tile_matching_style')
     var other_matching_style = other_tile.get('tile_category').get('tile_matching_style')
     if (this_matching_style === app.tileMatchingStyles.all ||

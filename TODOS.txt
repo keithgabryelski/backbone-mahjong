@@ -19,6 +19,8 @@ features:
 
  highlights not quite working for gnome tiles
 
+ set webapp icon for ios
+
 wishes:
  resize tiles but don't adjust x/y alone
 
@@ -33,3 +35,12 @@ wishes:
  implement other tile sets (gnome png, self owned colorized png)
 
  need something like requirejs to organize the templates
+
+other:
+ use camel case everywhere
+
+ change attribute name: position to subposition or something
+
+ use log4javascript
+
+ fix board generation so it doesn't get traps.

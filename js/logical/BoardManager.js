@@ -3,7 +3,6 @@ app.models.BoardManager = Backbone.Model.extend({
     this.boardDiv = board_div;
     this.configuration = configuration;
     this.board = null;
-    this.hitMaster = null;
     this.tileManager = null;
     this.hintIndex = null;
     this.tileClickHandler = tile_click_handler;
@@ -12,9 +11,18 @@ app.models.BoardManager = Backbone.Model.extend({
   setupGame: function(board_status) {
     this.boardStatus = board_status;
     this.dealer = new app.models.Dealer(this.configuration);
-    this.board = this.dealer.build_board();
-    this.hitMaster = new app.models.HitMaster(this.board);
-    this.tileManager = new app.models.TileManager(this.board, this.configuration, this.boardDiv, this.tileClickHandler);
+    for (var i = 0; i < 10; ++i) {
+      try {
+        this.board = this.dealer.buildWinnableBoard(app.decks.standard);
+        //var examiner = new app.models.Examiner(this.board);
+        //examiner.examine();
+        this.tileManager = new app.models.TileManager(this.board, this.configuration, this.boardDiv, this.tileClickHandler);
+      } catch (e) {
+        console.log("failed to build board (retry): " + e);
+        continue;
+      }
+      break;
+    }
   },
   prepareToStartGame: function() {
     this.tileManager.prepareToStartGame()
@@ -45,54 +53,19 @@ app.models.BoardManager = Backbone.Model.extend({
       this.boardStatus.set({status: "Playing..."});
     }
   },
-  is_previous_match: function(tile, previous_matching_sets) {
-    for (var t = 0; t < previous_matching_sets.length; ++t) {
-      var previous_matches = previous_matching_sets[t][1];
-      for (var tt = 0; tt < previous_matches.length; ++tt) {
-        if (previous_matches[tt] == tile) {
-          return true;
-        }
-      }
-    }
-    return false;
-  },
   setBoardStatusAndTileState: function() {
-    var tiles_on_board = this.board.get_all_positioned_tiles();
-    this.boardStatus.set({tiles_on_board: tiles_on_board})
-    var movable_tiles = [];
-    var visible_tiles = [];
-
-    for (var i = 0; i < tiles_on_board.length; ++i) {
-      var tile = tiles_on_board[i];
-      if (!this.hitMaster.is_tile_blocked(tile)) {
-        movable_tiles.push(tile);
-      }
-      if (this.hitMaster.is_tile_visible(tile)) {
-        visible_tiles.push(tile);
-      }
-    }
-
-    this.tileManager.set_tiles_state(tiles_on_board, movable_tiles, visible_tiles);
-    
-    var tiles_having_matches = [];
-    for (var i = 0; i < movable_tiles.length; ++i) {
-      var tile1 = movable_tiles[i];
-      var matching_tiles = [];
-      for (var n = i+1; n < movable_tiles.length; ++n) {
-        var tile2 = movable_tiles[n];
-        if (tile1.is_matching(tile2)) {
-          if (!this.is_previous_match(tile2, tiles_having_matches)) {
-            matching_tiles.push(tile2)
-          }
-        }
-      }
-      if (matching_tiles.length > 0) {
-        tiles_having_matches.push([tile1, matching_tiles])
-      }
-    }
-
-    this.boardStatus.set({unblocked_tiles: movable_tiles})
-    this.boardStatus.set({tiles_having_matches: tiles_having_matches})
+    var tile_oracle = new app.models.TileOracle();
+    var tiles = tile_oracle.getTileStates(this.board.get('positioned_tiles'));
+    this.tileManager.set_tiles_state(
+      tiles.tiles_on_board,
+      tiles.unblocked_tiles,
+      tiles.visible_tiles
+    );
+    this.boardStatus.set({
+      unblocked_tiles: tiles.unblocked_tiles,
+      tiles_having_matches: tiles.tiles_having_matches,
+      tiles_on_board: tiles.tiles_on_board
+    })
     this.set_status();
   },
   displayTilesOnBoard: function() {
@@ -121,7 +94,7 @@ app.models.BoardManager = Backbone.Model.extend({
         // BONKETY
         app.audioBoard.play_undo_selection();
       } else {
-        if (this.selectedTile.is_matching(positioned_tile)) {
+        if (this.selectedTile.isMatching(positioned_tile)) {
           app.audioBoard.play_tile_pair_selected();
           var old_dimensions = this.current_dimensions();
           // FLASH

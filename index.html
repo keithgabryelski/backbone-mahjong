@@ -33,8 +33,8 @@
       <h3>version 0.8</h3>
     </div>
     <div id="splash_icon" class="col-sm-6">
-      <span id="splash_icon_bottom" class="splash_icon_bottom"></span>
-      <span id="splash_icon_top" class="splash_icon_top"></span>
+      <span id="splash_icon_bottom" class="splash_icon_bottom" style="font-size: 64px;"></span>
+      <span id="splash_icon_top" class="splash_icon_top" style="font-size: 64px;"></span>
     </div>
   </div>
   </div>
@@ -297,7 +297,7 @@
     <legend>Volume</legend>
       <div class="form-group row">
         <div class="col-xs-12">
-          <input size="64" id="audio_volume_slider" data-slider-id="audioVolumeSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="5" data-slider-value="75"/>
+          <input id="audio_volume_slider" data-slider-id="audioVolumeSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="5" data-slider-value="75"/>
         </div>
       </div>
 </fieldset>
@@ -424,6 +424,9 @@
   <script src="js/vendor/backbone-cookies.js"></script>
   <script src="js/vendor/bootstrap-slider.js"></script>
 
+  <script src="js/support/array.js"></script>
+  <script src="js/support/math.js"></script>
+  
   <script src="js/App.js"></script>
 
   <script src="js/models/Type.js"></script>
@@ -438,6 +441,7 @@
   <script src="js/models/Position.js"></script>
   <script src="js/models/PositionedTile.js"></script>
   <script src="js/models/TilePair.js"></script>
+  <script src="js/models/TileSet.js"></script>
   <script src="js/models/TileRenderer.js"></script>
   <script src="js/models/AudioBoard.js"></script>
 
@@ -453,6 +457,7 @@
   <script src="js/collections/Positions.js"></script>
   <script src="js/collections/PositionedTiles.js"></script>
   <script src="js/collections/TileRenderers.js"></script>
+  <script src="js/collections/TileSets.js"></script>
 
   <script src="js/models/BoardStatus.js"></script>
 
@@ -471,6 +476,7 @@
   <script src="js/logical/HitMaster.js"></script>
   <script src="js/logical/Dealer.js"></script>
   <script src="js/logical/TileManager.js"></script>
+  <script src="js/logical/TileOracle.js"></script>
   <script src="js/logical/BoardManager.js"></script>
   <script src="js/logical/tile_plugs/UnicodeTilePlug.js"></script>
   <script src="js/logical/tile_plugs/UnicodeWithColoredBackTilePlug.js"></script>
@@ -494,6 +500,11 @@
   <script src="js/views/mahjong.js"></script>
 
   <script src="js/data/TileRenderers.js"></script>
+
+  <script src="js/logical/examiner/Node.js"></script>
+  <script src="js/logical/examiner/Move.js"></script>
+  <script src="js/logical/examiner/Moves.js"></script>
+  <script src="js/logical/examiner/Examiner.js"></script>
 
   <script>
     window.onload = function() {
