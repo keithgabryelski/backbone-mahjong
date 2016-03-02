@@ -29,7 +29,7 @@ app.models.Examiner = Backbone.Model.extend({
     });
     this.boardCache[hash] = node;
 
-    var state = this.getValidMoveTilePairs(board_array);
+    var state = this.tileOracle.getValidMoveTilePairs(board_array);
     for (var i = 0; i < state.tile_pairs.length; ++i) {
       var tile_pair = state.tile_pairs[i];
       var new_board = this.adjustBoard(board_array, tile_pair);
@@ -48,25 +48,6 @@ app.models.Examiner = Backbone.Model.extend({
       }
     }
     return node;
-  },
-  getValidMoveTilePairs: function(board_array) {
-    var tile_states = this.tileOracle.getTileStates(board_array);
-    var legal_moves = tile_states.tiles_having_matches
-    var legal_moves_as_tile_pairs = []
-    for (var i = 0; i < legal_moves.length; ++i) {
-      var tile1 = legal_moves[i][0];
-      var matching_tiles = legal_moves[i][1];
-      for (var m = 0; m < matching_tiles.length; ++m) {
-        legal_moves_as_tile_pairs.push(new app.models.TilePair({
-          tile1: tile1,
-          tile2: matching_tiles[m]
-        }))
-      }
-    }
-    return {
-      tile_pairs: legal_moves_as_tile_pairs,
-      tiles_on_board: tile_states.tiles_on_board
-    }
   },
   adjustBoard: function(board_array, tile_pair) {
     var new_board = this.copyBoard(board_array);

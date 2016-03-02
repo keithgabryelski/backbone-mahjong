@@ -20,7 +20,7 @@ app.dealingStyles.set(
       ID: 3,
       name: 'Blind Forward',
       short_name: 'blind-forward',
-      description: 'Blank tiles are pulled from the board at random and assign tile pairs, guaranteeing a winnable board, (not working).',
+      description: 'Blank tiles are pulled from the board at random and assign tile pairs, guaranteeing a winnable board.',
       dealer_class: app.models.BlindForwardDealer
     },
     {
