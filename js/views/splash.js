@@ -11,7 +11,7 @@ app.views.splash = Backbone.View.extend({
   },
 
   render: function() {
-    var tile = app.decks.standard.shuffle()[0]
+    var tile = app.decks.standard.getShuffledTiles()[0]
     this.$el.html(this.template());
     var width = $('body').innerWidth() / 3;
     var fontSize = width;

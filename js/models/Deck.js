@@ -1,21 +1,19 @@
 app.models.Deck = app.models.Type.extend({
   defaults: {
-    tiles: []
+    tile_sets: []
   },
-  shuffle: function() {
-    var array = this.get('tiles')
-    var m = array.length, t, i;
-
-    // While there remain elements to shuffle…
-    while (m) {
-      // Pick a remaining element…
-      i = Math.floor(Math.random() * m--);
-      // And swap it with the current element.
-      t = array[m];
-      array[m] = array[i];
-      array[i] = t;
-    }
-
-    return array;
+  getShuffledTiles: function() {
+    var tiles = [];
+    this.get('tile_sets').each(function(tile_set) {
+      tiles = tiles.concat(tile_set.getTiles())
+    });
+    return tiles.shuffle();
+  },
+  getShuffledTilePairs: function() {
+    var tiles = [];
+    this.get('tile_sets').each(function(tile_set) {
+      tiles = tiles.concat(tile_set.asTilePairs())
+    });
+    return tiles.shuffle();
   },
 });
