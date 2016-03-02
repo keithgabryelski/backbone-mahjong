@@ -4,13 +4,9 @@ app.models.Deck = app.models.Type.extend({
   },
   getShuffledTiles: function() {
     var tiles = [];
-    var tile_sets = this.get('tile_sets');
-    var exemplar_tiles = app.tiles.where({tile_category: this.get('tile_category')})
-    for (var i = 0; i < exemplar_tiles.length; ++i) {
-      for (var n = 0; n < this.get('num_sets'); ++n) {
-        tiles = tiles.concat(exemplar_tiles)
-      }
-    }
+    this.get('tile_sets').each(function(tile_set) {
+      tiles = tiles.concat(tile_set.getTiles())
+    });
     return tiles.shuffle();
   },
   getShuffledTilePairs: function() {

@@ -1,6 +1,5 @@
 app.models.Board = Backbone.Model.extend({
   defaults: {
-    deck: null,
     board_layout: null,
     positioned_tiles: [],
     pulled_tiles: [],

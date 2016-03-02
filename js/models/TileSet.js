@@ -3,12 +3,21 @@ app.models.TileSet = Backbone.Model.extend({
     tile_category: null,
     num_sets: null
   },
-  getTiles: function() {
+  getTilesFromCategory: function() {
     return app.tiles.where({tile_category: this.get('tile_category')});
+  },
+  getTiles: function() {
+    var category_tiles = this.getTilesFromCategory();
+    var num_sets = this.get('num_sets');
+    var tiles = [];
+    for (var i = 0; i < num_sets; ++i) {
+      tiles = tiles.concat(category_tiles);
+    }
+    return tiles;
   },
   asTilePairs: function() {
     var tile_pairs = []
-    var tiles = this.getTiles();
+    var tiles = this.getTilesFromCategory();
     var num_sets = this.get('num_sets');
     if ((num_sets % 2) == 0) {
       for (var nn = 0; nn < num_sets / 2; ++nn) {

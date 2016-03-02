@@ -51,7 +51,7 @@ app.models.Examiner = Backbone.Model.extend({
   },
   getValidMoveTilePairs: function(board_array) {
     var tile_states = this.tileOracle.getTileStates(board_array);
-    var legal_moves = tile_states['tiles_having_matches']
+    var legal_moves = tile_states.tiles_having_matches
     var legal_moves_as_tile_pairs = []
     for (var i = 0; i < legal_moves.length; ++i) {
       var tile1 = legal_moves[i][0];
@@ -65,12 +65,10 @@ app.models.Examiner = Backbone.Model.extend({
     }
     return {
       tile_pairs: legal_moves_as_tile_pairs,
-      tiles_on_board: tile_states['tiles_on_board']
+      tiles_on_board: tile_states.tiles_on_board
     }
   },
   adjustBoard: function(board_array, tile_pair) {
-    // it's fast enough
-    // http://jsperf.com/cloning-an-object/2
     var new_board = this.copyBoard(board_array);
 
     var tile = tile_pair.get('tile1')

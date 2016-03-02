@@ -10,12 +10,10 @@ app.models.BoardManager = Backbone.Model.extend({
   },
   setupGame: function(board_status) {
     this.boardStatus = board_status;
-    this.dealer = new app.models.Dealer(this.configuration);
+    this.dealer = this.configuration.getDealer();
     for (var i = 0; i < 10; ++i) {
       try {
-        this.board = this.dealer.buildWinnableBoard(app.decks.standard);
-        //var examiner = new app.models.Examiner(this.board);
-        //examiner.examine();
+        this.board = this.dealer.deal(app.decks.standard);
         this.tileManager = new app.models.TileManager(this.board, this.configuration, this.boardDiv, this.tileClickHandler);
       } catch (e) {
         console.log("failed to build board (retry): " + e);
@@ -23,6 +21,8 @@ app.models.BoardManager = Backbone.Model.extend({
       }
       break;
     }
+    //var examiner = new app.models.Examiner(this.board);
+    //examiner.examine();
   },
   prepareToStartGame: function() {
     this.tileManager.prepareToStartGame()

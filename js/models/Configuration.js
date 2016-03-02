@@ -12,7 +12,8 @@ app.models.Configuration = Backbone.Model.extend({
     allow_reshuffle: true,
     ensure_solvable: false,
     scale_as_tiles_are_removed: false,
-    audio_volume: .75
+    audio_volume: .75,
+    dealing_style_id: 1
   },
   tile_renderer: function() {
     return app.tileRenderers.findWhere({ID: this.get('tile_renderer_id')});
@@ -31,5 +32,11 @@ app.models.Configuration = Backbone.Model.extend({
   },
   background_repeat: function() {
     return this.background().get('repeat')
+  },
+  getDealer: function() {
+    var dealing_style = app.dealingStyles.findWhere({ID: this.get('dealing_style_id')});
+    var dealer_class = dealing_style.get('dealer_class');
+    var dealer = new dealer_class(this);
+    return dealer;
   }
 });

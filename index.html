@@ -264,6 +264,22 @@
 </fieldset>
 
 <fieldset>
+    <legend>Dealing Style</legend>
+      <div class="form-group row">
+        <div id="dealing_style_description" class="col-sm-2 pull-top">
+          <%= app.dealingStyles.findWhere({ID: parseInt(dealing_style_id)}).get('description') %>
+        </div>
+        <div class="col-sm-10 pull-top">
+          <select id="dealing_style_selector" class="form-control">
+              <% app.dealingStyles.each(function(dealing_style) { %>
+                  <option value="<%= dealing_style.get('ID') %>"<%= dealing_style_id == dealing_style.get('ID') ? " SELECTED" : "" %> ><%= dealing_style.get('name') %></option>
+              <% }); %>
+          </select>
+        </div>
+      </div>
+</fieldset>
+
+<fieldset>
     <legend>Background</legend>
       <div class="form-group row">
         <div class="col-sm-2 pull-top">
@@ -283,7 +299,10 @@
 <fieldset>
     <legend>Tiles</legend>
       <div class="form-group row">
-        <div class="col-sm-12 pull-top">
+        <div id="tile_renderer_description" class="col-sm-2 pull-top">
+          <%= app.tileRenderers.findWhere({ID: parseInt(tile_renderer_id)}).get('description') %>
+        </div>
+        <div class="col-sm-10 pull-top">
           <select id="tile_renderer_selector" class="form-control">
               <% app.tileRenderers.each(function(tile_renderer) { %>
                   <option value="<%= tile_renderer.get('ID') %>"<%= tile_renderer_id == tile_renderer.get('ID') ? " SELECTED" : "" %> ><%= tile_renderer.get('name') %></option>
@@ -444,6 +463,7 @@
   <script src="js/models/TileSet.js"></script>
   <script src="js/models/TileRenderer.js"></script>
   <script src="js/models/AudioBoard.js"></script>
+  <script src="js/models/DealingStyle.js"></script>
 
   <script src="js/collections/Types.js"></script>
   <script src="js/collections/BoardLayouts.js"></script>
@@ -458,6 +478,7 @@
   <script src="js/collections/PositionedTiles.js"></script>
   <script src="js/collections/TileRenderers.js"></script>
   <script src="js/collections/TileSets.js"></script>
+  <script src="js/collections/DealingStyles.js"></script>
 
   <script src="js/models/BoardStatus.js"></script>
 
@@ -487,6 +508,12 @@
   <script src="js/logical/TileManager.js"></script>
   <script src="js/logical/MahjongGame.js"></script>
 
+  <script src="js/logical/Dealer.js"></script>
+  <script src="js/logical/dealers/BlindForwardDealer.js"></script>
+  <script src="js/logical/dealers/RandomDealer.js"></script>
+  <script src="js/logical/dealers/ReverseDealer.js"></script>
+  <script src="js/logical/dealers/RandomButCheckedDealer.js"></script>
+
   <script src="js/views/splash.js"></script>
   <script src="js/views/instructions.js"></script>
   <script src="js/views/tile_set_gallery.js"></script>
@@ -500,6 +527,7 @@
   <script src="js/views/mahjong.js"></script>
 
   <script src="js/data/TileRenderers.js"></script>
+  <script src="js/data/DealingStyles.js"></script>
 
   <script src="js/logical/examiner/Node.js"></script>
   <script src="js/logical/examiner/Move.js"></script>
