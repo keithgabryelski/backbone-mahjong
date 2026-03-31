@@ -2,5 +2,5 @@
 
 Written in backbone and bootstrap.
 
-[Play](https://rawgit.com/keithgabryelski/backbone-mahjong/master/index.html)
+[Play](http://keithgabryelski.github.io/backbone-mahjong/)
 
